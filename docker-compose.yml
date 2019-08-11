@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+    db: # コンテナ名
+      image: mdillon/postgis:10 #postgres イメージからコンテナを作る
+      volumes:
+          - ./pgsql-data:/var/lib/postgresql/data
+      ports:
+          - "5432:5432"
+
+    web: # コンテナ名
+      build: . # 同じディレクトリに Dockerfile からイメージを作りコンテナを作る
+      command: /bin/bash -c "/wait-for-it.sh db:5432; python manage.py runserver 0.0.0.0:8000" # コンテナ内で実行するコマンド
+      volumes: # マウント
+          - .:/code # ホストの今いるディレクトリを、コンテナ内の /code にマウントする
+      ports:
+          - "8000:8000" # ホストの8000番ポートとコンテナの8000番ポートを接続
+      depends_on:
+          - db # コンテナ db に web は依存するという設定。
+      
