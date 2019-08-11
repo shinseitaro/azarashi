@@ -14,4 +14,5 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
-
+COPY ./wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
