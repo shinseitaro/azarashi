@@ -19,3 +19,5 @@ yarn-error.log*
 # ここはあとで設定ファイルをどう扱うか相談してから
 settings.py 
 *.toml
+
+migrations/
