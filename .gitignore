@@ -15,9 +15,7 @@ yarn-error.log*
 !.gitkeep
 
 /env
-
-# ここはあとで設定ファイルをどう扱うか相談してから
-settings.py 
+.env
 *.toml
 
 migrations/
