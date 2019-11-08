@@ -2,12 +2,14 @@ import uuid
 from django.utils import timezone
 from django.contrib.gis.db import models
 
+class Category(models.Model):
+	id = models.CharField(primary_key=True, max_length=2)
+	name = models.CharField(max_length=50)
+
 class Infra(models.Model):
 	"""インフラベースモデル
 	"""
-	class Meta: 
-		# db_table = 'infra'
-		
+	class Meta:
 		# マイグレーションするときにテーブルは作成されない設定
 		# よって他のモデルに継承するためのモデルになる
 		abstract = True 
@@ -16,7 +18,7 @@ class Infra(models.Model):
 	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 	name = models.CharField(verbose_name='名称', max_length=50)
 	address = models.CharField(verbose_name='住所', max_length=60)
-	category = models.CharField(verbose_name='カテゴリ', max_length=20, blank=True)
+	category = models.ForeignKey(Category, verbose_name='カテゴリ', on_delete=models.PROTECT)
 	registered_at = models.DateTimeField(default=timezone.now)
 	modified_at = models.DateTimeField(blank=True, null=True)
 	url = models.URLField(blank=True)
