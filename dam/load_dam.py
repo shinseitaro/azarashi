@@ -1,5 +1,3 @@
-import os
-from django.contrib.gis.utils import LayerMapping
 from dam.models import Dam, DamType, Institution, Purpose
 from infrastructure.models import Category
 from django.contrib.gis.geos import GEOSGeometry
