@@ -6,6 +6,9 @@ class Category(models.Model):
 	id = models.CharField(primary_key=True, max_length=2)
 	name = models.CharField(max_length=50)
 
+	def __str__(self):
+		return self.name
+
 class Infra(models.Model):
 	"""インフラベースモデル
 	"""

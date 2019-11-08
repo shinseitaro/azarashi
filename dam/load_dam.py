@@ -116,3 +116,7 @@ def load_records():
             for institution in institutions.split(','):
                 dam.institution_in_charge.add(Institution.objects.filter(id=institution)[0])
 
+def run():
+    load_base_data() #先にpurpose, dam_type, institutionのテーブルを作成
+    load_records() #データを読み込み、dbに投入
+    load_geometry() #geometry項目はgeopandasのdataframe->json化できなかったので、csv化した

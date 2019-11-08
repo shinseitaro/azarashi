@@ -6,6 +6,9 @@ class DamType(models.Model):
     id = models.CharField(primary_key=True, max_length=2)
     description = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.description
+
     @classmethod
     def create(cls, id, description):
         dam_type = cls(id=id, description=description)
@@ -15,6 +18,9 @@ class Institution(models.Model):
     id = models.CharField(primary_key=True, max_length=4)
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
     @classmethod
     def create(cls, id, name):
         institution = cls(id=id, name=name)
@@ -23,6 +29,9 @@ class Institution(models.Model):
 class Purpose(models.Model):
     id = models.CharField(primary_key=True, max_length=4)
     name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
 
     @classmethod
     def create(cls, id, name):
