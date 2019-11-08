@@ -93,9 +93,8 @@ def load_records():
         for record in records:
             # keys to exclude purpose_code,type_code,institution_in_charge
 
-            # First, create Dam record excluding fields that have many to many relationship
+            # First, create Dam record excluding fields that have many-to-many relationship
             record_excluded = {k: v for k, v in record.items() if k not in excludes}
-            # print(record_excluded)
 
             dam = Dam(**record_excluded)
 
@@ -117,6 +116,8 @@ def load_records():
                 dam.institution_in_charge.add(Institution.objects.filter(id=institution)[0])
 
 def run():
+    print('starting...')
     load_base_data() #先にpurpose, dam_type, institutionのテーブルを作成
     load_records() #データを読み込み、dbに投入
     load_geometry() #geometry項目はgeopandasのdataframe->json化できなかったので、csv化した
+    print('finished!')
