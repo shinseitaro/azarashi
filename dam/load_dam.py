@@ -99,7 +99,7 @@ def load_records():
 
             dam = Dam(**record_excluded)
 
-            # type_code - OneToMany field
+            # type_code and category - OneToMany field
             dam_type = record.get('type_code')
             dam.type_code = DamType.objects.get(pk=dam_type)
             dam.category = Category.objects.get(pk='1')
@@ -116,4 +116,3 @@ def load_records():
             for institution in institutions.split(','):
                 dam.institution_in_charge.add(Institution.objects.filter(id=institution)[0])
 
-            # print(dam)
