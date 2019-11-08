@@ -53,7 +53,7 @@ def load_base_data():
         {'id': '-', 'name': '-'},
     ]
 
-    category = [
+    categories = [
         {'id': '1', 'name': 'ダム'}
     ]
 
@@ -67,6 +67,10 @@ def load_base_data():
 
     for purpose in purposes:
         record = Purpose.create(**purpose)
+        record.save()
+
+    for category in categories:
+        record = Category(**category)
         record.save()
 
 
@@ -84,7 +88,7 @@ def load_geometry():
 def load_records():
     excludes = ['purpose_code', 'type_code', 'institution_in_charge']
     # load json
-    with open('./dam/data/output.json', encoding='utf8') as json_file:
+    with open('./dam/data/dam.json', encoding='utf8') as json_file:
         records = json.load(json_file)
         for record in records:
             # keys to exclude purpose_code,type_code,institution_in_charge
@@ -98,7 +102,7 @@ def load_records():
             # type_code - OneToMany field
             dam_type = record.get('type_code')
             dam.type_code = DamType.objects.get(pk=dam_type)
-            dam.category = Category.objcets.get(pk='1')
+            dam.category = Category.objects.get(pk='1')
 
             dam.save()
 
