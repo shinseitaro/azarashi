@@ -68,7 +68,7 @@ def load_base_data():
         record.save()
 
     for category in categories:
-        record = Category(**category)
+        record = Category.create(**category)
         record.save()
 
 

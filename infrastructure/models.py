@@ -9,6 +9,11 @@ class Category(models.Model):
 	def __str__(self):
 		return self.name
 
+	@classmethod
+	def create(cls, id, name):
+		category = cls(id=id, name=name)
+		return category
+
 class Infra(models.Model):
 	"""インフラベースモデル
 	"""
@@ -52,12 +57,3 @@ class Infra(models.Model):
 
 # 	# card 独自のURLを持っているときがあるので．周年記念カード紹介サイトとか．
 # 	url = models.URLField(blank=True)
-
-
-
-# class Dam(models.Model):
-# 	"""ダムクラス""" 
-
-# 	class Meta:
-# 		db_table = 'dam'
-	
