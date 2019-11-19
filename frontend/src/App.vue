@@ -34,24 +34,26 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld />
+      <Cards />
     </v-content>
   </v-app>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
+import Vue from 'vue';
+// import HelloWorld from './components/HelloWorld.vue';
+import Cards from './components/organisms/Cards.vue';
 
 export default Vue.extend({
-  name: "App",
+  name: 'App',
 
   components: {
-    HelloWorld
+    // HelloWorld,
+    Cards,
   },
 
   data: () => ({
     //
-  })
+  }),
 });
 </script>
