@@ -34,6 +34,7 @@
     </v-app-bar>
 
     <v-content>
+      <Map />
       <Cards />
     </v-content>
   </v-app>
@@ -41,14 +42,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-// import HelloWorld from './components/HelloWorld.vue';
+import Map from './components/molecules/Map.vue';
 import Cards from './components/organisms/Cards.vue';
 
 export default Vue.extend({
   name: 'App',
 
   components: {
-    // HelloWorld,
+    Map,
     Cards,
   },
 
