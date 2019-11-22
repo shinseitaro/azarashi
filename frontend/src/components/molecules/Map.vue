@@ -8,18 +8,17 @@
     >
       <MglNavigationControl />
       <MglMarker
-        v-for="(marker, index) in mapData.marker"
+        v-for="(marker, index) in markers"
         :key="index"
-        :coordinates.sync="mapData.marker"
-        color="green"
+        :coordinates="marker"
       >
-        <v-icon slot="marker">mdi-map-marker</v-icon>
+        <v-icon slot="marker" color="blue">mdi-map-marker</v-icon>
       </MglMarker>
       <MglGeojsonLayer
         type="fill"
         :sourceId="sourceId"
         :layerId="layerId"
-        :source="mapData.geojson"
+        :source="geoJsonSource"
       />
     </MglMap>
   </div>
@@ -45,22 +44,19 @@ export default Vue.extend({
       mapStyle: 'mapbox://styles/mapbox/streets-v10',
       center: { lon: 139.7009177, lat: 35.6580971 },
       mapData: {},
-      // geoJsonSource: mapData.geojson,
+      geoJsonSource: {},
       layerId: 'firstLayer',
       sourceId: 'firstSource',
-      // markerCoordinates: mapData.marker,
+      markers: [] as any,
     };
   },
   mounted() {
-    axios.get('/geojson/dam.geojson').then(
-      (response: AxiosResponse) =>
-        (this.mapData = {
-          geojson: response.data,
-          marker: response.data.features.map((value: any) => [
-            value.geometory.coordinates,
-          ]),
-        })
-    );
+    axios.get('/geojson/dam.geojson').then((response: AxiosResponse) => {
+      this.geoJsonSource = response.data;
+      response.data.features.map((value: any) => {
+        this.markers.push(value.geometry.coordinates);
+      });
+    });
   },
 });
 </script>
