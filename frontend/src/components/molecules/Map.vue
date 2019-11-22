@@ -43,7 +43,6 @@ export default Vue.extend({
       zoom: 6,
       mapStyle: 'mapbox://styles/mapbox/streets-v10',
       center: { lon: 139.7009177, lat: 35.6580971 },
-      mapData: {},
       geoJsonSource: {},
       layerId: 'firstLayer',
       sourceId: 'firstSource',
