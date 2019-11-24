@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from rest_framework import viewsets 
+from rest_framework import viewsets
 from rest_framework_gis.filters import DistanceToPointFilter, InBBoxFilter 
 from rest_framework.pagination import PageNumberPagination 
 
@@ -16,7 +15,4 @@ class DamViewSet(viewsets.ModelViewSet):
 
     filter_backends = (DistanceToPointFilter, )
     distance_filter_field = 'geom'
-    distance_filter_convert_meters = True 
-
-
-
+    distance_filter_convert_meters = True
