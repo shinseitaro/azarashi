@@ -3,7 +3,6 @@ from infrastructure.models import Category
 from django.contrib.gis.geos import GEOSGeometry
 import json
 
-
 def load_base_data():
     dam_types = [
         {'id': '1', 'description': 'アーチダム'},
