@@ -8,11 +8,10 @@
   </v-container>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script>
 import Card from '../molecules/Card.vue';
 
-export default Vue.extend({
+export default {
   name: 'Cards',
 
   components: {
@@ -22,5 +21,5 @@ export default Vue.extend({
   data: () => ({
     //
   }),
-});
+};
 </script>

@@ -40,12 +40,11 @@
   </v-app>
 </template>
 
-<script lang="ts">
-import Vue from 'vue';
+<script>
 import Map from './components/molecules/Map.vue';
 import Cards from './components/organisms/Cards.vue';
 
-export default Vue.extend({
+export default {
   name: 'App',
 
   components: {
@@ -56,5 +55,5 @@ export default Vue.extend({
   data: () => ({
     //
   }),
-});
+};
 </script>
