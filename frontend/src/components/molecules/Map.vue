@@ -1,32 +1,51 @@
 <template>
-  <div id="map-wrap">
-    <mapbox-map
-      :access-token="accessToken"
-      :map-style="mapStyle"
-      :center="center"
-      :zoom="zoom"
-    >
-      <mapbox-cluster :data="geoJsonSource" :clustersPaint="clustersPaint" />
-    </mapbox-map>
+  <div>
+    <div id="map-wrap">
+      <mapbox-map
+        :access-token="accessToken"
+        :map-style="mapStyle"
+        :center="center"
+        :zoom="zoom"
+        :bounds="getBounds"
+        :fitBoundsOptions="fitBoundsOptions"
+      >
+        <mapbox-cluster
+          v-if="!isDisplayMarker"
+          :data="geoJsonSource"
+          :clustersPaint="clustersPaint"
+        />
+        <mapbox-marker v-if="isDisplayMarker" :lng-lat="markerPosition" />
+      </mapbox-map>
+    </div>
+    <div>{{ getBounds }}</div>
   </div>
 </template>
 
 <script>
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { MapboxMap, MapboxCluster } from '@studiometa/vue-mapbox-gl';
+import {
+  MapboxMap,
+  MapboxCluster,
+  MapboxMarker,
+} from '@studiometa/vue-mapbox-gl';
 import axios from 'axios';
+import { mapState, mapGetters } from 'vuex';
 
 export default {
   components: {
     MapboxMap,
     MapboxCluster,
+    MapboxMarker,
   },
   data() {
     return {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       zoom: 6,
       mapStyle: 'mapbox://styles/mapbox/streets-v10',
-      center: { lon: 139.7009177, lat: 35.6580971 },
+      fitBoundsOptions: {
+        linear: true,
+        maxZoom: 8,
+      },
       geoJsonSource: {},
       clustersPaint: {
         'circle-color': [
@@ -46,6 +65,14 @@ export default {
     axios.get('/geojson/dam.geojson').then(response => {
       this.geoJsonSource = response.data;
     });
+  },
+  computed: {
+    ...mapState({
+      center: state => state.map.center,
+      isDisplayMarker: state => state.map.isDisplayMarker,
+      markerPosition: state => state.map.markerPosition,
+    }),
+    ...mapGetters('map', ['getBounds']),
   },
 };
 </script>
