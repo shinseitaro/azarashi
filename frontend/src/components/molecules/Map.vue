@@ -1,23 +1,19 @@
 <template>
-  <div>
-    <div id="map-wrap">
-      <mapbox-map
-        :access-token="accessToken"
-        :map-style="mapStyle"
-        :center="center"
-        :zoom="zoom"
-        :bounds="getBounds"
-        :fitBoundsOptions="fitBoundsOptions"
-      >
-        <mapbox-cluster
-          v-if="!isDisplayMarker"
-          :data="geoJsonSource"
-          :clustersPaint="clustersPaint"
-        />
-        <mapbox-marker v-if="isDisplayMarker" :lng-lat="markerPosition" />
-      </mapbox-map>
-    </div>
-    <div>{{ getBounds }}</div>
+  <div id="map-wrap">
+    <mapbox-map
+      :access-token="accessToken"
+      :map-style="mapStyle"
+      :center="getBounds[1]"
+      @mb-created="mapboxInstance => (map = mapboxInstance)"
+      @mb-styledata="fitBounds"
+    >
+      <mapbox-cluster
+        v-if="!isDisplayMarker"
+        :data="geoJsonSource"
+        :clustersPaint="clustersPaint"
+      />
+      <mapbox-marker v-if="isDisplayMarker" :lng-lat="markerPosition" />
+    </mapbox-map>
   </div>
 </template>
 
@@ -40,12 +36,7 @@ export default {
   data() {
     return {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
-      zoom: 6,
       mapStyle: 'mapbox://styles/mapbox/streets-v10',
-      fitBoundsOptions: {
-        linear: true,
-        maxZoom: 8,
-      },
       geoJsonSource: {},
       clustersPaint: {
         'circle-color': [
@@ -59,6 +50,7 @@ export default {
         ],
         'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
       },
+      map: null,
     };
   },
   mounted() {
@@ -68,11 +60,19 @@ export default {
   },
   computed: {
     ...mapState({
-      center: state => state.map.center,
       isDisplayMarker: state => state.map.isDisplayMarker,
       markerPosition: state => state.map.markerPosition,
     }),
     ...mapGetters('map', ['getBounds']),
+  },
+  methods: {
+    fitBounds: function() {
+      this.map.fitBounds(this.$store.state.map.bounds, {
+        linear: true,
+        padding: 100,
+        maxZoom: 6,
+      });
+    },
   },
 };
 </script>

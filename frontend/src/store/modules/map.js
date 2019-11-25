@@ -6,7 +6,6 @@ Vue.use(Vuex);
 const map = {
   namespaced: true,
   state: {
-    center: [139.7009177, 35.6580971],
     isDisplayMarker: false,
     markerPosition: [0, 0],
     boundsNext: [139.7009177, 35.6580971],
