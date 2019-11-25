@@ -89,6 +89,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.env.local
 
 # Spyder project settings
 .spyderproject
@@ -110,16 +111,10 @@ __pycache__
 .DS_Store
 /.idea
 
-/node_modules
+node_modules/
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
 !.gitkeep
-
-/env
-.env
-*.toml
-
-migrations/
