@@ -38,6 +38,21 @@ class Purpose(models.Model):
         purpose = cls(id=id, name=name)
         return purpose
 
+class DamCardDistributionPlace(models.Model):
+    id = models.CharField(max_length=4, primary_key=True)
+    name = models.CharField(max_length=50)
+    url = models.URLField()
+    address = models.CharField(max_length=100)
+    operation_hour = models.CharField(max_length=200)
+    prefecture = models.CharField(max_length=4)
+
+    def __str__(self):
+        return self.name
+
+    @classmethod
+    def create(cls, id, name, url, address, operation_hour, prefecture):
+        return cls(id=id, name=name, url=url, address=address, operation_hour=operation_hour, prefecture=prefecture)
+
 class Dam(Infra):
     dam_code = models.IntegerField(null=False)
     water_system_name = models.CharField(max_length=50)

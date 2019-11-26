@@ -1,7 +1,8 @@
-from dam.models import Dam, DamType, Institution, Purpose
+from dam.models import Dam, DamType, Institution, Purpose, DamCardDistributionPlace
 from infrastructure.models import Category
 from django.contrib.gis.geos import GEOSGeometry
 import json
+import csv
 
 def load_base_data():
     dam_types = [
@@ -72,8 +73,7 @@ def load_base_data():
 
 
 def load_geometry():
-    import csv
-    with open('./dam/data/dam.geometry.csv', newline='') as file:
+    with open('./data/dam.geometry.csv', newline='') as file:
         rows = csv.reader(file, delimiter=',')
         next(rows)  # skip header
         for row in rows:
@@ -85,7 +85,7 @@ def load_geometry():
 def load_records():
     excludes = ['purpose_code', 'type_code', 'institution_in_charge']
     # load json
-    with open('./dam/data/dam.json', encoding='utf8') as json_file:
+    with open('./data/dam.json', encoding='utf8') as json_file:
         records = json.load(json_file)
         for record in records:
             # keys to exclude purpose_code,type_code,institution_in_charge
@@ -112,9 +112,23 @@ def load_records():
             for institution in institutions.split(','):
                 dam.institution_in_charge.add(Institution.objects.filter(id=institution)[0])
 
+def load_dam_card_distribution_place():
+    with open('./data/dam_card_places_set.csv', newline='') as file:
+        reader = csv.DictReader(file, delimiter=",", quotechar='"')
+        next(reader)  # skip header
+        data = []
+        for row in reader:
+            data.append(row)
+        return data
+
 def run():
     print('starting...')
     load_base_data() #先にpurpose, dam_type, institutionのテーブルを作成
+    print('loaded base data...loading dam data')
     load_records() #データを読み込み、dbに投入
+    print('loaded dam data...loading geometry data')
     load_geometry() #geometry項目はgeopandasのdataframe->json化できなかったので、csv化した
-    print('finished!')
+    print('all done! you are good to go! Create user and Do python manage.py runserver --settings [your env config]!')
+
+if __name__ == '__main__':
+    run()
