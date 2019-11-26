@@ -5,7 +5,9 @@
       :map-style="mapStyle"
       :center="getBounds[1]"
       @mb-created="mapboxInstance => (map = mapboxInstance)"
-      @mb-styledata="fitBounds"
+      @mb-movestart="startMove"
+      @mb-move="move"
+      @mb-moveend="endMove"
     >
       <mapbox-cluster
         v-if="!isDisplayMarker"
@@ -51,6 +53,7 @@ export default {
         'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
       },
       map: null,
+      isMoving: false,
     };
   },
   mounted() {
@@ -66,12 +69,23 @@ export default {
     ...mapGetters('map', ['getBounds']),
   },
   methods: {
-    fitBounds: function() {
-      this.map.fitBounds(this.$store.state.map.bounds, {
-        linear: true,
-        padding: 100,
-        maxZoom: 6,
-      });
+    startMove: function() {
+      this.isMoving = true;
+    },
+    move: function() {
+      if (this.isMoving) {
+        this.map.fitBounds(this.$store.state.map.bounds, {
+          linear: true,
+          easing: function(t) {
+            return t;
+          },
+          padding: 100,
+          maxZoom: 6,
+        });
+      }
+    },
+    endMove: function() {
+      this.isMoving = false;
     },
   },
 };

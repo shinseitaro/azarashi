@@ -7,7 +7,7 @@ const map = {
   namespaced: true,
   state: {
     isDisplayMarker: false,
-    markerPosition: [0, 0],
+    markerPosition: [139.7009177, 35.6580971],
     boundsNext: [139.7009177, 35.6580971],
     bounds: [
       [139.7009177, 35.6580971],
