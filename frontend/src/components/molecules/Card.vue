@@ -20,11 +20,11 @@
       <v-spacer></v-spacer>
 
       <v-btn icon @click="setMarker(marker)">
-        <v-icon>mdi-heart</v-icon>
+        <v-icon>mdi-map-marker</v-icon>
       </v-btn>
 
       <v-btn icon>
-        <v-icon>mdi-bookmark</v-icon>
+        <v-icon>mdi-heart</v-icon>
       </v-btn>
 
       <v-btn icon>

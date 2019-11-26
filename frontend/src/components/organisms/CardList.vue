@@ -18,7 +18,7 @@ import axios from 'axios';
 import Card from '../molecules/Card.vue';
 
 export default {
-  name: 'Cards',
+  name: 'CardList',
   components: {
     Card,
   },
