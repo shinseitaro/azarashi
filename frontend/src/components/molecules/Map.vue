@@ -4,8 +4,8 @@
       :access-token="accessToken"
       :map-style="mapStyle"
       :center="getBounds[1]"
+      :zoom="zoom"
       @mb-created="mapboxInstance => (map = mapboxInstance)"
-      @mb-movestart="startMove"
       @mb-move="move"
       @mb-moveend="endMove"
     >
@@ -39,6 +39,7 @@ export default {
     return {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/streets-v10',
+      zoom: 6,
       geoJsonSource: {},
       clustersPaint: {
         'circle-color': [
@@ -53,7 +54,6 @@ export default {
         'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
       },
       map: null,
-      isMoving: false,
     };
   },
   mounted() {
@@ -69,11 +69,8 @@ export default {
     ...mapGetters('map', ['getBounds']),
   },
   methods: {
-    startMove: function() {
-      this.isMoving = true;
-    },
     move: function() {
-      if (this.isMoving) {
+      if (this.$store.state.map.isMoving) {
         this.map.fitBounds(this.$store.state.map.bounds, {
           linear: true,
           easing: function(t) {
@@ -85,7 +82,7 @@ export default {
       }
     },
     endMove: function() {
-      this.isMoving = false;
+      this.$store.dispatch('map/stopMove');
     },
   },
 };

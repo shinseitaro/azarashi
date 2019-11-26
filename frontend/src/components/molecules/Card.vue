@@ -19,7 +19,7 @@
     <v-card-actions>
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="setMarker(marker)">
+      <v-btn icon @click="moveMarker(marker)">
         <v-icon>mdi-map-marker</v-icon>
       </v-btn>
 
@@ -35,12 +35,12 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
-
 export default {
   props: ['marker'],
   methods: {
-    ...mapActions('map', ['setMarker']),
+    moveMarker: function(marker) {
+      this.$store.dispatch('map/startMove', marker);
+    },
   },
 };
 </script>

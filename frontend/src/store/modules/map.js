@@ -13,17 +13,25 @@ const map = {
       [139.7009177, 35.6580971],
       [139.7009177, 35.6580971],
     ],
+    isMoving: false,
   },
   mutations: {
-    SET_MARKER(state, marker) {
+    START_MOVE(state, marker) {
+      state.isMoving = true;
       state.isDisplayMarker = true;
       state.markerPosition = marker;
       state.boundsNext = marker;
     },
+    STOP_MOVE(state) {
+      state.isMoving = false;
+    },
   },
   actions: {
-    setMarker({ commit }, marker) {
-      commit('SET_MARKER', marker);
+    startMove({ commit }, marker) {
+      commit('START_MOVE', marker);
+    },
+    stopMove({ commit }) {
+      commit('STOP_MOVE');
     },
   },
   getters: {
