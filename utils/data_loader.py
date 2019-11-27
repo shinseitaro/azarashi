@@ -98,7 +98,7 @@ def load_records():
 
             if dam:
                 for key, value in record_excluded.items():
-                    setattr(dam, key, value) #実質的なupsert
+                    setattr(dam, key, value) #実質的なupdate
             else:
                 # type_code and category - OneToMany field
                 dam = Dam(**record_excluded)
