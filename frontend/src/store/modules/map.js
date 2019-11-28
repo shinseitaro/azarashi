@@ -1,8 +1,3 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-
-Vue.use(Vuex);
-
 const initialCenter = [139.7009177, 35.6580971];
 
 const map = {
