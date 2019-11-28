@@ -3,16 +3,15 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
+const initialCenter = [139.7009177, 35.6580971];
+
 const map = {
   namespaced: true,
   state: {
     isDisplayMarker: false,
-    markerPosition: [139.7009177, 35.6580971],
-    boundsNext: [139.7009177, 35.6580971],
-    bounds: [
-      [139.7009177, 35.6580971],
-      [139.7009177, 35.6580971],
-    ],
+    markerPosition: initialCenter,
+    boundsNext: initialCenter,
+    bounds: [initialCenter, initialCenter],
     isMoving: false,
   },
   mutations: {
