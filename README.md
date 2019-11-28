@@ -22,3 +22,15 @@ shellに入って,
 
 ### Step5. Runserver
 `python manage.py runserver 8000 --settings config.settings.development`
+
+## Frontend setup
+※ `frontend` フォルダの直下に **.env** あるいは **.env.local** ファイルが必要です。
+```
+$ cd frontend
+$ npm install
+$ npm run serve
+```
+フロントエンドのローカルサーバー `http://localhost:8080/`
+
+### エラー画面が表示されたら
+`npm run lint` を試してください。自動で修正されるかもしれません。
