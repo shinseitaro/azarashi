@@ -1,34 +1,35 @@
 import axios from 'axios';
 
+axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
 axios.defaults.xsrfCookieName = 'XSRF-TOKEN';
 axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 
 export function read(repository) {
-  return access(`/api/v1/${repository}/`, 'GET');
+  return access(`${repository}/`, 'GET');
 }
 
 export function readPage(repository, page = 1) {
-  return access(`/api/v1/${repository}/?page=${page}`, 'GET');
+  return access(`${repository}/?page=${page}`, 'GET');
 }
 
 export function search(repository, word) {
-  return access(`/api/v1/${repository}/?q=${word}`, 'GET');
+  return access(`${repository}/?q=${word}`, 'GET');
 }
 
 export function set(repository, id) {
-  return data_access(`/api/v1/${repository}/${id}/`, 'GET');
+  return data_access(`${repository}/${id}/`, 'GET');
 }
 
 export function create(repository, data) {
-  return data_access(`/api/v1/${repository}/`, 'POST', data);
+  return data_access(`${repository}/`, 'POST', data);
 }
 
 export function update(repository, id, data) {
-  return data_access(`/api/v1/${repository}/${id}/`, 'PATCH', data);
+  return data_access(`${repository}/${id}/`, 'PATCH', data);
 }
 
 export function destroy(repository, id) {
-  return access(`/api/v1/${repository}/${id}/`, 'DELETE');
+  return access(`${repository}/${id}/`, 'DELETE');
 }
 
 export function fetchUrl(url) {
@@ -47,12 +48,16 @@ function access(url, method) {
 }
 
 function data_access(url, method, data) {
-  return _access(url, {
-    method: method,
-    headers: {
-      'content-type': 'application/json',
-    },
-    data: JSON.stringify(data),
+  return new Promise((resolve, reject) => {
+    const { payload, error } = _access(url, {
+      method: method,
+      headers: {
+        'content-type': 'application/json',
+      },
+      data: JSON.stringify(data),
+    });
+    resolve(payload);
+    reject(error);
   });
 }
 
