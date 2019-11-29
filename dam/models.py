@@ -55,18 +55,19 @@ class DamCardDistributionPlace(models.Model):
 
 class Dam(Infra):
     dam_code = models.IntegerField(null=False)
-    water_system_name = models.CharField(max_length=50)
-    river_name = models.CharField(max_length=50)
+    water_system_name = models.CharField(max_length=50, blank=True, null=True)
+    river_name = models.CharField(max_length=50, blank=True, null=True)
     type_code = models.ForeignKey(DamType, on_delete=models.CASCADE, null=True, blank=True)
     purpose_code = models.ManyToManyField(Purpose, blank=True, null=True)
-    scale_bank_height = models.FloatField()
-    scale_bank_span = models.FloatField()
-    bank_volume = models.IntegerField()
-    total_pondage = models.IntegerField()
+    scale_bank_height = models.FloatField(blank=True, null=True)
+    scale_bank_span = models.FloatField(blank=True, null=True)
+    bank_volume = models.IntegerField(blank=True, null=True)
+    total_pondage = models.IntegerField(blank=True, null=True)
     institution_in_charge = models.ManyToManyField(Institution, blank=True, null=True)
-    year_of_completion = models.CharField(max_length=10)
-    positional_information_precision = models.IntegerField()
+    year_of_completion = models.CharField(max_length=10, blank=True, null=True)
+    positional_information_precision = models.IntegerField(blank=True, null=True)
     geom = models.PointField(srid=4019, blank=True, null=True)
+    prefecture = models.CharField(max_length=4, blank=True, null=True)
 
     def __str__(self):
         return '{}'.format(self.name)
