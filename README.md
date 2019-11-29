@@ -8,7 +8,7 @@
 `python manage.py migrate --settings config.settings.development`
 
 ### Step3. データの読み込み
-`python manage.py loaddata config.settings.development`
+`python manage.py loaddata --settings config.settings.development`
 
 ### Step4. Createsuperuser
 `python manage.py createsuperuser --settings config.settings.development`
