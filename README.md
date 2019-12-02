@@ -17,6 +17,7 @@
 ### Step5. Runserver
 `python manage.py runserver 8000 --settings config.settings.development`
 
+
 ## Frontend setup
 ※ `frontend` フォルダの直下に **.env** あるいは **.env.local** ファイルが必要です。
 ```
@@ -28,3 +29,13 @@ $ npm run serve
 
 ### エラー画面が表示されたら
 `npm run lint` を試してください。自動で修正されるかもしれません。
+
+
+# packages 
+
+```
+Django==2.1.11
+djangorestframework==3.9.4
+djangorestframework-gis==0.14
+django-filter==2.0.0
+```
