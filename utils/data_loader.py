@@ -93,12 +93,18 @@ def load_records():
             # First, create Dam record excluding fields that have many-to-many relationship
             record_excluded = {k: v for k, v in record.items() if k not in excludes}
 
-            dam = Dam(**record_excluded)
+            # dam = Dam(**record_excluded)
+            dam = Dam.objects.filter(dam_code=record_excluded.get('dam_code')).first()
 
-            # type_code and category - OneToMany field
-            dam_type = record.get('type_code')
-            dam.type_code = DamType.objects.get(pk=dam_type)
-            dam.category = Category.objects.get(pk='1')
+            if dam:
+                for key, value in record_excluded.items():
+                    setattr(dam, key, value) #実質的なupdate
+            else:
+                # type_code and category - OneToMany field
+                dam = Dam(**record_excluded)
+                dam_type = record.get('type_code')
+                dam.type_code = DamType.objects.get(pk=dam_type)
+                dam.category = Category.objects.get(pk='1')
 
             dam.save()
 

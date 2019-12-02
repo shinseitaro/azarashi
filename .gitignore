@@ -118,3 +118,5 @@ yarn-debug.log*
 yarn-error.log*
 
 !.gitkeep
+
+/templates

@@ -17,13 +17,30 @@
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="orange" text>
-        Share
+      <v-spacer></v-spacer>
+
+      <v-btn icon @click="moveMarker(marker)">
+        <v-icon>mdi-map-marker</v-icon>
       </v-btn>
 
-      <v-btn color="orange" text>
-        Explore
+      <v-btn icon>
+        <v-icon>mdi-heart</v-icon>
+      </v-btn>
+
+      <v-btn icon>
+        <v-icon>mdi-share-variant</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
+
+<script>
+export default {
+  props: ['marker'],
+  methods: {
+    moveMarker: function(marker) {
+      this.$store.dispatch('map/startMove', marker);
+    },
+  },
+};
+</script>
