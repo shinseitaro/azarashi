@@ -26,7 +26,9 @@ shellに入って,
 
 # packages 
 
+```
 Django==2.1.11
 djangorestframework==3.9.4
 djangorestframework-gis==0.14
 django-filter==2.0.0
+```
