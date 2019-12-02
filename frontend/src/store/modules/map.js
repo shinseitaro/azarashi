@@ -1,21 +1,25 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import * as API from '../../apis/API';
 
-Vue.use(Vuex);
+const initialCenter = [139.7009177, 35.6580971];
 
 const map = {
   namespaced: true,
   state: {
+    damData: {},
+    markers: [],
     isDisplayMarker: false,
-    markerPosition: [139.7009177, 35.6580971],
-    boundsNext: [139.7009177, 35.6580971],
-    bounds: [
-      [139.7009177, 35.6580971],
-      [139.7009177, 35.6580971],
-    ],
+    markerPosition: initialCenter,
+    boundsNext: initialCenter,
+    bounds: [initialCenter, initialCenter],
     isMoving: false,
   },
   mutations: {
+    GET_DAM_DATA(state, data) {
+      state.damData = data;
+    },
+    GET_MARKERS(state, markers) {
+      state.markers = markers;
+    },
     START_MOVE(state, marker) {
       state.isMoving = true;
       state.isDisplayMarker = true;
@@ -27,6 +31,20 @@ const map = {
     },
   },
   actions: {
+    getDamData({ commit }) {
+      let markersArray = [];
+      API.read('dam')
+        .then(response => {
+          commit('GET_DAM_DATA', response.payload.results);
+          return response.payload.results;
+        })
+        .then(data => {
+          data.features.map(value => {
+            markersArray.push(value.geometry.coordinates);
+          });
+          commit('GET_MARKERS', markersArray);
+        });
+    },
     startMove({ commit }, marker) {
       commit('START_MOVE', marker);
     },

@@ -11,7 +11,7 @@
     >
       <mapbox-cluster
         v-if="!isDisplayMarker"
-        :data="geoJsonSource"
+        :data="damData"
         :clustersPaint="clustersPaint"
       />
       <mapbox-marker v-if="isDisplayMarker" :lng-lat="markerPosition" />
@@ -26,7 +26,6 @@ import {
   MapboxCluster,
   MapboxMarker,
 } from '@studiometa/vue-mapbox-gl';
-import axios from 'axios';
 import { mapState, mapGetters } from 'vuex';
 
 export default {
@@ -56,13 +55,9 @@ export default {
       map: null,
     };
   },
-  mounted() {
-    axios.get('/geojson/dam.geojson').then(response => {
-      this.geoJsonSource = response.data;
-    });
-  },
   computed: {
     ...mapState({
+      damData: state => state.map.damData,
       isDisplayMarker: state => state.map.isDisplayMarker,
       markerPosition: state => state.map.markerPosition,
     }),
