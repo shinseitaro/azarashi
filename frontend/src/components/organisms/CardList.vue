@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 import Card from '../molecules/Card.vue';
 
 export default {
@@ -28,11 +28,11 @@ export default {
     };
   },
   mounted() {
-    axios.get('/geojson/dam.geojson').then(response => {
-      response.data.features.map(value => {
-        this.markers.push(value.geometry.coordinates);
-      });
-    });
+    // axios.get('/geojson/dam.geojson').then(response => {
+    //   response.data.features.map(value => {
+    //     this.markers.push(value.geometry.coordinates);
+    //   });
+    // });
   },
 };
 </script>

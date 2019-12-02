@@ -1,8 +1,11 @@
+import * as API from '../../apis/API';
+
 const initialCenter = [139.7009177, 35.6580971];
 
 const map = {
   namespaced: true,
   state: {
+    damData: {},
     isDisplayMarker: false,
     markerPosition: initialCenter,
     boundsNext: initialCenter,
@@ -10,6 +13,9 @@ const map = {
     isMoving: false,
   },
   mutations: {
+    GET_DAM_DATA(state, data) {
+      state.damData = data;
+    },
     START_MOVE(state, marker) {
       state.isMoving = true;
       state.isDisplayMarker = true;
@@ -21,6 +27,11 @@ const map = {
     },
   },
   actions: {
+    getDamData({ commit }) {
+      API.read('dam').then(data => {
+        commit('GET_DAM_DATA', data);
+      });
+    },
     startMove({ commit }, marker) {
       commit('START_MOVE', marker);
     },
