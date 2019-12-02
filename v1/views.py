@@ -20,7 +20,7 @@ class GeojsonLocationList(generics.ListCreateAPIView):
 
 class DamFilter(filters.FilterSet):
     # この変数名が、 url のクエリ文字列キーになる
-    # `api/dam/?prefecture=愛知` という感じ
+    # 例: `api/dam/?prefecture=愛知` 
     prefecture = filters.CharFilter(field_name='address', lookup_expr='startswith')
     river = filters.CharFilter(field_name='river_name', lookup_expr='startswith')
     water_system = filters.CharFilter(field_name='water_system_name', lookup_expr='startswith')
