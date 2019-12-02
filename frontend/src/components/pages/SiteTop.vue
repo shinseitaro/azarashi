@@ -19,9 +19,8 @@ export default {
     Map,
     CardList,
   },
-
-  data: () => ({
-    //
-  }),
+  mounted() {
+    this.$store.dispatch('map/getDamData');
+  },
 };
 </script>

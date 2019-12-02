@@ -37,19 +37,18 @@ export function fetchUrl(url) {
 }
 
 function access(url, method) {
-  return new Promise((resolve, reject) => {
-    const { payload, error } = _access(url, {
+  return new Promise(resolve => {
+    const payload = _access(url, {
       method: method,
       headers: {},
     });
     resolve(payload);
-    reject(error);
   });
 }
 
 function data_access(url, method, data) {
-  return new Promise((resolve, reject) => {
-    const { payload, error } = _access(url, {
+  return new Promise(resolve => {
+    const payload = _access(url, {
       method: method,
       headers: {
         'content-type': 'application/json',
@@ -57,7 +56,6 @@ function data_access(url, method, data) {
       data: JSON.stringify(data),
     });
     resolve(payload);
-    reject(error);
   });
 }
 

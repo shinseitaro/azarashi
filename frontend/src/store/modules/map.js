@@ -6,6 +6,7 @@ const map = {
   namespaced: true,
   state: {
     damData: {},
+    markers: [],
     isDisplayMarker: false,
     markerPosition: initialCenter,
     boundsNext: initialCenter,
@@ -15,6 +16,9 @@ const map = {
   mutations: {
     GET_DAM_DATA(state, data) {
       state.damData = data;
+    },
+    GET_MARKERS(state, markers) {
+      state.markers = markers;
     },
     START_MOVE(state, marker) {
       state.isMoving = true;
@@ -28,9 +32,18 @@ const map = {
   },
   actions: {
     getDamData({ commit }) {
-      API.read('dam').then(data => {
-        commit('GET_DAM_DATA', data);
-      });
+      let markersArray = [];
+      API.read('dam')
+        .then(response => {
+          commit('GET_DAM_DATA', response.payload.results);
+          return response.payload.results;
+        })
+        .then(data => {
+          data.features.map(value => {
+            markersArray.push(value.geometry.coordinates);
+          });
+          commit('GET_MARKERS', markersArray);
+        });
     },
     startMove({ commit }, marker) {
       commit('START_MOVE', marker);

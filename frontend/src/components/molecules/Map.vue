@@ -55,9 +55,6 @@ export default {
       map: null,
     };
   },
-  mounted() {
-    this.$store.dispatch('map/getDamData');
-  },
   computed: {
     ...mapState({
       damData: state => state.map.damData,

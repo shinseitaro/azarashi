@@ -14,25 +14,17 @@
 </template>
 
 <script>
-// import axios from 'axios';
+import { mapState } from 'vuex';
 import Card from '../molecules/Card.vue';
 
 export default {
-  name: 'CardList',
   components: {
     Card,
   },
-  data() {
-    return {
-      markers: [],
-    };
-  },
-  mounted() {
-    // axios.get('/geojson/dam.geojson').then(response => {
-    //   response.data.features.map(value => {
-    //     this.markers.push(value.geometry.coordinates);
-    //   });
-    // });
+  computed: {
+    ...mapState({
+      markers: state => state.map.markers,
+    }),
   },
 };
 </script>
