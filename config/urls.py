@@ -13,5 +13,5 @@ router.register('dam', DamViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('card/', include('card.urls')),
+    path('api/card/', include('card.urls')),
 ]
