@@ -36,8 +36,8 @@ export function fetchUrl(url) {
   return access(url, 'GET');
 }
 
-export function fileUpload(repository, file) {
-  return file_upload(`${repository}/`, file);
+export function fileUpload(repository, params) {
+  return file_upload(`${repository}/`, params);
 }
 
 function access(url, method) {
@@ -94,22 +94,20 @@ function _access(url, config) {
     });
 }
 
-function file_upload(url, file) {
-  const params = new FormData();
-  params.append('file', file);
-  axios(url, params, {
-    method: 'POST',
-    headers: {
-      'content-type': 'multipart/form-data',
-    },
-  })
+async function file_upload(url, params) {
+  await axios
+    .post(url, params, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    })
     .then(response => {
       // console.log('response : ', response);
       // console.log(response.data);
       return { payload: response.data };
     })
     .catch(error => {
-      console.log(error.config);
+      // console.log(error.config);
       return { error };
     });
 }
