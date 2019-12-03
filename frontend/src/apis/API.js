@@ -36,6 +36,10 @@ export function fetchUrl(url) {
   return access(url, 'GET');
 }
 
+export function fileUpload(repository, file) {
+  return file_upload(`${repository}/`, file);
+}
+
 function access(url, method) {
   return new Promise(resolve => {
     const payload = _access(url, {
@@ -85,6 +89,26 @@ function _access(url, config) {
         // Something happened in setting up the request that triggered an Error
         console.log('Error', error.message);
       }
+      console.log(error.config);
+      return { error };
+    });
+}
+
+function file_upload(url, file) {
+  const params = new FormData();
+  params.append('file', file);
+  axios(url, params, {
+    method: 'POST',
+    headers: {
+      'content-type': 'multipart/form-data',
+    },
+  })
+    .then(response => {
+      // console.log('response : ', response);
+      // console.log(response.data);
+      return { payload: response.data };
+    })
+    .catch(error => {
       console.log(error.config);
       return { error };
     });
