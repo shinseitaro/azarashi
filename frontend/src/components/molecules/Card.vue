@@ -36,7 +36,7 @@
 
 <script>
 export default {
-  props: ['marker'],
+  props: ['marker', 'cardData'],
   methods: {
     moveMarker: function(marker) {
       this.$store.dispatch('map/startMove', marker);

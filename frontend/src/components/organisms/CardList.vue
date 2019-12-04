@@ -7,24 +7,25 @@
         cols="12"
         md="3"
       >
-        <Card :marker="marker" />
+        <Card :marker="marker" :card-data="data"/>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import Card from '../molecules/Card.vue';
+    import {mapState} from 'vuex';
+    import Card from '../molecules/Card.vue';
 
-export default {
-  components: {
-    Card,
-  },
-  computed: {
-    ...mapState({
-      markers: state => state.map.markers,
-    }),
-  },
-};
+    export default {
+        components: {
+            Card,
+        },
+        computed: {
+            ...mapState({
+                markers: state => state.map.markers,
+                data: state => state.map.damDataForCardList
+            }),
+        },
+    };
 </script>
