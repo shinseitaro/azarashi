@@ -1,16 +1,21 @@
 <template>
   <v-container class="grey lighten-5">
     <v-row>
-        <v-col
-          v-for="(dam, index) in dams"
-          :key="index"
-          cols="12"
-          md="3"
-        >
-          <Card :dam="dam"/>
-        </v-col>
+      <v-col
+        v-for="(dam, index) in dams"
+        :key="index"
+        cols="12"
+        md="3"
+      >
+        <Card :dam="dam"/>
+      </v-col>
     </v-row>
-    <v-btn small @click="loadMore">もっと見る</v-btn>
+    <v-row align="center"
+          justify="center">
+      <div class="text-xs-center">
+        <v-btn small @click="loadMore">もっと見る</v-btn>
+      </div>
+    </v-row>
   </v-container>
 </template>
 
