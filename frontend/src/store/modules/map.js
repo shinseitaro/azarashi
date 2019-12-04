@@ -21,7 +21,8 @@ const map = {
       state.damData = data;
     },
     GET_DAM_DATA_FOR_CARD_LIST(state, data) {
-      state.damDataForCardList.push(data)
+      console.log(data)
+      state.damDataForCardList = state.damDataForCardList.concat(data)
     },
     GET_MARKERS(state, markers) {
       state.markers = markers;
@@ -36,15 +37,15 @@ const map = {
       state.isMoving = false;
     },
     PAGE_UP(state) {
-      state.page =+ 1
+      state.page += 1
     },
     PAGE_DOWN(state) {
-      state.page =-1
+      state.page -= 1
     },
-    LOADING_BUSY(state){
+    LOADING_BUSY(state) {
       state.loadingBusy = true;
     },
-    LOADING_NOT_BUSY(state){
+    LOADING_NOT_BUSY(state) {
       state.loadingBusy = false;
     },
 
@@ -56,16 +57,20 @@ const map = {
     //stateも新規に必要
     //pageもstateにするといい。
     //pageの値を変更するためのaction
-    getDamDataForCardList({commit}) {
+    getDamDataForCardList({commit, state}) {
       API.readPage('dam', state.page).then(response => {
-        commit('GET_DAM_DATA_FOR_CARD_LIST', response.payload.results);
-        return ''
+        return response.payload.results
+      }).then(data => {
+        commit('GET_DAM_DATA_FOR_CARD_LIST',
+          data.features.map(value => {
+            return value.properties;
+          }));
       })
     }
     ,
 
 
-    getDamData({ commit }) {
+    getDamData({commit}) {
       let markersArray = [];
       API.read('dam')
         .then(response => {
@@ -79,27 +84,30 @@ const map = {
           commit('GET_MARKERS', markersArray);
         });
     },
-    startMove({ commit }, marker) {
+    startMove({commit}, marker) {
       commit('START_MOVE', marker);
     },
-    stopMove({ commit }) {
+    stopMove({commit}) {
       commit('STOP_MOVE');
     },
-    pageUp( { commit },   ) {
+    pageUp({commit},) {
       commit('PAGE_UP')
     },
-    pageDown({ commit },) {
+    pageDown({commit},) {
       commit('PAGE_DOWN')
     },
     loadingBusy({commit},) {
       commit('LOADING_BUSY')
-    }
+    },
   },
   getters: {
     getBounds: state => {
       const boundsArray = [...state.bounds, state.boundsNext].slice(-2);
       state.bounds = boundsArray;
       return boundsArray;
+    },
+    getPages: state => {
+      return state.page;
     },
   },
 };

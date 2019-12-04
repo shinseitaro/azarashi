@@ -5,21 +5,21 @@
       height="200px"
       src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
     >
-      <v-card-title>Top 10 Australian beaches</v-card-title>
+      <v-card-title>{{ dam.name }}</v-card-title>
     </v-img>
 
-    <v-card-subtitle class="pb-0">Number 10</v-card-subtitle>
+    <v-card-subtitle class="pb-0">{{ dam.river_name }}</v-card-subtitle>
 
     <v-card-text class="text--primary">
-      <div>Whitehaven Beach</div>
+      <div>{{ dam.address }}</div>
 
-      <div>Whitsunday Island, Whitsunday Islands</div>
+      <div>{{ dam.year_of_completion }}</div>
     </v-card-text>
 
     <v-card-actions>
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="moveMarker(marker)">
+      <v-btn icon @click="moveMarker(dam.coordinates)">
         <v-icon>mdi-map-marker</v-icon>
       </v-btn>
 
@@ -36,10 +36,10 @@
 
 <script>
 export default {
-  props: ['marker', 'cardData'],
+  props: ['dam'],
   methods: {
-    moveMarker: function(marker) {
-      this.$store.dispatch('map/startMove', marker);
+    moveMarker: function(coordinates) {
+      this.$store.dispatch('map/startMove', coordinates);
     },
   },
 };

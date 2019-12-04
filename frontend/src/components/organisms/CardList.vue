@@ -1,15 +1,16 @@
 <template>
   <v-container class="grey lighten-5">
     <v-row>
-      <v-col
-        v-for="(marker, index) in markers.slice(0, 8)"
-        :key="index"
-        cols="12"
-        md="3"
-      >
-        <Card :marker="marker" :card-data="data"/>
-      </v-col>
+        <v-col
+          v-for="(dam, index) in dams"
+          :key="index"
+          cols="12"
+          md="3"
+        >
+          <Card :dam="dam"/>
+        </v-col>
     </v-row>
+    <v-btn small @click="loadMore">もっと見る</v-btn>
   </v-container>
 </template>
 
@@ -21,11 +22,29 @@
         components: {
             Card,
         },
+        data() {
+            return {
+                busy: false
+            }
+        },
         computed: {
             ...mapState({
                 markers: state => state.map.markers,
-                data: state => state.map.damDataForCardList
+                dams: state => state.map.damDataForCardList
             }),
         },
+        methods: {
+            async loadMore() {
+                this.busy = true;
+                console.log('page up')
+                await this.$store.dispatch('map/pageUp');
+                //read pages
+                await this.$store.dispatch('map/getDamDataForCardList');
+                this.busy = false;
+            }
+        },
+        created() {
+            this.$store.dispatch('map/getDamDataForCardList');
+        }
     };
 </script>
