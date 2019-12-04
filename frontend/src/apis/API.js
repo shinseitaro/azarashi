@@ -94,20 +94,21 @@ function _access(url, config) {
     });
 }
 
-async function file_upload(url, params) {
-  await axios
-    .post(url, params, {
-      headers: {
-        'content-type': 'multipart/form-data',
-      },
-    })
-    .then(response => {
-      // console.log('response : ', response);
-      // console.log(response.data);
-      return { payload: response.data };
-    })
-    .catch(error => {
-      // console.log(error.config);
-      return { error };
-    });
+function file_upload(url, params) {
+  return new Promise(resolve => {
+    const payload = axios
+      .post(url, params, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        return { payload: response };
+      })
+      .catch(error => {
+        // console.log(error.config);
+        return { error };
+      });
+    resolve(payload);
+  });
 }
