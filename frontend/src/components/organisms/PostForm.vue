@@ -5,10 +5,11 @@
       accept="image/*"
       :clearable="clearable"
       :value="fileName"
+      @click="clearFileName"
       @change="inputFile"
     ></v-file-input>
     <div>
-      <img :src="previewSrc" alt="" />
+      <img :src="previewSrc" alt="" width="300" />
     </div>
     <v-btn @click="clearFile">Clear File</v-btn>
     <v-textarea
@@ -29,31 +30,32 @@ export default {
   data() {
     return {
       file: null,
+      fileName: [],
       previewSrc: '',
       clearable: false,
     };
   },
   computed: {
     ...mapState({
-      fileName: state => state.form.fileName,
       comment: state => state.form.comment,
     }),
   },
   methods: {
     inputFile: function(e) {
       reader.onload = e => {
-        console.log(e);
         this.previewSrc = e.target.result;
       };
       reader.readAsDataURL(e);
       this.file = e;
-      this.$store.dispatch('form/inputFileName', e.name);
+      this.fileName[0] = e.name;
     },
     clearFile: function() {
-      reader.abort();
       this.file = null;
+      this.fileName = [];
       this.previewSrc = '';
-      this.$store.dispatch('form/clearFileName');
+    },
+    clearFileName: function(e) {
+      e.target.value = '';
     },
     inputComment: function(e) {
       this.$store.dispatch('form/inputComment', e);
