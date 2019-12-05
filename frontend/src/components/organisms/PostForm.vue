@@ -64,6 +64,7 @@ export default {
       const params = new FormData();
       params.append('file', this.file);
       this.$store.dispatch('form/sendForm', params);
+      this.fileName = [];
       this.previewSrc = '';
     },
   },
