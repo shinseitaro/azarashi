@@ -39,7 +39,6 @@ export default {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/streets-v10',
       zoom: 6,
-      geoJsonSource: {},
       clustersPaint: {
         'circle-color': [
           'step',
