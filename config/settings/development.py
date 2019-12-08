@@ -23,9 +23,6 @@ INSTALLED_APPS += [
 MIDDLEWARE += [
 ]
 
-CORS_ORIGIN_WHITELIST = (
-    'localhost:8080',
-)
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
