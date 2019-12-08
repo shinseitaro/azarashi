@@ -37,3 +37,6 @@ DATABASES = {
         'PORT': os.environ['DATABASE_PORT'],
         }
 }
+
+SOCIAL_AUTH_GITHUB_KEY = os.environ['GITHUB_KEY']
+SOCIAL_AUTH_GITHUB_SECRET = os.environ['GITHUB_SECRET']
