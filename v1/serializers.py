@@ -4,10 +4,10 @@ from dam.models import Dam, Institution, Purpose
 
 
 class DamSerializer(serializers.ModelSerializer):
-
-	class Meta:
-		model = Dam
-		exclude = ["registered_at", "modified_at"]
+    class Meta:
+        model=Dam
+        #exclude = ["registered_at", "modified_at"]
+        fields = ("name", "address", "river_name","geom")
 
 
 class DamListSerializer(serializers.ListSerializer):
@@ -35,5 +35,13 @@ class DamGeoFeatureModelSerializer(GeoFeatureModelSerializer):
         model = Dam
         geo_field = "geom"
         id_field = False
-        exclude = ("registered_at", "modified_at", "id")
-    # fields = ("name", "address", "river_name")
+        #exclude = ("registered_at", "modified_at", )
+        fields = ("name", "address", "river_name", "type_code", "institution_in_charge", "purpose_code" )
+        #fields = ("name", "address", "river_name",)
+
+class DamListCardGeoFeatureModelSerializer(GeoFeatureModelSerializer):
+    class Meta:
+        model = Dam
+        geo_field = "geom"
+        exclude = ("registered_at", "modified_at", )
+        

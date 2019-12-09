@@ -8,7 +8,7 @@ from django_filters import rest_framework as filters
 
 
 from dam.models import Dam
-from v1.serializers import DamGeoFeatureModelSerializer
+from v1.serializers import DamGeoFeatureModelSerializer, DamSerializer, DamListSerializer
 
 class GeojsonLocationList(generics.ListCreateAPIView):
     pagination_class = GeoJsonPagination
@@ -28,9 +28,6 @@ class DamFilter(filters.FilterSet):
         model = Dam
         fields = ("name", "address", )
 
-
-
-
 class DamViewSet(viewsets.ModelViewSet):
 
     queryset = Dam.objects.all()
@@ -41,6 +38,28 @@ class DamViewSet(viewsets.ModelViewSet):
     distance_filter_convert_meters = True
     filterset_class = DamFilter
     http_method_names = ['get', 'head', 'option']
+
+class DamCardlistPagination(PageNumberPagination):
+    page_size = 10
+    
+
+class DamCardlistViewSet(viewsets.ModelViewSet):     
+    """ CardList用View
+    """
+    queryset = Dam.objects.all()
+    # ここをGEOではなく普通のDRFに変更
+    serializer_class = DamSerializer#DamGeoFeatureModelSerializer#DamSerializer
+    pagination_class = DamCardlistPagination
+    filter_backends = (filters.DjangoFilterBackend,DistanceToPointFilter,) #
+    distance_filter_field = 'geom'
+    distance_filter_convert_meters = True
+    filterset_class = DamFilter
+
+
+
+
+
+
 
 
 
