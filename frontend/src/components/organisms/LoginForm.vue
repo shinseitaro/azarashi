@@ -1,6 +1,6 @@
 <template>
   <v-container class="grey lighten-5">
-    <v-btn large color="primary" :href="githubLogin" @click="login">
+    <v-btn large color="primary" :href="githubLogin">
       Login
     </v-btn>
   </v-container>
@@ -12,11 +12,6 @@ export default {
     return {
       githubLogin: process.env.VUE_APP_ROOT_URL + 'auth/login/github/',
     };
-  },
-  methods: {
-    login: function() {
-      this.$store.dispatch('form/login', true);
-    },
   },
 };
 </script>
