@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework_gis.filters import DistanceToPointFilter, InBBoxFilter 
 from rest_framework.pagination import PageNumberPagination 
 
-from .serializers import DamSerializer
+from .serializers import DamSerializer, DamCardListSerializer
 from .models import Dam
 
 class MyPagination(PageNumberPagination):
@@ -16,3 +16,4 @@ class DamViewSet(viewsets.ModelViewSet):
     filter_backends = (DistanceToPointFilter, )
     distance_filter_field = 'geom'
     distance_filter_convert_meters = True
+

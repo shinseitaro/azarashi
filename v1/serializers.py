@@ -6,14 +6,32 @@ from dam.models import Dam, Institution, Purpose
 class DamSerializer(serializers.ModelSerializer):
     class Meta:
         model=Dam
-        #exclude = ["registered_at", "modified_at"]
-        fields = ("name", "address", "river_name","geom")
+        exclude = ["registered_at", "modified_at"]
+        #fields = ("name", "address", "river_name","geom")
+
+class DamCardSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Dam
+        exclude = ["registered_at", "modified_at"]
+        #fields = ("name", "address","geom")
+
+    def to_representation(self, instance):
+        response_dict = super().to_representation(instance)
+        response_dict['coordinates'] = instance.geom.coords #['coordinates']
+        del response_dict['geom']
+        return response_dict
 
 
 class DamListSerializer(serializers.ListSerializer):
 	"""複数ダムを扱う
 	"""
 	child = DamSerializer()
+
+class DamCardListSerializer(serializers.ListSerializer):
+	"""複数ダムカードを扱う
+	"""
+	child = DamCardSerializer()
+
 
 class InstitutionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -39,9 +57,3 @@ class DamGeoFeatureModelSerializer(GeoFeatureModelSerializer):
         fields = ("name", "address", "river_name", "type_code", "institution_in_charge", "purpose_code" )
         #fields = ("name", "address", "river_name",)
 
-class DamListCardGeoFeatureModelSerializer(GeoFeatureModelSerializer):
-    class Meta:
-        model = Dam
-        geo_field = "geom"
-        exclude = ("registered_at", "modified_at", )
-        
