@@ -57,3 +57,12 @@ class DamGeoFeatureModelSerializer(GeoFeatureModelSerializer):
         fields = ("name", "address", "river_name", "type_code", "institution_in_charge", "purpose_code" )
         #fields = ("name", "address", "river_name",)
 
+
+class DamMapModelSerializer(GeoFeatureModelSerializer):
+    """Dam map 表示のためのシリアライザ。 geom と name だけ。
+    """
+    class Meta:
+        model = Dam
+        geo_field = "geom"
+        id_field = False
+        fields = ("name", "geom",)
