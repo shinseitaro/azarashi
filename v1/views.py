@@ -67,7 +67,7 @@ class DamCardListViewSet(viewsets.ModelViewSet):
 class DamMapListViewSet(viewsets.ModelViewSet):
     queryset = Dam.objects.all()
     serializer_class = DamMapModelSerializer
-    pagination_class = DamPagination
+    #pagination_class = DamPagination
 
 
 
