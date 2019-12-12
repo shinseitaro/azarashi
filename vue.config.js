@@ -6,6 +6,5 @@ module.exports = {
     },
   },
   outputDir: 'frontend/static/frontend',
-  publicPath: process.env.NODE_ENV === 'production' ? '/static/' : '/',
   transpileDependencies: ['vuetify'],
 };
