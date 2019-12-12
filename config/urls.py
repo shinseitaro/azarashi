@@ -17,4 +17,3 @@ urlpatterns = [
     path('auth/', include('rest_framework_social_oauth2.urls')),
     path('', include('frontend.urls')),
 ]
-

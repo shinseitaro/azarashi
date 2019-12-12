@@ -107,7 +107,7 @@ venv.bak/
 *~
 __pycache__
 /pgsql-data
-/static
+static
 .DS_Store
 /.idea
 
