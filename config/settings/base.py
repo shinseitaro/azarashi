@@ -41,11 +41,12 @@ INSTALLED_APPS = [
     'markdown',
     'infrastructure',
     'corsheaders',
+    'card',
 ]
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',# corsheaders
-    'django.middleware.common.CommonMiddleware',# corsheaders    
+    'django.middleware.common.CommonMiddleware',# corsheaders
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -132,4 +133,10 @@ REST_FRAMEWORK = {
     # pagination は、各ビューで行う。
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'PAGE_SIZE': '10',
+
 }
+
+# Upload files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+

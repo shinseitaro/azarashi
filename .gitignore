@@ -120,3 +120,5 @@ yarn-error.log*
 !.gitkeep
 
 /templates
+
+/media
