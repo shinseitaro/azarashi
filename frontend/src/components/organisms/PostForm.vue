@@ -35,6 +35,9 @@ export default {
       clearable: false,
     };
   },
+  mounted() {
+    this.$store.dispatch('form/login', true);
+  },
   computed: {
     ...mapState({
       comment: state => state.form.comment,
