@@ -15,4 +15,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/card/', include('card.urls')),
     path('auth/', include('rest_framework_social_oauth2.urls')),
+    path('', include('frontend.urls')),
 ]
+
