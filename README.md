@@ -40,3 +40,10 @@ djangorestframework-gis==0.14
 django-filter==2.0.0
 django-cors-headers==3.2.0
 ```
+
+# issue_44 
+
+https://github.com/shinseitaro/azarashi/issues/44
+
+
+
