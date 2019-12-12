@@ -1,6 +1,6 @@
 #from django.contrib import admin
 from django.contrib.gis import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 
 from v1.views import DamViewSet
@@ -15,5 +15,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/card/', include('card.urls')),
     path('auth/', include('rest_framework_social_oauth2.urls')),
-    path('', include('frontend.urls')),
+    re_path('^(?:.*)/?', include('frontend.urls')),
 ]
