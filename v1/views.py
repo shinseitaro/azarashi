@@ -5,6 +5,13 @@ from rest_framework_gis.filters import DistanceToPointFilter
 from rest_framework_gis.pagination import GeoJsonPagination
 from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
+from rest_framework.response import Response
+
+
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 
 from dam.models import Dam
@@ -14,7 +21,7 @@ class GeojsonLocationList(generics.ListCreateAPIView):
     pagination_class = GeoJsonPagination
 
 class DamPagination(PageNumberPagination):
-    # url のリクエスト　例：GET /api/dam/?page=2 
+    # url のリクエスト　例：GET /api/dam/?page=2
     page_size_query_param = 'page_size'
     # 一ページあたりの件数
     page_size = 100
@@ -40,7 +47,7 @@ class DamViewSet(viewsets.ModelViewSet):
     filterset_class = DamFilter
     http_method_names = ['get', 'head', 'option']
 
-# class DamCardlistViewSet(viewsets.ModelViewSet):     
+# class DamCardlistViewSet(viewsets.ModelViewSet):
 #     """ CardList用View
 #     """
 #     queryset = Dam.objects.all()
@@ -52,22 +59,32 @@ class DamViewSet(viewsets.ModelViewSet):
 #     distance_filter_convert_meters = True
 #     filterset_class = DamFilter
 
+class DamCardListViewSet(viewsets.ViewSet):
+    # ＃　キャッシュのためにModelViewSetは使えないので、コメントアウト
+    # queryset = Dam.objects.all()
+    # serializer_class = DamCardSerializer
+
+    # 二時間キャッシュ
+    @method_decorator(cache_page(60*60*2))
+    @method_decorator(vary_on_cookie)
+    def list(self, request):
+        queryset = Dam.objects.all()
+        serializer = DamCardSerializer(queryset, many=True)
+        # キャッシュがきいているかどうか確認するのにかんたんな方法はプリントされるかどうか。効いている間はされない。
+        #print("Am I Printed?")
+        return Response(serializer.data)
 
 
-class DamCardListViewSet(viewsets.ModelViewSet):
-    queryset = Dam.objects.all()
-    serializer_class = DamCardSerializer
-    
+class DamMapListViewSet(viewsets.ViewSet):
 
-    # filter_backends = (DistanceToPointFilter, )
-    # distance_filter_field = 'geom'
-    # distance_filter_convert_meters = True
-
-
-class DamMapListViewSet(viewsets.ModelViewSet):
-    queryset = Dam.objects.all()
-    serializer_class = DamMapModelSerializer
-    #pagination_class = DamPagination
+    @method_decorator(cache_page(60*60*2))
+    @method_decorator(vary_on_cookie)
+    def list(self, request):
+        queryset = Dam.objects.all()
+        serializer = DamMapModelSerializer(queryset, many=True)
+        # キャッシュがきいているかどうか確認するのにかんたんな方法はプリントされるかどうか。効いている間はされない。
+        #print("Am I Printed?")
+        return Response(serializer.data)
 
 
 
