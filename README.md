@@ -1,7 +1,7 @@
 # azarashi
 
 
-# How to setup dev env 
+# How to setup dev env
 ### Step1. Makemigrations
 `python manage.py makemigrations --settings config.settings.development`
 ### Step2. Migrate
@@ -31,7 +31,7 @@ $ npm run serve
 `npm run lint` を試してください。自動で修正されるかもしれません。
 
 
-# packages 
+# packages
 
 ```
 Django==2.1.11
@@ -40,10 +40,6 @@ djangorestframework-gis==0.14
 django-filter==2.0.0
 django-cors-headers==3.2.0
 ```
-
-# issue_44 
-
-https://github.com/shinseitaro/azarashi/issues/44
 
 
 
