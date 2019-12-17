@@ -5,18 +5,24 @@ from rest_framework.response import Response
 from rest_framework import status
 from datetime import datetime
 from .serializers import CardSerializer
+from .models import Card
 
 
 class CardViewSet(viewsets.ViewSet):
     parser_class = (FileUploadParser,)
 
+    def list(self, request):
+        queryset = Card.objects.all()
+        serializer = CardSerializer(queryset)
+        return Response(serializer.data)
+
     def create(self, request):
         context = {
             "request": self.request,
         }
-        card_serializer = CardSerializer(data=request.data, context=context)
+        serializer = CardSerializer(data=request.data, context=context)
 
-        if card_serializer.is_valid():
-            card_serializer.save(published_date=datetime.now())
-            return Response(card_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(card_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if serializer.is_valid():
+            serializer.save(published_date=datetime.now())
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
