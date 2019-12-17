@@ -36,13 +36,14 @@ export function fetchUrl(url) {
   return access(url, 'GET');
 }
 
-export function fileUpload(repository, params) {
+export function fileUpload(repository, params, data={}) {
   return new Promise(resolve => {
     const payload = axios
       .post(`${repository}/`, params, {
         headers: {
           'content-type': 'multipart/form-data',
         },
+        data: JSON.stringify(data),
       })
       .then(response => {
         return { payload: response };
