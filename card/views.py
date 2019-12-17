@@ -11,7 +11,10 @@ class CardViewSet(viewsets.ViewSet):
     parser_class = (FileUploadParser,)
 
     def create(self, request):
-        card_serializer = CardSerializer(data=request.data)
+        context = {
+            "request": self.request,
+        }
+        card_serializer = CardSerializer(data=request.data, context=context)
 
         if card_serializer.is_valid():
             card_serializer.save(published_date=datetime.now())

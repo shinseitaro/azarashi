@@ -11,7 +11,7 @@ router = DefaultRouter()
 router.register('dam/search', DamViewSet)
 router.register('dam/list', DamCardListViewSet)
 router.register('dam/map', DamMapListViewSet)
-router.register('card', CardViewSet)
+router.register('card', CardViewSet, basename='card')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
