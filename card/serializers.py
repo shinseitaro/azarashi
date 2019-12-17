@@ -3,6 +3,10 @@ from .models import Card
 
 
 class CardSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
     class Meta:
         model = Card
         fields = "__all__"
