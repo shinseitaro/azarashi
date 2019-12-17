@@ -7,7 +7,7 @@ from datetime import datetime
 from .serializers import CardSerializer
 
 
-class FileUploadView(viewsets.ViewSet):
+class CardViewSet(viewsets.ViewSet):
     parser_class = (FileUploadParser,)
 
     def create(self, request):
