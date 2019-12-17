@@ -9,4 +9,4 @@ class CardSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Card
-        fields = ('user', 'comment', 'published_date')
+        fields = "__all__"

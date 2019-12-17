@@ -11,10 +11,10 @@ from .models import Card
 class CardViewSet(viewsets.ViewSet):
     parser_class = (FileUploadParser,)
 
-    def list(self, request):
-        queryset = Card.objects.all()
-        serializer = CardSerializer(queryset)
-        return Response(serializer.data)
+    #def list(self, request):
+    #    queryset = Card.objects.all()
+    #    serializer = CardSerializer(queryset)
+    #    return Response(serializer.data)
 
     def create(self, request):
         context = {
