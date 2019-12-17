@@ -1,6 +1,6 @@
 #from django.contrib import admin
 from django.contrib.gis import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.views.static import serve
 from rest_framework.routers import DefaultRouter
@@ -21,5 +21,5 @@ router.register('card', CardViewSet, basename='card')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    re_path('media/(?P<path>.*)', serve, {'document_root': settings.MEDIA_ROOT}),
 ]
