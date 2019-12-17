@@ -1,6 +1,6 @@
 #from django.contrib import admin
 from django.contrib.gis import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
 from v1.views import DamViewSet, DamCardListViewSet, DamMapListViewSet
@@ -19,5 +19,4 @@ router.register('card', CardViewSet, basename='card')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    re_path('^(?:.*)/?', include('frontend.urls')),
 ]
