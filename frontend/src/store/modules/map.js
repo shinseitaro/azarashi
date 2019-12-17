@@ -33,10 +33,10 @@ const map = {
   actions: {
     getDamData({ commit }) {
       let markersArray = [];
-      API.read('dam')
+      API.read('dam/map')
         .then(response => {
-          commit('GET_DAM_DATA', response.payload.results);
-          return response.payload.results;
+          commit('GET_DAM_DATA', response.payload);
+          return response.payload;
         })
         .then(data => {
           data.features.map(value => {

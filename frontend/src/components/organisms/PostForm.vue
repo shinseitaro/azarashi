@@ -35,6 +35,9 @@ export default {
       clearable: false,
     };
   },
+  mounted() {
+    this.$store.dispatch('form/login', true);
+  },
   computed: {
     ...mapState({
       comment: state => state.form.comment,
@@ -63,6 +66,7 @@ export default {
     sendForm: function() {
       const params = new FormData();
       params.append('file', this.file);
+      params.append('comment', this.$store.state.form.comment);
       this.$store.dispatch('form/sendForm', params);
       this.fileName = [];
       this.previewSrc = '';

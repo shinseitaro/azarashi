@@ -25,5 +25,9 @@
     <v-btn href="/about" text>
       <span class="mr-2">About</span>
     </v-btn>
+
+    <v-btn href="/post" text>
+      <span class="mr-2">Post</span>
+    </v-btn>
   </v-app-bar>
 </template>

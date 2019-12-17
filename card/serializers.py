@@ -1,8 +1,12 @@
 from rest_framework import serializers
-from .models import File
+from .models import Card
 
 
-class FileSerializer(serializers.ModelSerializer):
+class CardSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(
+        default=serializers.CurrentUserDefault()
+    )
+
     class Meta:
-        model = File
+        model = Card
         fields = "__all__"
