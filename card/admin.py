@@ -1,4 +1,4 @@
 from django.contrib import admin
-from .models import File
+from .models import Card
 
-admin.site.register(File)
+admin.site.register(Card)
