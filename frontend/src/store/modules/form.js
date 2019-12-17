@@ -25,7 +25,7 @@ const form = {
       commit('INPUT_COMMENT', text);
     },
     sendForm({ commit, state }, params) {
-      API.fileUpload('card', params, state).then(response => {
+      API.fileUpload('card', params, state.form).then(response => {
         console.log(response.payload.status);
         if (response.payload.status === 201) {
           commit('CLEAR_FORM');

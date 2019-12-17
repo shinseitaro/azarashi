@@ -37,6 +37,7 @@ export function fetchUrl(url) {
 }
 
 export function fileUpload(repository, params, data={}) {
+  console.log(data);
   return new Promise(resolve => {
     const payload = axios
       .post(`${repository}/`, params, {
