@@ -1,4 +1,5 @@
-from .base import *
+import os
+from config.settings.base import *
 from dotenv import load_dotenv
 
 load_dotenv(dotenv_path=BASE_DIR+'/.env')
@@ -23,19 +24,10 @@ INSTALLED_APPS += [
 MIDDLEWARE += [
 ]
 
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': os.environ['DATABASE_NAME'],
-        'USER': os.environ['DATABASE_USER'],
-        'PASSWORD': os.environ['DATABASE_PASSWORD'],
-        'HOST': os.environ['DATABASE_HOST'],
-        'PORT': os.environ['DATABASE_PORT'],
-        }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ATOMIC_REQUESTS': True,
+    }
 }
-
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
