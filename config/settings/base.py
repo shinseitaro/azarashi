@@ -42,7 +42,11 @@ INSTALLED_APPS = [
     'infrastructure',
     'corsheaders',
     'card',
+    'user'
 ]
+
+AUTH_USER_MODEL = 'user.User'
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',# corsheaders
