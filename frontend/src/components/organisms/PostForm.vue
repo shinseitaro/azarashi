@@ -17,12 +17,12 @@
       :value="comment"
       @change="inputComment"
     ></v-textarea>
-    <v-btn large color="primary" @click="sendForm">Upload File</v-btn>
+    <v-btn large color="primary" @click="sendForm">Post</v-btn>
   </v-container>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import * as API from '../../apis/API';
 
 const reader = new FileReader();
 
@@ -33,15 +33,8 @@ export default {
       fileName: [],
       previewSrc: '',
       clearable: false,
+      comment: '',
     };
-  },
-  mounted() {
-    this.$store.dispatch('form/login', true);
-  },
-  computed: {
-    ...mapState({
-      comment: state => state.form.comment,
-    }),
   },
   methods: {
     inputFile: function(e) {
@@ -61,15 +54,19 @@ export default {
       e.target.value = '';
     },
     inputComment: function(e) {
-      this.$store.dispatch('form/inputComment', e);
+      this.comment = e;
     },
     sendForm: function() {
       const params = new FormData();
       params.append('file', this.file);
-      params.append('comment', this.$store.state.form.comment);
-      this.$store.dispatch('form/sendForm', params);
-      this.fileName = [];
-      this.previewSrc = '';
+      params.append('comment', this.comment);
+      API.fileUpload('card', params).then(response => {
+        if (response.payload.status === 201) {
+          this.fileName = [];
+          this.previewSrc = '';
+          this.comment = '';
+        }
+      });
     },
   },
 };
