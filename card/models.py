@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Card(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     file = models.FileField(blank=False, null=False)
     comment = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
