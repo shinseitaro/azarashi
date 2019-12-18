@@ -3,9 +3,7 @@ from .models import Card
 
 
 class CardSerializer(serializers.ModelSerializer):
-    user = serializers.HiddenField(
-        default=serializers.CurrentUserDefault()
-    )
+    user = serializers.CurrentUserDefault()
 
     class Meta:
         model = Card
