@@ -159,7 +159,7 @@ REST_FRAMEWORK = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-GITHUB_CALLBACK_URL = ''
+GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/accounts/github/login/callback/'
 
 REST_USE_JWT = True
 
