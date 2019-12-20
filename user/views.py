@@ -4,7 +4,7 @@ from rest_auth.registration.views import SocialLoginView
 from django.conf import settings
 from allauth.account.views import ConfirmEmailView
 from rest_auth.registration.serializers import VerifyEmailSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
@@ -12,12 +12,26 @@ from allauth.account.models import EmailConfirmationHMAC
 from django.utils.translation import ugettext_lazy as _
 from django.http import Http404, HttpResponseRedirect
 import urllib.parse
-
+from allauth.socialaccount.models import SocialToken
+from django.http import JsonResponse
+from django.contrib.auth.models import AnonymousUser
 
 class GithubLoginView(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter
     callback_url = settings.GITHUB_CALLBACK_URL
     client_class = OAuth2Client
+
+class FetchTokenView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, *args, **kwargs):
+        json_data = dict()
+        if request.user is not None and isinstance(request.user, AnonymousUser):
+            return JsonResponse({'result':'none'})
+        access_token = SocialToken.objects.get(account__user=request.user, account__provider='github')
+        json_data['token'] = access_token.token
+        return JsonResponse(json_data)
+
 
 # このqiitaのまとめが素晴らしい。https://qiita.com/fumuumuf/items/e39eb99524c4b234b019
 # 基本的にはallauth.account.views.ConfirmEmailViewを継承したViewをカスタムで作る。

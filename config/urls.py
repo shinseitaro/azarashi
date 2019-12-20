@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from django.conf.urls import url
 
 from v1.views import DamViewSet, DamCardListViewSet, DamMapListViewSet
-from user.views import GithubLoginView
+from user.views import GithubLoginView, FetchTokenView
 from rest_framework_jwt.views import obtain_jwt_token
 from user import urls as user_url
 
@@ -27,4 +27,5 @@ urlpatterns = [
     path('rest-auth/registration/', include(user_url)),
     path('rest-auth/github/', GithubLoginView.as_view(), name='github_login'),
     path('api-token-auth/', obtain_jwt_token),
+    path('token/', FetchTokenView.as_view(), name='token')
 ]

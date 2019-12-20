@@ -160,7 +160,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/accounts/github/login/callback/'
-
+LOGIN_REDIRECT_URL = '/token/'
 REST_USE_JWT = True
 
 # Refer to https://django-allauth.readthedocs.io/en/latest/advanced.html#custom-user-models
