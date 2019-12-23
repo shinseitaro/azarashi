@@ -12,8 +12,18 @@ export function readPage(repository, page = 1) {
   return access(`${repository}/?page=${page}`, 'GET');
 }
 
-export function search(repository, word) {
-  return access(`${repository}/?q=${word}`, 'GET');
+export function searchGeo(
+  repository,
+  name = '',
+  address = '',
+  prefecture = '',
+  river = '',
+  waterSystem = ''
+) {
+  return access(
+    `${repository}/?name=${name}&address=${address}&prefecture=${prefecture}&river=${river}&water_system=${waterSystem}`,
+    'GET'
+  );
 }
 
 export function set(repository, id) {

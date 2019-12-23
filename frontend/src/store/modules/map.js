@@ -12,6 +12,14 @@ const map = {
     boundsNext: initialCenter,
     bounds: [initialCenter, initialCenter],
     isMoving: false,
+    search: {
+      name: '',
+      address: '',
+      prefecture: '',
+      river: '',
+      waterSystem: '',
+    },
+    isEmptySearchField: true,
   },
   mutations: {
     GET_DAM_DATA(state, data) {
@@ -28,6 +36,24 @@ const map = {
     },
     STOP_MOVE(state) {
       state.isMoving = false;
+    },
+    SEARCH_NAME(state, name) {
+      state.search.name = name;
+    },
+    SEARCH_ADDRESS(state, address) {
+      state.search.address = address;
+    },
+    SEARCH_PREF(state, pref) {
+      state.search.prefecture = pref;
+    },
+    SEARCH_RIVER(state, river) {
+      state.search.river = river;
+    },
+    SEARCH_WATER_SYSTEM(state, waterSystem) {
+      state.search.waterSystem = waterSystem;
+    },
+    EMPTY_SEARCH_FIELD(state, bool) {
+      state.isEmptySearchField = bool;
     },
   },
   actions: {
@@ -50,6 +76,62 @@ const map = {
     },
     stopMove({ commit }) {
       commit('STOP_MOVE');
+    },
+    searchName({ commit }, name) {
+      return new Promise(resolve => {
+        commit('SEARCH_NAME', name);
+        resolve();
+      });
+    },
+    searchAddress({ commit }, address) {
+      return new Promise(resolve => {
+        commit('SEARCH_ADDRESS', address);
+        resolve();
+      });
+    },
+    searchPref({ commit }, pref) {
+      return new Promise(resolve => {
+        commit('SEARCH_PREF', pref);
+        resolve();
+      });
+    },
+    searchRiver({ commit }, river) {
+      return new Promise(resolve => {
+        commit('SEARCH_RIVER', river);
+        resolve();
+      });
+    },
+    searchWaterSystem({ commit }, waterSystem) {
+      return new Promise(resolve => {
+        commit('SEARCH_WATER_SYSTEM', waterSystem);
+        resolve();
+      });
+    },
+    emptySearchField({ commit, state }) {
+      const isEmpty = Object.values(state.search).every(
+        x => x === null || x === ''
+      );
+      return new Promise(resolve => {
+        commit('EMPTY_SEARCH_FIELD', isEmpty);
+        resolve();
+      });
+    },
+    searchResult({ dispatch, commit, state }) {
+      console.log(state.isEmptySearchField);
+      if (!state.isEmptySearchField) {
+        API.searchGeo(
+          'dam/search',
+          state.search.name,
+          state.search.address,
+          state.search.prefecture,
+          state.search.river,
+          state.search.waterSystem
+        ).then(response => {
+          commit('GET_DAM_DATA', response.payload.results);
+        });
+      } else {
+        dispatch('getDamData');
+      }
     },
   },
   getters: {
