@@ -79,7 +79,7 @@ class DamCardListViewSet(viewsets.ViewSet):
 
 class DamMapListViewSet(viewsets.ViewSet, APIView):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
 
     @method_decorator(cache_page(60*60*2))
     @method_decorator(vary_on_cookie)
