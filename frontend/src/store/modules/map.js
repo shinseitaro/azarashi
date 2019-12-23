@@ -117,7 +117,6 @@ const map = {
       });
     },
     searchResult({ dispatch, commit, state }) {
-      console.log(state.isEmptySearchField);
       if (!state.isEmptySearchField) {
         API.searchGeo(
           'dam/search',
