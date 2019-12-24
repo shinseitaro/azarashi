@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 // import store from '../store';
 import SiteTop from '../components/pages/SiteTop.vue';
+import SignUp from '../components/pages/SignUp';
 import Login from '../components/pages/Login.vue';
 import Post from '../components/pages/Post.vue';
 import About from '../components/pages/About.vue';
@@ -13,6 +14,11 @@ const routes = [
     path: '/',
     name: 'sitetop',
     component: SiteTop,
+  },
+  {
+    path: '/signup',
+    name: 'signup',
+    component: SignUp,
   },
   {
     path: '/login',
