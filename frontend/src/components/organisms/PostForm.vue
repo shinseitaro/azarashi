@@ -12,11 +12,7 @@
       <img :src="previewSrc" alt="" width="300" />
     </div>
     <v-btn @click="clearFile">Clear File</v-btn>
-    <v-textarea
-      label="コメント"
-      :value="comment"
-      @change="inputComment"
-    ></v-textarea>
+    <v-textarea v-model="comment" label="コメント"></v-textarea>
     <v-btn large color="primary" @click="sendForm">Post</v-btn>
   </v-container>
 </template>
@@ -52,9 +48,6 @@ export default {
     },
     clearFileName: function(e) {
       e.target.value = '';
-    },
-    inputComment: function(e) {
-      this.comment = e;
     },
     sendForm: function() {
       const params = new FormData();
