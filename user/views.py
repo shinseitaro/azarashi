@@ -1,6 +1,8 @@
 from allauth.socialaccount.providers.github.views import GitHubOAuth2Adapter
+from allauth.socialaccount.providers.twitter.views import TwitterOAuthAdapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
 from rest_auth.registration.views import SocialLoginView
+from rest_auth.social_serializers import TwitterLoginSerializer
 from django.conf import settings
 from allauth.account.views import ConfirmEmailView
 from rest_auth.registration.serializers import VerifyEmailSerializer
@@ -15,6 +17,12 @@ import urllib.parse
 from allauth.socialaccount.models import SocialToken
 from django.http import JsonResponse
 from django.contrib.auth.models import AnonymousUser
+
+class TwitterLoginView(SocialLoginView):
+    serializer_class = TwitterLoginSerializer
+    adapter_class = TwitterOAuthAdapter
+    callback_url = settings.TWITTER_CALLBACK_URL
+
 
 class GithubLoginView(SocialLoginView):
     adapter_class = GitHubOAuth2Adapter

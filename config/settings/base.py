@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.twitter',
 ]
 SITE_ID = 1
 
@@ -160,6 +161,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/accounts/github/login/callback/'
+TWITTER_CALLBACK_URL = 'http://127.0.0.1:8000/accounts/twitter/login/callback/'
 LOGIN_REDIRECT_URL = '/token/'
 REST_USE_JWT = True
 
