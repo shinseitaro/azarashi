@@ -1,6 +1,5 @@
 # from django.contrib import admin
 from django.contrib.gis import admin
-from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 from django.urls import path, include, re_path
 from django.conf import settings
