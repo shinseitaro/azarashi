@@ -1,11 +1,12 @@
 <template>
   <v-container class="grey lighten-5">
-    <v-card class="mx-auto" max-width="400">
+    <v-card class="mx-auto pa-4" max-width="400">
       <v-card-title>ユーザー登録</v-card-title>
       <div class="mx-4">
         <v-text-field
           v-model="email"
           label="e-mail"
+          type="email"
           :rules="[rules.required]"
         ></v-text-field>
         <v-text-field
@@ -28,8 +29,13 @@
         ></v-text-field>
       </div>
       <v-card-actions>
-        <v-btn block color="primary" @click="signUp">Sign Up</v-btn>
+        <v-btn block color="primary" :disabled="disabledBtn" @click="signUp">
+          Sign Up
+        </v-btn>
       </v-card-actions>
+      <div class="mx-4 red--text">
+        <p>{{ error }}</p>
+      </div>
     </v-card>
   </v-container>
 </template>
@@ -51,18 +57,29 @@ export default {
         passwordMatch: value =>
           value === this.password1 || 'パスワードが一致しません',
       },
+      error: '',
     };
+  },
+  computed: {
+    disabledBtn: function() {
+      return (
+        this.email === '' ||
+        this.password1 === '' ||
+        this.password2 === '' ||
+        this.password1 !== this.password2
+      );
+    },
   },
   methods: {
     signUp: function() {
+      const params = new URLSearchParams();
+      params.append('email', this.email);
+      params.append('password1', this.password1);
+      params.append('password2', this.password2);
       axios
         .post(
           process.env.VUE_APP_ROOT_URL + 'rest-auth/registration/',
-          {
-            email: this.email,
-            password1: this.password1,
-            password2: this.password2,
-          },
+          params,
           {
             headers: {
               'content-type': 'application/x-www-form-urlencoded',
@@ -70,11 +87,10 @@ export default {
           }
         )
         .then(response => {
-          console.log(response);
+          console.log(response.data);
         })
         .catch(error => {
-          // console.log(error.config);
-          return { error };
+          return (this.error = error.response.data.email.join(''));
         });
     },
   },
