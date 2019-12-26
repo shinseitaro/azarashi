@@ -1,41 +1,43 @@
 <template>
-  <v-row>
-    <v-col cols="12" md="6" sm="12">
-      <v-text-field
-        placeholder="名称"
-        prepend-icon="mdi-magnify"
-        @change="searchName"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="12" md="6" sm="12">
-      <v-text-field
-        placeholder="住所"
-        prepend-icon="mdi-magnify"
-        @change="searchAddress"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="12" md="4" sm="12">
-      <v-text-field
-        placeholder="都道府県"
-        prepend-icon="mdi-magnify"
-        @change="searchPref"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="12" md="4" sm="12">
-      <v-text-field
-        placeholder="河川"
-        prepend-icon="mdi-magnify"
-        @change="searchRiver"
-      ></v-text-field>
-    </v-col>
-    <v-col cols="12" md="4" sm="12">
-      <v-text-field
-        placeholder="水系"
-        prepend-icon="mdi-magnify"
-        @change="searchWaterSystem"
-      ></v-text-field>
-    </v-col>
-  </v-row>
+  <v-container class="grey lighten-5">
+    <v-row>
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field
+          placeholder="名称"
+          prepend-icon="mdi-magnify"
+          @change="searchName"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" md="6" sm="12">
+        <v-text-field
+          placeholder="住所"
+          prepend-icon="mdi-magnify"
+          @change="searchAddress"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" md="4" sm="12">
+        <v-text-field
+          placeholder="都道府県"
+          prepend-icon="mdi-magnify"
+          @change="searchPref"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" md="4" sm="12">
+        <v-text-field
+          placeholder="河川"
+          prepend-icon="mdi-magnify"
+          @change="searchRiver"
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" md="4" sm="12">
+        <v-text-field
+          placeholder="水系"
+          prepend-icon="mdi-magnify"
+          @change="searchWaterSystem"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

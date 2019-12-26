@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import DamSearchField from '../molecules/DamSearchField';
+import DamSearchField from '../organisms/DamSearchField';
 import Map from '../molecules/Map';
 import Header from '../organisms/Header';
 import CardList from '../organisms/CardList';
