@@ -11,7 +11,7 @@
     >
       <mapbox-cluster
         v-if="!isDisplayMarker"
-        :data="damData"
+        :data="damGeoData"
         :clustersPaint="clustersPaint"
       />
       <mapbox-marker v-if="isDisplayMarker" :lng-lat="markerPosition" />
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     ...mapState({
-      damData: state => state.map.damData,
+      damGeoData: state => state.map.damGeoData,
       isDisplayMarker: state => state.map.isDisplayMarker,
       markerPosition: state => state.map.markerPosition,
     }),

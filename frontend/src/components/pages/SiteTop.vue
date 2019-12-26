@@ -23,7 +23,8 @@ export default {
     CardList,
   },
   mounted() {
-    this.$store.dispatch('map/getDamData');
+    this.$store.dispatch('map/getDamGeoData');
+    this.$store.dispatch('map/getDamList');
   },
 };
 </script>
