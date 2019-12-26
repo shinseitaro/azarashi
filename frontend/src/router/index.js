@@ -1,11 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 // import store from '../store';
-import SiteTop from '../components/pages/SiteTop.vue';
+import SiteTop from '../components/pages/SiteTop';
 import SignUp from '../components/pages/SignUp';
-import Login from '../components/pages/Login.vue';
-import Post from '../components/pages/Post.vue';
-import About from '../components/pages/About.vue';
+import Login from '../components/pages/Login';
+import Post from '../components/pages/Post';
 
 Vue.use(VueRouter);
 
@@ -30,11 +29,6 @@ const routes = [
     name: 'post',
     component: Post,
     meta: { requiresAuth: true },
-  },
-  {
-    path: '/about',
-    name: 'about',
-    component: About,
   },
 ];
 

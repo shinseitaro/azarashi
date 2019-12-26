@@ -15,7 +15,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import Card from '../molecules/Card.vue';
+import Card from '../molecules/Card';
 
 export default {
   components: {

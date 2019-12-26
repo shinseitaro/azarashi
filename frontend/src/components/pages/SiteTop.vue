@@ -11,9 +11,9 @@
 
 <script>
 import DamSearchField from '../molecules/DamSearchField';
-import Map from '../molecules/Map.vue';
-import Header from '../organisms/Header.vue';
-import CardList from '../organisms/CardList.vue';
+import Map from '../molecules/Map';
+import Header from '../organisms/Header';
+import CardList from '../organisms/CardList';
 
 export default {
   components: {

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Header from '../organisms/Header.vue';
+import Header from '../organisms/Header';
 import SignUpForm from '../organisms/SignUpForm';
 
 export default {

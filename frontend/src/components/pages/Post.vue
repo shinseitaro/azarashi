@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Header from '../organisms/Header.vue';
-import PostForm from '../organisms/PostForm.vue';
+import Header from '../organisms/Header';
+import PostForm from '../organisms/PostForm';
 
 export default {
   components: {

@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Header from '../organisms/Header.vue';
-import LoginForm from '../organisms/LoginForm.vue';
+import Header from '../organisms/Header';
+import LoginForm from '../organisms/LoginForm';
 
 export default {
   components: {
