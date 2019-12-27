@@ -12,18 +12,23 @@
         <v-text-field
           v-model="password1"
           label="password"
-          hint="8文字以上"
+          hint="最低8文字以上必要です。数字だけのパスワードにはできません。"
           :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="[rules.required, rules.min]"
+          :rules="[rules.required, rules.min, rules.notNumberOnly]"
           :type="show1 ? 'text' : 'password'"
           @click:append="show1 = !show1"
         ></v-text-field>
         <v-text-field
           v-model="password2"
-          label="password（確認）"
-          hint="8文字以上"
+          label="password（確認用）"
+          hint="確認のため、再度パスワードを入力してください。"
           :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-          :rules="[rules.required, rules.min, rules.passwordMatch]"
+          :rules="[
+            rules.required,
+            rules.min,
+            rules.notNumberOnly,
+            rules.passwordMatch,
+          ]"
           :type="show2 ? 'text' : 'password'"
           @click:append="show2 = !show2"
         ></v-text-field>
@@ -53,7 +58,9 @@ export default {
       password2: '',
       rules: {
         required: value => !!value || '必須項目です',
-        min: value => value.length >= 8 || '8文字以上',
+        min: value => value.length >= 8 || '8文字以上必要です',
+        notNumberOnly: value =>
+          !/^\d*$/.test(value) || '数字だけのパスワードにはできません',
         passwordMatch: value =>
           value === this.password1 || 'パスワードが一致しません',
       },

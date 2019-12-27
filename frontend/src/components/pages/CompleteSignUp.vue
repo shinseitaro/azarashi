@@ -4,8 +4,11 @@
     <v-content>
       <v-container class="grey lighten-5">
         <Information
-          text="確認メールを送信しました。<br>メールボックスをご確認いただき、メール本文に記載のアドレスにアクセスしてください。"
+          text="メールアドレスが確認されました。<br>以下よりログインしてください。"
         />
+        <v-btn href="/login" text>
+          <span>Login</span>
+        </v-btn>
       </v-container>
     </v-content>
   </v-app>

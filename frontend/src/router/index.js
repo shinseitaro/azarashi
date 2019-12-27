@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 import SiteTop from '../components/pages/SiteTop';
 import SignUp from '../components/pages/SignUp';
 import CheckYourEmail from '../components/pages/CheckYourEmail';
+import CompleteSignUp from '../components/pages/CompleteSignUp';
 import Login from '../components/pages/Login';
 import Post from '../components/pages/Post';
 
@@ -24,6 +25,11 @@ const routes = [
     path: '/check_your_email',
     name: 'check_your_email',
     component: CheckYourEmail,
+  },
+  {
+    path: '/complete_sign_up',
+    name: 'complete_sign_up',
+    component: CompleteSignUp,
   },
   {
     path: '/login',
