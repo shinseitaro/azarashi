@@ -20,7 +20,7 @@
       </div>
       <v-card-actions>
         <v-btn block color="primary" :disabled="disabledBtn" @click="login">
-          Sign Up
+          Login
         </v-btn>
       </v-card-actions>
       <div class="mx-4 red--text">
