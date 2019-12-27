@@ -87,8 +87,8 @@ export default {
             },
           }
         )
-        .then(response => {
-          console.log(response.data);
+        .then(() => {
+          this.$router.push('check_your_email');
         })
         .catch(error => {
           console.log(error);
