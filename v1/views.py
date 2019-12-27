@@ -32,6 +32,8 @@ class DamFilter(filters.FilterSet):
     prefecture = filters.CharFilter(field_name='address', lookup_expr='contains')
     river = filters.CharFilter(field_name='river_name', lookup_expr='contains')
     water_system = filters.CharFilter(field_name='water_system_name', lookup_expr='contains')
+    name = filters.CharFilter(field_name='name', lookup_expr='contains')
+
     class Meta:
         model = Dam
         fields = ("name", "address", )
