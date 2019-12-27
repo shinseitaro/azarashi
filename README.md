@@ -46,6 +46,9 @@ django-cors-headers==3.2.0
 ### Github Login
 http://127.0.0.1:8000/accounts/github/login/
 
+### Twitter Login
+http://127.0.0.1:8000/accounts/twitter/login/
+
 
 
 ### User作成
