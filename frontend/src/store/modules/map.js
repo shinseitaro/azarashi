@@ -5,8 +5,8 @@ const initialCenter = [139.7009177, 35.6580971];
 const map = {
   namespaced: true,
   state: {
-    damData: {},
-    markers: [],
+    damGeoData: {},
+    damList: [],
     isDisplayMarker: false,
     markerPosition: initialCenter,
     boundsNext: initialCenter,
@@ -22,11 +22,11 @@ const map = {
     isEmptySearchField: true,
   },
   mutations: {
-    GET_DAM_DATA(state, data) {
-      state.damData = data;
+    GET_DAM_GEO_DATA(state, data) {
+      state.damGeoData = data;
     },
-    GET_MARKERS(state, markers) {
-      state.markers = markers;
+    GET_DAM_LIST(state, list) {
+      state.damList = list;
     },
     START_MOVE(state, marker) {
       state.isMoving = true;
@@ -57,19 +57,15 @@ const map = {
     },
   },
   actions: {
-    getDamData({ commit }) {
-      let markersArray = [];
-      API.read('dam/map')
-        .then(response => {
-          commit('GET_DAM_DATA', response.payload);
-          return response.payload;
-        })
-        .then(data => {
-          data.features.map(value => {
-            markersArray.push(value.geometry.coordinates);
-          });
-          commit('GET_MARKERS', markersArray);
-        });
+    getDamGeoData({ commit }) {
+      API.read('dam/map').then(response => {
+        commit('GET_DAM_GEO_DATA', response.payload);
+      });
+    },
+    getDamList({ commit }) {
+      API.read('dam/list').then(response => {
+        commit('GET_DAM_LIST', response.payload);
+      });
     },
     startMove({ commit }, marker) {
       commit('START_MOVE', marker);
@@ -126,7 +122,7 @@ const map = {
           state.search.river,
           state.search.waterSystem
         ).then(response => {
-          commit('GET_DAM_DATA', response.payload.results);
+          commit('GET_DAM_GEO_DATA', response.payload.results);
         });
       } else {
         dispatch('getDamData');

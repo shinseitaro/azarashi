@@ -22,8 +22,8 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn href="/about" text>
-      <span class="mr-2">About</span>
+    <v-btn href="/signup" text>
+      <span class="mr-2">Sign Up</span>
     </v-btn>
 
     <v-btn href="/post" text>

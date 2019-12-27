@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import DamSearchField from '../molecules/DamSearchField';
-import Map from '../molecules/Map.vue';
-import Header from '../organisms/Header.vue';
-import CardList from '../organisms/CardList.vue';
+import DamSearchField from '../organisms/DamSearchField';
+import Map from '../molecules/Map';
+import Header from '../organisms/Header';
+import CardList from '../organisms/CardList';
 
 export default {
   components: {
@@ -23,7 +23,8 @@ export default {
     CardList,
   },
   mounted() {
-    this.$store.dispatch('map/getDamData');
+    this.$store.dispatch('map/getDamGeoData');
+    this.$store.dispatch('map/getDamList');
   },
 };
 </script>

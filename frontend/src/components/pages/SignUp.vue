@@ -2,19 +2,19 @@
   <v-app>
     <Header />
     <v-content>
-      <PostForm />
+      <SignUpForm />
     </v-content>
   </v-app>
 </template>
 
 <script>
 import Header from '../organisms/Header';
-import PostForm from '../organisms/PostForm';
+import SignUpForm from '../organisms/SignUpForm';
 
 export default {
   components: {
     Header,
-    PostForm,
+    SignUpForm,
   },
 
   data: () => ({
