@@ -76,6 +76,7 @@ export default {
       params.append('email', this.email);
       params.append('password1', this.password1);
       params.append('password2', this.password2);
+      params.append('username', this.email);
       axios
         .post(
           process.env.VUE_APP_ROOT_URL + 'rest-auth/registration/',
@@ -90,6 +91,8 @@ export default {
           console.log(response.data);
         })
         .catch(error => {
+          console.log(error);
+          console.log(error.response);
           return (this.error = error.response.data.email.join(''));
         });
     },

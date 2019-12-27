@@ -69,7 +69,7 @@ class CustomConfirmEmailView(APIView, ConfirmEmailView):
             params = {'detail': _('Invalid input.'), 'status': status.HTTP_404_NOT_FOUND}
 
         # Front サーバーへリダイレクト.
-        url = 'http://localhost:3000/complete_sign_up'
+        url = 'http://127.0.0.1:8080/complete_sign_up'
         # クエリパラメータに認証結果を付与
         url = '{}?{}'.format(url, urllib.parse.urlencode(params))
         return HttpResponseRedirect(redirect_to=url)
