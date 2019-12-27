@@ -29,10 +29,12 @@ class DamPagination(PageNumberPagination):
 class DamFilter(filters.FilterSet):
     # この変数名が、 url のクエリ文字列キーになる
     # 例: `api/dam/?prefecture=愛知`
-    prefecture = filters.CharFilter(field_name='address', lookup_expr='contains')
+    prefecture = filters.CharFilter(field_name='prefecture', lookup_expr='contains')
     river = filters.CharFilter(field_name='river_name', lookup_expr='contains')
     water_system = filters.CharFilter(field_name='water_system_name', lookup_expr='contains')
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
+    address = filters.CharFilter(field_name='address', lookup_expr='contains')
+
 
     class Meta:
         model = Dam
