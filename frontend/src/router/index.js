@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-// import store from '../store';
+import store from '../store';
 import SiteTop from '../components/pages/SiteTop';
 import SignUp from '../components/pages/SignUp';
 import CheckYourEmail from '../components/pages/CheckYourEmail';
@@ -50,19 +50,35 @@ const router = new VueRouter({
   routes,
 });
 
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     if (!store.state.form.loggedIn) {
-//       next({
-//         path: '/login',
-//         query: { redirect: to.fullPath },
-//       });
-//     } else {
-//       next();
-//     }
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('token');
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.state.auth.isLoggedIn) {
+      next();
+    } else {
+      if (token !== null) {
+        store
+          .dispatch('auth/update')
+          .then(() => {
+            next();
+          })
+          .catch(() => {
+            forceToLoginPage(to, from, next);
+          });
+      } else {
+        forceToLoginPage(to, from, next);
+      }
+    }
+  } else {
+    next();
+  }
+});
+
+function forceToLoginPage(to, from, next) {
+  next({
+    path: '/login',
+    query: { next: to.fullPath },
+  });
+}
 
 export default router;

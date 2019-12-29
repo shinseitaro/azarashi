@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+import { mapState } from 'vuex';
 
 export default {
   data() {
@@ -42,13 +42,15 @@ export default {
       rules: {
         required: value => !!value || '必須項目です',
       },
-      error: '',
     };
   },
   computed: {
     disabledBtn: function() {
       return this.email === '' || this.password === '';
     },
+    ...mapState({
+      error: state => state.auth.error,
+    }),
   },
   methods: {
     login: function() {
@@ -56,18 +58,11 @@ export default {
       params.append('email', this.email);
       params.append('password', this.password);
       params.append('name', this.email);
-      axios
-        .post(process.env.VUE_APP_ROOT_URL + 'api-token-auth/', params, {
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded',
-          },
-        })
-        .then(response => {
-          localStorage.setItem('token', response.data.token);
-        })
-        .catch(error => {
-          return (this.error = error.response.data.non_field_errors.join(''));
-        });
+      this.$store.dispatch('auth/login', params).then(response => {
+        if (response.payload.status === 200) {
+          this.$router.push({ name: 'post' });
+        }
+      });
     },
   },
 };
