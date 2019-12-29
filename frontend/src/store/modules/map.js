@@ -125,7 +125,7 @@ const map = {
           commit('GET_DAM_GEO_DATA', response.payload.results);
         });
       } else {
-        dispatch('getDamData');
+        dispatch('getDamGeoData');
       }
     },
   },
