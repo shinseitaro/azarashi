@@ -10,6 +10,7 @@
       @mb-moveend="endMove"
       @mb-zoom="zoomMap"
     >
+      <mapbox-navigation-control />
       <mapbox-cluster
         v-if="!isDisplayZoomLayer"
         :data="damGeoData"
@@ -35,6 +36,7 @@ import {
   MapboxMarker,
   MapboxSource,
   MapboxLayer,
+  MapboxNavigationControl,
 } from '@studiometa/vue-mapbox-gl';
 import { mapState, mapGetters } from 'vuex';
 
@@ -45,6 +47,7 @@ export default {
     MapboxMarker,
     MapboxSource,
     MapboxLayer,
+    MapboxNavigationControl,
   },
   data() {
     return {
