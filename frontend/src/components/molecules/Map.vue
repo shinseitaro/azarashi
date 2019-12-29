@@ -8,13 +8,21 @@
       @mb-created="mapboxInstance => (map = mapboxInstance)"
       @mb-move="move"
       @mb-moveend="endMove"
+      @mb-zoom="zoomMap"
     >
       <mapbox-cluster
-        v-if="!isDisplayMarker"
+        v-if="!isDisplayZoomLayer"
         :data="damGeoData"
         :clustersPaint="clustersPaint"
+        :unclusteredPointPaint="unclusteredPointPaint"
       />
       <mapbox-marker v-if="isDisplayMarker" :lng-lat="markerPosition" />
+      <mapbox-source id="zoomUp" :options="zoomUpSource" />
+      <mapbox-layer
+        v-if="isDisplayZoomLayer"
+        :id="zoomUpLayer.id"
+        :options="zoomUpLayer"
+      />
     </mapbox-map>
   </div>
 </template>
@@ -25,6 +33,8 @@ import {
   MapboxMap,
   MapboxCluster,
   MapboxMarker,
+  MapboxSource,
+  MapboxLayer,
 } from '@studiometa/vue-mapbox-gl';
 import { mapState, mapGetters } from 'vuex';
 
@@ -33,25 +43,35 @@ export default {
     MapboxMap,
     MapboxCluster,
     MapboxMarker,
+    MapboxSource,
+    MapboxLayer,
   },
   data() {
     return {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
-      mapStyle: 'mapbox://styles/mapbox/streets-v10',
+      mapStyle: 'mapbox://styles/mapbox/streets-v11',
       zoom: 6,
+      zoomThreshold: 7,
       clustersPaint: {
         'circle-color': [
           'step',
           ['get', 'point_count'],
           '#51bbd6',
+          50,
+          '#78d6bc',
           100,
           '#f1ae4e',
-          750,
+          300,
           '#f24078',
         ],
         'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40],
       },
+      unclusteredPointPaint: {
+        'circle-color': '#51bbd6',
+        'circle-radius': 4,
+      },
       map: null,
+      isDisplayZoomLayer: false,
     };
   },
   computed: {
@@ -61,8 +81,41 @@ export default {
       markerPosition: state => state.map.markerPosition,
     }),
     ...mapGetters('map', ['getBounds']),
+    zoomUpSource: function() {
+      return {
+        type: 'geojson',
+        cluster: false,
+        data: this.$store.state.map.damGeoData,
+      };
+    },
+    zoomUpLayer: function() {
+      return {
+        id: 'zoomUpLayer',
+        type: 'circle',
+        source: 'zoomUp',
+        paint: {
+          'circle-radius': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            10,
+            ['/', ['number', ['get', 'bank_volume']], 700],
+            13,
+            ['/', ['number', ['get', 'bank_volume']], 400],
+          ],
+          'circle-color': '#3794b3',
+        },
+      };
+    },
   },
   methods: {
+    zoomMap: function() {
+      if (this.map.getZoom() > this.zoomThreshold) {
+        this.isDisplayZoomLayer = true;
+      } else {
+        this.isDisplayZoomLayer = false;
+      }
+    },
     move: function() {
       if (this.$store.state.map.isMoving) {
         this.map.fitBounds(this.$store.state.map.bounds, {
