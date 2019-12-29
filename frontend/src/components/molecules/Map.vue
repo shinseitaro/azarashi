@@ -49,7 +49,7 @@ export default {
   data() {
     return {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
-      mapStyle: 'mapbox://styles/mapbox/streets-v11',
+      mapStyle: 'mapbox://styles/mapbox/light-v10',
       zoom: 6,
       zoomThreshold: 7,
       clustersPaint: {
