@@ -5,5 +5,4 @@ class Command(BaseCommand):
     help = 'add dam data'
 
     def handle(self, **options):
-        # print("Hello")
         data_loader.run()
