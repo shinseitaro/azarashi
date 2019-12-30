@@ -5,8 +5,8 @@ import SiteTop from '../components/pages/SiteTop';
 import SignUp from '../components/pages/SignUp';
 import CheckYourEmail from '../components/pages/CheckYourEmail';
 import CompleteSignUp from '../components/pages/CompleteSignUp';
-import Login from '../components/pages/Login';
-import Post from '../components/pages/Post';
+import LoginPage from '../components/pages/LoginPage';
+import PostPage from '../components/pages/PostPage';
 
 Vue.use(VueRouter);
 
@@ -34,12 +34,12 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: Login,
+    component: LoginPage,
   },
   {
     path: '/post',
     name: 'post',
-    component: Post,
+    component: PostPage,
     meta: { requiresAuth: true },
   },
 ];

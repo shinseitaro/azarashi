@@ -1,28 +1,21 @@
 <template>
-  <v-app>
-    <Header />
-    <v-content>
-      <v-container class="grey lighten-5">
-        <Information
-          text="確認メールを送信しました。<br>メールボックスをご確認いただき、メール本文に記載のアドレスにアクセスしてください。"
-        />
-      </v-container>
-    </v-content>
-  </v-app>
+  <base-layout>
+    <v-container>
+      <information-text
+        text="確認メールを送信しました。<br>メールボックスをご確認いただき、メール本文に記載のアドレスにアクセスしてください。"
+      />
+    </v-container>
+  </base-layout>
 </template>
 
 <script>
-import Header from '../organisms/Header';
-import Information from '../atoms/Information';
+import BaseLayout from '../organisms/BaseLayout';
+import InformationText from '../atoms/InformationText';
 
 export default {
   components: {
-    Header,
-    Information,
+    BaseLayout,
+    InformationText,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>

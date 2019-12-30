@@ -113,11 +113,7 @@ export default {
   },
   methods: {
     zoomMap: function() {
-      if (this.map.getZoom() > this.zoomThreshold) {
-        this.isDisplayZoomLayer = true;
-      } else {
-        this.isDisplayZoomLayer = false;
-      }
+      this.isDisplayZoomLayer = this.map.getZoom() > this.zoomThreshold;
     },
     move: function() {
       if (this.$store.state.map.isMoving) {
