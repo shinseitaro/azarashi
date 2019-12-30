@@ -17,18 +17,13 @@
         :clustersPaint="clustersPaint"
         :unclusteredPointPaint="unclusteredPointPaint"
       />
-      <mapbox-marker
-        v-if="isDisplayZoomLayer"
-        :lng-lat="coordinates"
-        :offset="popupOffsets"
-      >
+      <mapbox-marker v-if="isDisplayPopup" :lng-lat="coordinates">
         <template>
           <div class="mapboxgl-popup">{{ name }}</div>
         </template>
       </mapbox-marker>
       <mapbox-source id="zoomUp" :options="zoomUpSource" />
       <mapbox-layer
-        v-if="isDisplayZoomLayer"
         :id="zoomUpLayer.id"
         :options="zoomUpLayer"
         @mb-click="displayPopup"
@@ -62,6 +57,7 @@ export default {
   },
   data() {
     return {
+      map: null,
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       zoom: 6,
@@ -84,17 +80,34 @@ export default {
         'circle-color': '#51bbd6',
         'circle-radius': 4,
       },
-      map: null,
       isDisplayZoomLayer: false,
-      coordinates: [0, 0],
+      zoomUpLayer: {
+        id: 'zoomUpLayer',
+        type: 'circle',
+        source: 'zoomUp',
+        paint: {
+          'circle-radius': [
+            '+',
+            ['ln', ['number', ['get', 'total_pondage']]],
+            1,
+          ],
+          'circle-color': '#3794b3',
+          'circle-opacity': {
+            stops: [
+              [7, 0],
+              [7.5, 1],
+            ],
+          },
+        },
+      },
+      coordinates: [null, null],
       name: '',
-      popupOffsets: [0, 0],
     };
   },
   computed: {
     ...mapState({
       damGeoData: state => state.map.damGeoData,
-      isDisplayMarker: state => state.map.isDisplayMarker,
+      isDisplayPopup: state => state.map.isDisplayPopup,
       markerPosition: state => state.map.markerPosition,
     }),
     ...mapGetters('map', ['getBounds']),
@@ -103,25 +116,6 @@ export default {
         type: 'geojson',
         cluster: false,
         data: this.$store.state.map.damGeoData,
-      };
-    },
-    zoomUpLayer: function() {
-      return {
-        id: 'zoomUpLayer',
-        type: 'circle',
-        source: 'zoomUp',
-        paint: {
-          'circle-radius': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            10,
-            ['/', ['number', ['get', 'bank_volume']], 700],
-            13,
-            ['/', ['number', ['get', 'bank_volume']], 400],
-          ],
-          'circle-color': '#3794b3',
-        },
       };
     },
   },
@@ -134,10 +128,14 @@ export default {
       this.name = e.features[0].properties.name;
     },
     setCursor: function() {
+      this.$store.dispatch('map/setPopup', true);
       this.map.getCanvas().style.cursor = 'pointer';
     },
     clearCursor: function() {
+      this.$store.dispatch('map/setPopup', false);
       this.map.getCanvas().style.cursor = '';
+      this.coordinates = [null, null];
+      this.name = '';
     },
     move: function() {
       if (this.$store.state.map.isMoving) {
@@ -176,6 +174,7 @@ export default {
 .mapboxgl-popup {
   background-color: #ffffff;
   white-space: nowrap;
-  transform: translate(-50%, -25px);
+  padding: 0.5em;
+  transform: translate(-50%, -40px);
 }
 </style>

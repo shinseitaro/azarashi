@@ -8,6 +8,7 @@ const map = {
     damGeoData: {},
     damList: [],
     isDisplayMarker: false,
+    isDisplayPopup: false,
     markerPosition: initialCenter,
     boundsNext: initialCenter,
     bounds: [initialCenter, initialCenter],
@@ -27,6 +28,9 @@ const map = {
     },
     GET_DAM_LIST(state, list) {
       state.damList = list;
+    },
+    SET_POPUP(state, bool) {
+      state.isDisplayPopup = bool;
     },
     START_MOVE(state, marker) {
       state.isMoving = true;
@@ -66,6 +70,9 @@ const map = {
       API.read('dam/list').then(response => {
         commit('GET_DAM_LIST', response.payload);
       });
+    },
+    setPopup({ commit }, bool) {
+      commit('SET_POPUP', bool);
     },
     startMove({ commit }, marker) {
       commit('START_MOVE', marker);
@@ -127,6 +134,7 @@ const map = {
       } else {
         dispatch('getDamGeoData');
       }
+      commit('SET_POPUP', false);
     },
   },
   getters: {
