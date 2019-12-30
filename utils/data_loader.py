@@ -3,6 +3,7 @@ from infrastructure.models import Category
 from django.contrib.gis.geos import GEOSGeometry
 import json
 import csv
+import traceback
 
 def load_base_data():
     dam_types = [
@@ -55,31 +56,42 @@ def load_base_data():
         {'id': '1', 'name': 'ダム'}
     ]
 
+    records = []
     for dam_type in dam_types:
-        record = DamType.create(**dam_type)
-        record.save()
 
+        record = DamType.create(**dam_type)
+        records.append(record)
+    DamType.objects.bulk_create(records)
+
+    records = []
     for institution in institutions:
         record = Institution.create(**institution)
-        record.save()
+        records.append(record)
+    Institution.objects.bulk_create(records)
 
+    records = []
     for purpose in purposes:
         record = Purpose.create(**purpose)
-        record.save()
+        records.append(record)
+    Purpose.objects.bulk_create(records)
 
+    records = []
     for category in categories:
         record = Category.create(**category)
-        record.save()
+        records.append(record)
+    Category.objects.bulk_create(records)
 
 
 def load_geometry():
     with open('./data/dam.geometry.csv', newline='') as file:
         rows = csv.reader(file, delimiter=',')
         next(rows)  # skip header
+        dams =[]
         for row in rows:
             dam = Dam.objects.filter(dam_code=row[1])[0]
             dam.geom = GEOSGeometry(row[2])
-            dam.save()
+            dams.append(dam)
+        Dam.objects.bulk_update(dams, fields=['geom'])
 
 
 def load_records():
@@ -87,6 +99,8 @@ def load_records():
     # load json
     with open('./data/dam.json', encoding='utf8') as json_file:
         records = json.load(json_file)
+
+        dams = []
         for record in records:
             # keys to exclude purpose_code,type_code,institution_in_charge
 
@@ -119,13 +133,33 @@ def load_records():
                 dam.institution_in_charge.add(Institution.objects.filter(id=institution)[0])
 
 def load_dam_card_distribution_place():
-    with open('./data/dam_card_places_set.csv', newline='') as file:
+    excludes = ['idx', 'dam', 'dam_name', 'mon','tue','wed','thu','fri','sat','sun']
+    with open('./data/dam_card_places_set_editmode.csv', newline='') as file:
         reader = csv.DictReader(file, delimiter=",", quotechar='"')
         next(reader)  # skip header
-        data = []
+        rows = []
         for row in reader:
-            data.append(row)
-        return data
+            rows.append(row)
+
+        for row in rows:
+            place = DamCardDistributionPlace.objects.filter(id=row['id'])
+            if not place:
+                row_excluded = {k: v for k, v in row.items() if k not in excludes}
+                try:
+                    place = DamCardDistributionPlace(**row_excluded)
+                    place.save()
+
+                    if row['dam'] == '':
+                        continue
+                    dam_to_be_added = Dam.objects.filter(dam_code=int(row['dam']))
+                    if dam_to_be_added is not None:
+                       place.dam.add(dam_to_be_added[0])
+
+
+                except Exception:
+                    print(row)
+                    print(traceback.format_exc())
+
 
 def run():
     print('starting...')
@@ -134,6 +168,8 @@ def run():
     load_records() #データを読み込み、dbに投入
     print('loaded dam data...loading geometry data')
     load_geometry() #geometry項目はgeopandasのdataframe->json化できなかったので、csv化した
+    print('load dam card distribution place...')
+    load_dam_card_distribution_place()
     print('all done! you are good to go! Create user and Do python manage.py runserver --settings [your env config]!')
 
 if __name__ == '__main__':
