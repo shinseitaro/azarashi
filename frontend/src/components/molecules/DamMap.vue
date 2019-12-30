@@ -17,12 +17,23 @@
         :clustersPaint="clustersPaint"
         :unclusteredPointPaint="unclusteredPointPaint"
       />
-      <mapbox-marker v-if="isDisplayMarker" :lng-lat="markerPosition" />
+      <mapbox-marker
+        v-if="isDisplayZoomLayer"
+        :lng-lat="coordinates"
+        :offset="popupOffsets"
+      >
+        <template>
+          <div class="mapboxgl-popup">{{ name }}</div>
+        </template>
+      </mapbox-marker>
       <mapbox-source id="zoomUp" :options="zoomUpSource" />
       <mapbox-layer
         v-if="isDisplayZoomLayer"
         :id="zoomUpLayer.id"
         :options="zoomUpLayer"
+        @mb-click="displayPopup"
+        @mb-mouseenter="setCursor"
+        @mb-mouseleave="clearCursor"
       />
     </mapbox-map>
   </div>
@@ -75,6 +86,9 @@ export default {
       },
       map: null,
       isDisplayZoomLayer: false,
+      coordinates: [0, 0],
+      name: '',
+      popupOffsets: [0, 0],
     };
   },
   computed: {
@@ -115,6 +129,16 @@ export default {
     zoomMap: function() {
       this.isDisplayZoomLayer = this.map.getZoom() > this.zoomThreshold;
     },
+    displayPopup: function(e) {
+      this.coordinates = e.features[0].geometry.coordinates.slice();
+      this.name = e.features[0].properties.name;
+    },
+    setCursor: function() {
+      this.map.getCanvas().style.cursor = 'pointer';
+    },
+    clearCursor: function() {
+      this.map.getCanvas().style.cursor = '';
+    },
     move: function() {
       if (this.$store.state.map.isMoving) {
         this.map.fitBounds(this.$store.state.map.bounds, {
@@ -147,5 +171,11 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+}
+
+.mapboxgl-popup {
+  background-color: #ffffff;
+  white-space: nowrap;
+  transform: translate(-50%, -25px);
 }
 </style>
