@@ -132,6 +132,9 @@ def load_records():
             for institution in institutions.split(','):
                 dam.institution_in_charge.add(Institution.objects.filter(id=institution)[0])
 
+def to_boolean(val):
+    return False if val == '0' else True
+
 def load_dam_card_distribution_place():
     excludes = ['idx', 'dam', 'dam_name', 'mon','tue','wed','thu','fri','sat','sun']
     with open('./data/dam_card_places_set_editmode.csv', newline='') as file:
@@ -155,10 +158,24 @@ def load_dam_card_distribution_place():
                     if dam_to_be_added is not None:
                        place.dam.add(dam_to_be_added[0])
 
-
                 except Exception:
                     print(row)
                     print(traceback.format_exc())
+
+        #営業曜日の追加
+        places = []
+        for row in rows:
+            place = DamCardDistributionPlace.objects.get(id=row['id'])
+            place.mon = to_boolean(row['mon'])
+            place.tue = to_boolean(row['tue'])
+            place.wed = to_boolean(row['wed'])
+            place.thu = to_boolean(row['thu'])
+            place.fri = to_boolean(row['fri'])
+            place.sat = to_boolean(row['sat'])
+            place.sun = to_boolean(row['sun'])
+            places.append(place)
+        DamCardDistributionPlace.objects.bulk_update(places, fields=['mon','tue','wed','thu','fri','sat','sun'])
+
 
 
 def run():

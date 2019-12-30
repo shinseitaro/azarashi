@@ -76,6 +76,14 @@ class DamCardDistributionPlace(models.Model):
     operation_hour = models.CharField(max_length=200)
     prefecture = models.CharField(max_length=4)
     dam = models.ManyToManyField(Dam, blank=True)
+    mon = models.BooleanField(default=False)
+    tue = models.BooleanField(default=False)
+    wed = models.BooleanField(default=False)
+    thu = models.BooleanField(default=False)
+    fri = models.BooleanField(default=False)
+    sat = models.BooleanField(default=False)
+    sun = models.BooleanField(default=False)
+
 
     def __str__(self):
         return self.name
