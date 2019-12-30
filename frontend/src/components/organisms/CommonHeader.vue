@@ -26,8 +26,23 @@
       <span class="mr-2">Sign Up</span>
     </v-btn>
 
-    <v-btn href="/post" text>
-      <span class="mr-2">Post</span>
+    <v-btn href="/login" text>
+      <span class="mr-2">Login</span>
+    </v-btn>
+
+    <v-btn text @click="logout">
+      <span class="mr-2">Logout</span>
     </v-btn>
   </v-app-bar>
 </template>
+
+<script>
+export default {
+  methods: {
+    logout: function() {
+      this.$store.dispatch('auth/logout');
+      this.$router.push({ name: 'sitetop' });
+    },
+  },
+};
+</script>

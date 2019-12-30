@@ -1,31 +1,24 @@
 <template>
-  <v-app>
-    <Header />
-    <v-content>
-      <v-container class="grey lighten-5">
-        <Information
-          text="メールアドレスが確認されました。<br>以下よりログインしてください。"
-        />
-        <v-btn href="/login" text>
-          <span>Login</span>
-        </v-btn>
-      </v-container>
-    </v-content>
-  </v-app>
+  <base-layout>
+    <v-container>
+      <information-text
+        text="メールアドレスが確認されました。<br>以下よりログインしてください。"
+      />
+      <v-btn href="/login" text>
+        <span>Login</span>
+      </v-btn>
+    </v-container>
+  </base-layout>
 </template>
 
 <script>
-import Header from '../organisms/Header';
-import Information from '../atoms/Information';
+import BaseLayout from '../organisms/BaseLayout';
+import InformationText from '../atoms/InformationText';
 
 export default {
   components: {
-    Header,
-    Information,
+    BaseLayout,
+    InformationText,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>

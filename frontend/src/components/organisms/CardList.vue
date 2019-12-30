@@ -1,5 +1,5 @@
 <template>
-  <v-container class="grey lighten-5">
+  <v-container>
     <v-row>
       <v-col
         v-for="(item, index) in damList.slice(0, 8)"
@@ -9,7 +9,7 @@
         md="6"
         xs="12"
       >
-        <Card :item="item" />
+        <card-item :item="item" />
       </v-col>
     </v-row>
   </v-container>
@@ -17,11 +17,11 @@
 
 <script>
 import { mapState } from 'vuex';
-import Card from '../molecules/Card';
+import CardItem from '../molecules/CardItem';
 
 export default {
   components: {
-    Card,
+    CardItem,
   },
   computed: {
     ...mapState({

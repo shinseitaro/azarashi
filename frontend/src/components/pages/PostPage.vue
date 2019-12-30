@@ -1,17 +1,17 @@
 <template>
   <base-layout>
-    <sign-up-form />
+    <post-form />
   </base-layout>
 </template>
 
 <script>
 import BaseLayout from '../organisms/BaseLayout';
-import SignUpForm from '../organisms/SignUpForm';
+import PostForm from '../organisms/PostForm';
 
 export default {
   components: {
     BaseLayout,
-    SignUpForm,
+    PostForm,
   },
 };
 </script>
