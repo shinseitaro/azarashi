@@ -57,20 +57,31 @@ class Dam(Infra):
     def __str__(self):
         return '{}'.format(self.name)
 
+
+class DamCardDistributionPlaceQuerySet(models.QuerySet):
+    def filter_active(self):
+        return self.filter(dam__isnull=False)
+
+
+class DamCardDistributionPlaceQueryManager(
+        models.Manager.from_queryset(DamCardDistributionPlaceQuerySet)):
+    pass
+
 class DamCardDistributionPlace(models.Model):
+    objects = DamCardDistributionPlaceQueryManager()
     id = models.CharField(max_length=4, primary_key=True)
     name = models.CharField(max_length=50)
     url = models.URLField()
     address = models.CharField(max_length=100)
     operation_hour = models.CharField(max_length=200)
     prefecture = models.CharField(max_length=4)
-    dam_id = models.ManyToManyField(Dam, blank=True)
+    dam = models.ManyToManyField(Dam, blank=True)
 
     def __str__(self):
         return self.name
 
     @classmethod
-    def create(cls, id, name, url, address, operation_hour, prefecture, dam_id):
+    def create(cls, id, name, url, address, operation_hour, prefecture, dam):
         return cls(id=id, name=name, url=url, address=address,
                    operation_hour=operation_hour, prefecture=prefecture,
-                   dam_id=dam_id)
+                   dam_id=dam)
