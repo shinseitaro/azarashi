@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row v-if="isEmptySearchField">
+    <v-row>
       <v-col
         v-for="(item, index) in damList.slice(0, 8)"
         :key="index"
@@ -9,19 +9,11 @@
         md="6"
         xs="12"
       >
-        <card-item :item="item" />
-      </v-col>
-    </v-row>
-    <v-row v-if="!isEmptySearchField">
-      <v-col
-        v-for="(item, index) in damGeoData.features"
-        :key="index"
-        cols="12"
-        lg="4"
-        md="6"
-        xs="12"
-      >
-        <card-item :item="item.properties" />
+        <card-item v-if="isEmptySearchField" :item="item" />
+        <card-item
+          v-if="!isEmptySearchField && item.properties"
+          :item="item.properties"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -38,7 +30,6 @@ export default {
   computed: {
     ...mapState({
       damList: state => state.map.damList,
-      damGeoData: state => state.map.damGeoData,
       isEmptySearchField: state => state.map.isEmptySearchField,
     }),
   },

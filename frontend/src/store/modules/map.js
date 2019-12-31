@@ -130,9 +130,11 @@ const map = {
           state.search.waterSystem
         ).then(response => {
           commit('GET_DAM_GEO_DATA', response.payload.results);
+          commit('GET_DAM_LIST', response.payload.results.features);
         });
       } else {
         dispatch('getDamGeoData');
+        dispatch('getDamList');
       }
       commit('SET_POPUP', false);
     },
