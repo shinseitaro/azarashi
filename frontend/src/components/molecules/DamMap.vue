@@ -24,6 +24,7 @@
       </mapbox-marker>
       <mapbox-source id="zoomUp" :options="zoomUpSource" />
       <mapbox-layer
+        v-if="isDisplayZoomLayer"
         :id="zoomUpLayer.id"
         :options="zoomUpLayer"
         @mb-click="displayPopup"
@@ -92,12 +93,6 @@ export default {
             1,
           ],
           'circle-color': '#3794b3',
-          'circle-opacity': {
-            stops: [
-              [7, 0],
-              [7.5, 1],
-            ],
-          },
         },
       },
       coordinates: [null, null],
