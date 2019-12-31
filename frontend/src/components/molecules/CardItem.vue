@@ -1,9 +1,6 @@
 <template>
   <v-card class="mx-auto" max-width="374">
-    <v-img
-      height="250"
-      src="https://res.cloudinary.com/dfkqsafii/image/upload/c_thumb,g_face/v1573604382/udc-dam/IMG_8077.jpg"
-    ></v-img>
+    <v-img :aspect-ratio="88 / 63" src="/img/no_cards_posted.jpg"></v-img>
 
     <v-card-title>
       <v-row align="center" justify="space-between" class="mx-0">
