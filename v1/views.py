@@ -6,6 +6,8 @@ from rest_framework_gis.pagination import GeoJsonPagination
 from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
 
 
 
@@ -79,7 +81,9 @@ class DamCardListViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
 
-class DamMapListViewSet(viewsets.ViewSet):
+class DamMapListViewSet(viewsets.ViewSet, APIView):
+    # permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (AllowAny,)
 
     @method_decorator(cache_page(60*60*2))
     @method_decorator(vary_on_cookie)

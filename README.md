@@ -43,3 +43,35 @@ django-cors-headers==3.2.0
 
 
 
+### Github Login
+http://127.0.0.1:8000/accounts/github/login/
+
+### Twitter Login
+http://127.0.0.1:8000/accounts/twitter/login/
+
+
+
+### User作成
+```bash
+curl -X "POST" "http://127.0.0.1:8000/rest-auth/registration/" \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+     --data-urlencode "email=tokyo2021@damcard.com" \
+     --data-urlencode "password1=asdfsdf1234---" \
+     --data-urlencode "password2=asdfsdf1234---"
+```
+
+### Email確認
+```bash
+curl -X "POST" "http://127.0.0.1:8000/rest-auth/registration/verify-email/" \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+     --data-urlencode "key=Nw:1ihTEs:UBe0fqlyjhVYRADxzlo88EGgKcw"
+```
+keyはDjango側で生成される
+
+### JWT
+```bash
+curl -X "POST" "http://127.0.0.1:8000/api-token-auth/" \
+     -H 'Content-Type: application/x-www-form-urlencoded; charset=utf-8' \
+     --data-urlencode "email=tokyo2021@damcard.com" \
+     --data-urlencode "password=asdfsdf1234---"
+```

@@ -6,5 +6,5 @@ from .models import Dam
 class DamSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Dam
-        fields = ('__all__')
+        fields = '__all__'
 

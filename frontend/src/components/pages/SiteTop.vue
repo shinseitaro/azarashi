@@ -1,26 +1,27 @@
 <template>
-  <v-app>
-    <Header />
-    <v-content>
-      <Map />
-      <CardList />
-    </v-content>
-  </v-app>
+  <base-layout>
+    <dam-map />
+    <dam-search-field />
+    <card-list />
+  </base-layout>
 </template>
 
 <script>
-import Map from '../molecules/Map.vue';
-import Header from '../organisms/Header.vue';
-import CardList from '../organisms/CardList.vue';
+import BaseLayout from '../organisms/BaseLayout';
+import DamSearchField from '../organisms/DamSearchField';
+import DamMap from '../molecules/DamMap';
+import CardList from '../organisms/CardList';
 
 export default {
   components: {
-    Header,
-    Map,
+    BaseLayout,
+    DamMap,
+    DamSearchField,
     CardList,
   },
   mounted() {
-    this.$store.dispatch('map/getDamData');
+    this.$store.dispatch('map/getDamGeoData');
+    this.$store.dispatch('map/getDamList');
   },
 };
 </script>

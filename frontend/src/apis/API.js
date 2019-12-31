@@ -1,8 +1,10 @@
 import axios from 'axios';
 
 axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
-axios.defaults.xsrfCookieName = 'XSRF-TOKEN';
-axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+// axios.defaults.xsrfCookieName = 'csrftoken';
+// axios.defaults.xsrfHeaderName = 'X-CSRFToken';
+axios.defaults.headers.common['Authorization'] =
+  'JWT ' + localStorage.getItem('token');
 
 export function read(repository) {
   return access(`${repository}/`, 'GET');
@@ -12,8 +14,18 @@ export function readPage(repository, page = 1) {
   return access(`${repository}/?page=${page}`, 'GET');
 }
 
-export function search(repository, word) {
-  return access(`${repository}/?q=${word}`, 'GET');
+export function searchGeo(
+  repository,
+  name = '',
+  address = '',
+  prefecture = '',
+  river = '',
+  waterSystem = ''
+) {
+  return access(
+    `${repository}/?name=${name}&address=${address}&prefecture=${prefecture}&river=${river}&water_system=${waterSystem}`,
+    'GET'
+  );
 }
 
 export function set(repository, id) {
@@ -37,7 +49,22 @@ export function fetchUrl(url) {
 }
 
 export function fileUpload(repository, params) {
-  return file_upload(`${repository}/`, params);
+  return new Promise(resolve => {
+    const payload = axios
+      .post(`${repository}/`, params, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      })
+      .then(response => {
+        return { payload: response };
+      })
+      .catch(error => {
+        // console.log(error.config);
+        return { error };
+      });
+    resolve(payload);
+  });
 }
 
 function access(url, method) {
@@ -92,23 +119,4 @@ function _access(url, config) {
       console.log(error.config);
       return { error };
     });
-}
-
-function file_upload(url, params) {
-  return new Promise(resolve => {
-    const payload = axios
-      .post(url, params, {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      })
-      .then(response => {
-        return { payload: response };
-      })
-      .catch(error => {
-        // console.log(error.config);
-        return { error };
-      });
-    resolve(payload);
-  });
 }

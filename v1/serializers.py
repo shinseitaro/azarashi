@@ -9,6 +9,7 @@ class DamSerializer(serializers.ModelSerializer):
         exclude = ["registered_at", "modified_at"]
         #fields = ("name", "address", "river_name","geom")
 
+
 class DamCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dam
@@ -38,6 +39,7 @@ class InstitutionSerializer(serializers.ModelSerializer):
         model = Institution
         fields = ('name',)
 
+
 class PurposeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Purpose
@@ -65,4 +67,4 @@ class DamMapModelSerializer(GeoFeatureModelSerializer):
         model = Dam
         geo_field = "geom"
         id_field = False
-        fields = ("name", "geom",)
+        fields = ("name", "bank_volume", "geom",)
