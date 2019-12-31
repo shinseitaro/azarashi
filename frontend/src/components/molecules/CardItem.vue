@@ -39,7 +39,7 @@
           </div>
           <div>{{ item.water_system_name }}水系 {{ item.river_name }}</div>
         </div>
-        <v-btn icon @click="moveMarker(item.coordinates)">
+        <v-btn icon>
           <v-icon>mdi-map-marker</v-icon>
         </v-btn>
       </v-row>
