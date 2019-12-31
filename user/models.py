@@ -36,7 +36,7 @@ if settings.AUTH_USER_MODEL == 'user.User':
 
     class User(AbstractBaseUser, PermissionsMixin):
         email = models.EmailField(max_length=254, unique=False, blank=True)
-        name = models.CharField(max_length=254, null=True, blank=True)
+        name = models.CharField(max_length=254, null=True, blank=True, unique=True)
         is_staff = models.BooleanField(default=False)
         is_superuser = models.BooleanField(default=False)
         is_active = models.BooleanField(default=True)
