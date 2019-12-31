@@ -36,8 +36,10 @@ class FetchTokenView(APIView):
         json_data = dict()
         if request.user is not None and isinstance(request.user, AnonymousUser):
             return JsonResponse({'result':'none'})
-        access_token = SocialToken.objects.get(account__user=request.user, account__provider='github')
-        json_data['token'] = access_token.token
+        provider = request.user.socialaccount_set.all()[0].get_provider_display()
+        access_token = SocialToken.objects.get(account__user=request.user, account__provider=provider.lower())
+        json_data['access_token'] = access_token.token
+        json_data['token_secret']=access_token.token_secret
         return JsonResponse(json_data)
 
 
