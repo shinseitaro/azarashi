@@ -4,7 +4,7 @@
       <v-col>
         <v-img :aspect-ratio="88 / 63" src="/img/no_cards_posted.jpg"></v-img>
 
-        <v-card-title>
+        <v-card-title v-if="this.$route.name !== 'dam'">
           <v-row align="center" justify="space-between" class="mx-0">
             <span>{{ item.name }}</span>
             <v-checkbox
@@ -18,7 +18,7 @@
           </v-row>
         </v-card-title>
 
-        <v-card-text>
+        <v-card-text v-if="this.$route.name !== 'dam'">
           <v-row align="center" class="mx-0">
             <v-rating
               :value="4.5"
@@ -45,10 +45,10 @@
         </v-card-text>
       </v-col>
 
-      <v-col class="card-footer">
+      <v-col v-if="this.$route.name !== 'dam'" class="card-footer">
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn v-if="this.$route.name === 'sitetop'" @click="goToDamPage">
+          <v-btn @click="goToDamPage">
             <v-icon left>mdi-map-legend</v-icon>配布所
           </v-btn>
           <v-btn><v-icon left>mdi-cards</v-icon>投稿一覧</v-btn>

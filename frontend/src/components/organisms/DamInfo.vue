@@ -1,5 +1,10 @@
 <template>
   <v-card>
+    <v-toolbar color="indigo" dark>
+      <v-toolbar-title>{{ items.name }}</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn text><v-icon>mdi-pencil-plus</v-icon>投稿する</v-btn>
+    </v-toolbar>
     <v-list>
       <template v-for="(value, name, index) in items">
         <dam-info-item
