@@ -18,7 +18,7 @@ const routes = [
     component: SiteTop,
   },
   {
-    path: '/dam/:id',
+    path: '/dam/:damId',
     name: 'dam',
     component: DamPage,
     props: true,

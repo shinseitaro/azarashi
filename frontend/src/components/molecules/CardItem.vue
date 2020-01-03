@@ -48,7 +48,9 @@
       <v-col class="card-footer">
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn><v-icon left>mdi-map-legend</v-icon>配布所</v-btn>
+          <v-btn v-if="this.$route.name === 'sitetop'" @click="goToDamPage">
+            <v-icon left>mdi-map-legend</v-icon>配布所
+          </v-btn>
           <v-btn><v-icon left>mdi-cards</v-icon>投稿一覧</v-btn>
           <v-btn><v-icon left>mdi-pencil-plus</v-icon>投稿する</v-btn>
         </v-card-actions>
@@ -68,6 +70,9 @@ export default {
   methods: {
     moveMarker: function(marker) {
       this.$store.dispatch('map/startMove', marker);
+    },
+    goToDamPage: function() {
+      this.$router.push({ name: 'dam', params: { damId: 1 } });
     },
   },
 };
