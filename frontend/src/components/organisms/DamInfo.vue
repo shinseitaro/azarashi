@@ -7,6 +7,7 @@
           :title="title"
           :value="value"
           :name="name"
+          :last="index === Object.keys(items).length - 1"
         />
       </template>
     </v-list>
