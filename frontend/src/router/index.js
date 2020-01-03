@@ -39,14 +39,16 @@ const routes = [
     component: CompleteSignUp,
   },
   {
-    path: '/login',
+    path: '/login/:damId?',
     name: 'login',
     component: LoginPage,
+    props: true,
   },
   {
-    path: '/post',
+    path: '/post/:damId',
     name: 'post',
     component: PostPage,
+    props: true,
     meta: { requiresAuth: true },
   },
 ];
@@ -83,8 +85,9 @@ router.beforeEach((to, from, next) => {
 
 function forceToLoginPage(to, from, next) {
   next({
-    path: '/login',
+    name: 'login',
     query: { next: to.fullPath },
+    params: to.params,
   });
 }
 

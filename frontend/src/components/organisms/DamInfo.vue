@@ -3,7 +3,9 @@
     <v-toolbar color="indigo" dark>
       <v-toolbar-title>{{ items.name }}</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn text><v-icon>mdi-pencil-plus</v-icon>投稿する</v-btn>
+      <v-btn text @click="goToPostPage">
+        <v-icon>mdi-pencil-plus</v-icon>投稿する
+      </v-btn>
     </v-toolbar>
     <v-list>
       <template v-for="(value, name, index) in items">
@@ -23,6 +25,7 @@
 import DamInfoItem from '../molecules/DamInfoItem';
 
 export default {
+  props: ['damId'],
   components: {
     DamInfoItem,
   },
@@ -82,6 +85,15 @@ export default {
         coordinates: [140.8858935039343, 40.70977115787313],
       },
     };
+  },
+  methods: {
+    goToPostPage: function() {
+      this.$router
+        .push({ name: 'post', params: { damId: this.damId } })
+        .catch(error => {
+          return { error };
+        });
+    },
   },
 };
 </script>

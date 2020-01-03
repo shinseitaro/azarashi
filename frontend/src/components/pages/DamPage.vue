@@ -4,7 +4,7 @@
     <v-container>
       <v-row>
         <v-col cols="12" md="6" xs="12">
-          <dam-info />
+          <dam-info :dam-id="damId" />
         </v-col>
         <v-col cols="12" md="6" xs="12">
           <distribution-list />

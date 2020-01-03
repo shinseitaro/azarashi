@@ -41,7 +41,11 @@ export default {
   methods: {
     logout: function() {
       this.$store.dispatch('auth/logout');
-      this.$router.push({ name: 'sitetop' });
+      if (this.$route.name !== 'sitetop') {
+        this.$router.push({ name: 'sitetop' }).catch(error => {
+          return { error };
+        });
+      }
     },
   },
 };

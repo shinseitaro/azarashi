@@ -77,7 +77,14 @@ export default {
       params.append('name', this.email);
       this.$store.dispatch('auth/login', params).then(response => {
         if (response.payload.status === 200) {
-          this.$router.push({ name: 'post' });
+          this.$router
+            .push({
+              name: 'post',
+              params: { damId: this.$route.params.damId },
+            })
+            .catch(error => {
+              return { error };
+            });
         }
       });
     },

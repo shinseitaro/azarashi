@@ -52,7 +52,9 @@
             <v-icon left>mdi-map-legend</v-icon>配布所
           </v-btn>
           <v-btn><v-icon left>mdi-cards</v-icon>投稿一覧</v-btn>
-          <v-btn><v-icon left>mdi-pencil-plus</v-icon>投稿する</v-btn>
+          <v-btn @click="goToPostPage">
+            <v-icon left>mdi-pencil-plus</v-icon>投稿する
+          </v-btn>
         </v-card-actions>
       </v-col>
     </v-row>
@@ -72,7 +74,14 @@ export default {
       this.$store.dispatch('map/startMove', marker);
     },
     goToDamPage: function() {
-      this.$router.push({ name: 'dam', params: { damId: 1 } });
+      this.$router.push({ name: 'dam', params: { damId: 1 } }).catch(error => {
+        return { error };
+      });
+    },
+    goToPostPage: function() {
+      this.$router.push({ name: 'post', params: { damId: 1 } }).catch(error => {
+        return { error };
+      });
     },
   },
 };
