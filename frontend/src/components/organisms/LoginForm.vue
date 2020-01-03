@@ -31,12 +31,12 @@
       <v-card-title>SNSでログイン</v-card-title>
       <v-list>
         <v-list-item>
-          <v-btn block class="github-color" :href="githubLoginUrl">
+          <v-btn block dark class="github-color" :href="githubLoginUrl">
             <v-icon left>mdi-github-circle</v-icon> GitHub
           </v-btn>
         </v-list-item>
         <v-list-item>
-          <v-btn block class="twitter-color" :href="twitterLoginUrl">
+          <v-btn block dark class="twitter-color" :href="twitterLoginUrl">
             <v-icon left>mdi-twitter</v-icon> twitter
           </v-btn>
         </v-list-item>
@@ -88,11 +88,9 @@ export default {
 <style lang="scss">
 .github-color {
   background-color: #333333 !important;
-  color: #ffffff !important;
 }
 
 .twitter-color {
   background-color: #1da1f2 !important;
-  color: #ffffff !important;
 }
 </style>
