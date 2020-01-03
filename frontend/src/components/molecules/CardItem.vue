@@ -75,7 +75,7 @@ export default {
 
 <style lang="scss">
 .card {
-  display: flex;
+  display: flex !important;
 }
 
 .card-inner {
