@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
 import SiteTop from '../components/pages/SiteTop';
+import DamPage from '../components/pages/DamPage';
 import SignUp from '../components/pages/SignUp';
 import CheckYourEmail from '../components/pages/CheckYourEmail';
 import CompleteSignUp from '../components/pages/CompleteSignUp';
@@ -15,6 +16,12 @@ const routes = [
     path: '/',
     name: 'sitetop',
     component: SiteTop,
+  },
+  {
+    path: '/dam/:id',
+    name: 'dam',
+    component: DamPage,
+    props: true,
   },
   {
     path: '/signup',
