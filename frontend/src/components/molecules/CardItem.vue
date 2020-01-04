@@ -31,17 +31,10 @@
 
             <div class="grey--text ml-4">4.5 (413)</div>
           </v-row>
-          <v-row align="start" justify="space-between" class="mx-0 my-4">
-            <div>
-              <div class="subtitle-1 black--text">
-                {{ item.address }}
-              </div>
-              <div>{{ item.water_system_name }}水系 {{ item.river_name }}</div>
-            </div>
-            <v-btn icon>
-              <v-icon>mdi-map-marker</v-icon>
-            </v-btn>
-          </v-row>
+          <div class="subtitle-1 black--text">
+            {{ item.address }}
+          </div>
+          <div>{{ item.water_system_name }}水系 {{ item.river_name }}</div>
         </v-card-text>
       </v-col>
 
@@ -69,9 +62,6 @@ export default {
     };
   },
   methods: {
-    moveMarker: function(marker) {
-      this.$store.dispatch('map/startMove', marker);
-    },
     goToDamPage: function() {
       this.$router
         .push({ name: 'dam', params: { damId: this.item.dam_code } })

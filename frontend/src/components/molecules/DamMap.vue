@@ -3,11 +3,10 @@
     <mapbox-map
       :access-token="accessToken"
       :map-style="mapStyle"
-      :center="getBounds[1]"
+      :center="center"
       :zoom="zoom"
+      :scrollZoom="scrollZoom"
       @mb-created="mapboxInstance => (map = mapboxInstance)"
-      @mb-move="move"
-      @mb-moveend="endMove"
       @mb-zoom="zoomMap"
     >
       <mapbox-navigation-control />
@@ -45,7 +44,7 @@ import {
   MapboxLayer,
   MapboxNavigationControl,
 } from '@studiometa/vue-mapbox-gl';
-import { mapState, mapGetters } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -61,6 +60,8 @@ export default {
       map: null,
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/light-v10',
+      center: [139.7009177, 35.6580971],
+      scrollZoom: false,
       zoom: 6,
       zoomThreshold: 7,
       clustersPaint: {
@@ -103,9 +104,7 @@ export default {
     ...mapState({
       damGeoData: state => state.map.damGeoData,
       isDisplayPopup: state => state.map.isDisplayPopup,
-      markerPosition: state => state.map.markerPosition,
     }),
-    ...mapGetters('map', ['getBounds']),
     zoomUpSource: function() {
       return {
         type: 'geojson',
@@ -131,21 +130,6 @@ export default {
       this.map.getCanvas().style.cursor = '';
       this.coordinates = [null, null];
       this.name = '';
-    },
-    move: function() {
-      if (this.$store.state.map.isMoving) {
-        this.map.fitBounds(this.$store.state.map.bounds, {
-          linear: true,
-          easing: function(t) {
-            return t;
-          },
-          padding: 100,
-          maxZoom: 6,
-        });
-      }
-    },
-    endMove: function() {
-      this.$store.dispatch('map/stopMove');
     },
   },
 };

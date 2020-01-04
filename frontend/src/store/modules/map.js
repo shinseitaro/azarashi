@@ -1,18 +1,11 @@
 import * as API from '../../apis/API';
 
-const initialCenter = [139.7009177, 35.6580971];
-
 const map = {
   namespaced: true,
   state: {
     damGeoData: {},
     damList: [],
-    isDisplayMarker: false,
     isDisplayPopup: false,
-    markerPosition: initialCenter,
-    boundsNext: initialCenter,
-    bounds: [initialCenter, initialCenter],
-    isMoving: false,
     search: {
       name: '',
       address: '',
@@ -31,15 +24,6 @@ const map = {
     },
     SET_POPUP(state, bool) {
       state.isDisplayPopup = bool;
-    },
-    START_MOVE(state, marker) {
-      state.isMoving = true;
-      state.isDisplayMarker = true;
-      state.markerPosition = marker;
-      state.boundsNext = marker;
-    },
-    STOP_MOVE(state) {
-      state.isMoving = false;
     },
     SEARCH_NAME(state, name) {
       state.search.name = name;
@@ -73,12 +57,6 @@ const map = {
     },
     setPopup({ commit }, bool) {
       commit('SET_POPUP', bool);
-    },
-    startMove({ commit }, marker) {
-      commit('START_MOVE', marker);
-    },
-    stopMove({ commit }) {
-      commit('STOP_MOVE');
     },
     searchName({ commit }, name) {
       return new Promise(resolve => {
@@ -139,13 +117,7 @@ const map = {
       commit('SET_POPUP', false);
     },
   },
-  getters: {
-    getBounds: state => {
-      const boundsArray = [...state.bounds, state.boundsNext].slice(-2);
-      state.bounds = boundsArray;
-      return boundsArray;
-    },
-  },
+  getters: {},
 };
 
 export default map;
