@@ -2,36 +2,49 @@
   <v-container>
     <v-row>
       <v-col
-        v-for="(item, index) in damList.slice(0, 8)"
+        v-for="(item, index) in cards"
         :key="index"
         cols="12"
         lg="4"
         md="6"
         xs="12"
       >
-        <card-item v-if="isEmptySearchField" :item="item" />
-        <card-item
-          v-if="!isEmptySearchField && item.properties"
-          :item="item.properties"
-        />
+        <card-item-for-dam :item="item" />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import CardItem from '../molecules/CardItem';
+import CardItemForDam from '../molecules/CardItemForDam';
 
 export default {
   components: {
-    CardItem,
+    CardItemForDam,
   },
-  computed: {
-    ...mapState({
-      damList: state => state.map.damList,
-      isEmptySearchField: state => state.map.isEmptySearchField,
-    }),
+  data() {
+    return {
+      cards: [
+        {
+          imageUrl: 'http://****',
+          userId: 1,
+          username: 'kaizumaki',
+          published_date: '2020-01-01',
+        },
+        {
+          imageUrl: 'http://****',
+          userId: 1,
+          username: 'kaizumaki',
+          published_date: '2020-01-01',
+        },
+        {
+          imageUrl: 'http://****',
+          userId: 1,
+          username: 'kaizumaki',
+          published_date: '2020-01-01',
+        },
+      ],
+    };
   },
 };
 </script>

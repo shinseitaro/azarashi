@@ -5,6 +5,7 @@
       :map-style="mapStyle"
       :center="damCoord"
       :zoom="zoom"
+      :scrollZoom="scrollZoom"
       @mb-created="mapboxInstance => (map = mapboxInstance)"
     >
       <mapbox-navigation-control />
@@ -34,6 +35,7 @@ export default {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       zoom: 6,
+      scrollZoom: false,
     };
   },
   computed: {

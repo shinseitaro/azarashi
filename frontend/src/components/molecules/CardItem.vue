@@ -4,7 +4,7 @@
       <v-col>
         <v-img :aspect-ratio="88 / 63" src="/img/no_cards_posted.jpg"></v-img>
 
-        <v-card-title v-if="this.$route.name !== 'dam'">
+        <v-card-title>
           <v-row align="center" justify="space-between" class="mx-0">
             <span>{{ item.name }}</span>
             <v-checkbox
@@ -18,7 +18,7 @@
           </v-row>
         </v-card-title>
 
-        <v-card-text v-if="this.$route.name !== 'dam'">
+        <v-card-text>
           <v-row align="center" class="mx-0">
             <v-rating
               :value="4.5"
@@ -31,14 +31,12 @@
 
             <div class="grey--text ml-4">4.5 (413)</div>
           </v-row>
-          <div class="subtitle-1 black--text">
-            {{ item.address }}
-          </div>
+          <div class="subtitle-1">{{ item.address }}</div>
           <div>{{ item.water_system_name }}水系 {{ item.river_name }}</div>
         </v-card-text>
       </v-col>
 
-      <v-col v-if="this.$route.name !== 'dam'" class="card-footer">
+      <v-col class="card-footer">
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="goToDamPage">
