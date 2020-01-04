@@ -22,23 +22,40 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn href="/signup" text>
+    <v-btn v-if="!isLoggedIn" href="/signup" text>
       <span class="mr-2">Sign Up</span>
     </v-btn>
 
-    <v-btn href="/login" text>
+    <v-btn v-if="!isLoggedIn" text @click="login">
       <span class="mr-2">Login</span>
     </v-btn>
 
-    <v-btn text @click="logout">
+    <v-btn v-if="isLoggedIn" text @click="logout">
       <span class="mr-2">Logout</span>
     </v-btn>
   </v-app-bar>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
+  computed: {
+    ...mapState({
+      isLoggedIn: state => state.auth.isLoggedIn,
+    }),
+  },
   methods: {
+    login: function() {
+      this.$router
+        .push({ name: 'login' })
+        .then(response => {
+          return { response };
+        })
+        .catch(error => {
+          return { error };
+        });
+    },
     logout: function() {
       this.$store.dispatch('auth/logout');
       if (this.$route.name !== 'sitetop') {

@@ -9,7 +9,7 @@ import BaseLayout from '../organisms/BaseLayout';
 import PostForm from '../organisms/PostForm';
 
 export default {
-  props: ['damId'],
+  props: ['damId', 'cardId'],
   components: {
     BaseLayout,
     PostForm,

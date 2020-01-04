@@ -75,17 +75,30 @@ export default {
       params.append('email', this.email);
       params.append('password', this.password);
       params.append('name', this.email);
-      this.$store.dispatch('auth/login', params).then(response => {
-        if (response.payload.status === 200) {
-          this.$router
-            .push({
-              name: 'post',
-              params: { damId: this.$route.params.damId },
-            })
-            .catch(error => {
-              return { error };
-            });
-        }
+      this.$store.dispatch('auth/login', params).then(() => {
+        this.$store.dispatch('auth/update').then(response => {
+          if (response.payload.status === 200) {
+            if (this.$route.params.damId) {
+              this.$router
+                .push({
+                  name: 'post',
+                  params: { damId: this.$route.params.damId },
+                })
+                .catch(error => {
+                  return { error };
+                });
+            } else {
+              this.$router
+                .push({
+                  name: 'edit',
+                  params: { userId: this.$store.state.auth.userId },
+                })
+                .catch(error => {
+                  return { error };
+                });
+            }
+          }
+        });
       });
     },
   },

@@ -33,7 +33,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch('dam/getDam', this.damId);
-    this.$store.dispatch('map/getDamList');
   },
 };
 </script>

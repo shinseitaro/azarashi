@@ -8,6 +8,7 @@ import CheckYourEmail from '../components/pages/CheckYourEmail';
 import CompleteSignUp from '../components/pages/CompleteSignUp';
 import LoginPage from '../components/pages/LoginPage';
 import PostPage from '../components/pages/PostPage';
+import UserPage from '../components/pages/UserPage';
 
 Vue.use(VueRouter);
 
@@ -39,7 +40,7 @@ const routes = [
     component: CompleteSignUp,
   },
   {
-    path: '/login/:damId?',
+    path: '/login/:damId?:userId?',
     name: 'login',
     component: LoginPage,
     props: true,
@@ -48,6 +49,25 @@ const routes = [
     path: '/post/:damId',
     name: 'post',
     component: PostPage,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/edit/:cardId',
+    name: 'edit_post',
+    component: PostPage,
+    props: true,
+  },
+  {
+    path: '/user/:userId',
+    name: 'user',
+    component: UserPage,
+    props: true,
+  },
+  {
+    path: '/user/:userId/edit',
+    name: 'edit',
+    component: UserPage,
     props: true,
     meta: { requiresAuth: true },
   },
@@ -62,21 +82,29 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.state.auth.isLoggedIn) {
-      next();
-    } else {
-      if (token !== null) {
-        store
-          .dispatch('auth/update')
-          .then(() => {
-            next();
-          })
-          .catch(() => {
-            forceToLoginPage(to, from, next);
-          });
+    if (
+      to.params.userId !== null &&
+      to.params.userId === store.state.auth.userId
+    ) {
+      if (store.state.auth.isLoggedIn) {
+        next();
       } else {
-        forceToLoginPage(to, from, next);
+        if (token !== null) {
+          store
+            .dispatch('auth/update')
+            .then(() => {
+              next();
+            })
+            .catch(() => {
+              forceToLoginPage(to, from, next);
+            });
+        } else {
+          forceToLoginPage(to, from, next);
+        }
       }
+    } else {
+      store.dispatch('auth/logout');
+      forceToLoginPage(to, from, next);
     }
   } else {
     next();

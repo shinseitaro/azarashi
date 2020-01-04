@@ -3,16 +3,19 @@ import axios from 'axios';
 const auth = {
   namespaced: true,
   state: {
+    userId: 0,
     username: '',
     isLoggedIn: false,
     error: '',
   },
   mutations: {
-    SET_NAME(state, name) {
+    SET_NAME(state, id, name) {
+      state.userId = id;
       state.username = name;
       state.isLoggedIn = true;
     },
     CLEAR_NAME(state) {
+      state.userId = 0;
       state.username = '';
       state.isLoggedIn = false;
     },
@@ -21,7 +24,7 @@ const auth = {
     },
   },
   actions: {
-    login({ dispatch, commit }, params) {
+    login({ commit }, params) {
       return new Promise(resolve => {
         const payload = axios
           .post(process.env.VUE_APP_ROOT_URL + 'api-token-auth/', params, {
@@ -32,7 +35,6 @@ const auth = {
           .then(response => {
             commit('SET_ERROR', '');
             localStorage.setItem('token', response.data.token);
-            dispatch('update');
             return { payload: response };
           })
           .catch(error => {
@@ -56,7 +58,7 @@ const auth = {
             },
           })
           .then(response => {
-            commit('SET_NAME', response.data.name);
+            commit('SET_NAME', response.data.pk, response.data.name);
             return { payload: response };
           })
           .catch(error => {
