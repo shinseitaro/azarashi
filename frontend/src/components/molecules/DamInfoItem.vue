@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div v-if="title[name]">
+    <v-divider v-if="!first"></v-divider>
+
     <v-list-item>
       <v-list-item-icon>
         <v-icon color="indigo">mdi-sign-direction</v-icon>
@@ -18,13 +20,11 @@
         </div>
       </v-list-item-content>
     </v-list-item>
-
-    <v-divider v-if="!last"></v-divider>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['title', 'value', 'name', 'last'],
+  props: ['title', 'value', 'name', 'first'],
 };
 </script>

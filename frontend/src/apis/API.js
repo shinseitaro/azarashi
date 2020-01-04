@@ -30,8 +30,8 @@ export function searchGeo(
   );
 }
 
-export function set(repository, id) {
-  return data_access(`${repository}/${id}/`, 'GET');
+export function setQuery(repository, query, id) {
+  return data_access(`${repository}/?${query}=${id}`, 'GET');
 }
 
 export function create(repository, data) {

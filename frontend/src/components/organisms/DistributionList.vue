@@ -4,6 +4,8 @@
       <v-toolbar-title>カード配布所</v-toolbar-title>
     </v-toolbar>
     <v-list :key="key" v-for="(item, key) in items">
+      <v-divider inset v-if="key !== 0"></v-divider>
+
       <v-list-item>
         <v-list-item-icon class="pt-3">
           <v-icon color="indigo">mdi-hand-pointing-right</v-icon>
@@ -20,7 +22,6 @@
           </template>
         </v-list-item-content>
       </v-list-item>
-      <v-divider inset v-if="key !== items.length - 1"></v-divider>
     </v-list>
   </v-card>
 </template>
@@ -35,12 +36,10 @@ export default {
   data() {
     return {
       title: {
-        name: 'ダム名',
-        dam_code: 'ダムコード',
+        name: '配布所名',
+        url: 'URL',
         address: '所在地',
         operation_hour: '配布日時',
-        prefecture: '都道府県',
-        coordinates: '緯度・経度',
       },
       items: [
         {

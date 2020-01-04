@@ -3,12 +3,12 @@
     <mapbox-map
       :access-token="accessToken"
       :map-style="mapStyle"
-      :center="coordinates"
+      :center="damCoord"
       :zoom="zoom"
       @mb-created="mapboxInstance => (map = mapboxInstance)"
     >
       <mapbox-navigation-control />
-      <mapbox-marker :lng-lat="coordinates" />
+      <mapbox-marker :lng-lat="damCoord" />
     </mapbox-map>
   </div>
 </template>
@@ -20,6 +20,7 @@ import {
   MapboxMarker,
   MapboxNavigationControl,
 } from '@studiometa/vue-mapbox-gl';
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -33,8 +34,12 @@ export default {
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       zoom: 6,
-      coordinates: [139.7009177, 35.6580971],
     };
+  },
+  computed: {
+    ...mapState({
+      damCoord: state => state.dam.damCoord,
+    }),
   },
 };
 </script>

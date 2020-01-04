@@ -74,9 +74,11 @@ export default {
       this.$store.dispatch('map/startMove', marker);
     },
     goToDamPage: function() {
-      this.$router.push({ name: 'dam', params: { damId: 1 } }).catch(error => {
-        return { error };
-      });
+      this.$router
+        .push({ name: 'dam', params: { damId: 200 } })
+        .catch(error => {
+          return { error };
+        });
     },
     goToPostPage: function() {
       this.$router.push({ name: 'post', params: { damId: 1 } }).catch(error => {
