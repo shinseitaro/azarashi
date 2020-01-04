@@ -49,9 +49,8 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="goToDamPage">
-            <v-icon left>mdi-map-legend</v-icon>配布所
+            <v-icon left>mdi-map-legend</v-icon>詳細
           </v-btn>
-          <v-btn><v-icon left>mdi-cards</v-icon>投稿一覧</v-btn>
           <v-btn @click="goToPostPage">
             <v-icon left>mdi-pencil-plus</v-icon>投稿する
           </v-btn>
@@ -75,15 +74,17 @@ export default {
     },
     goToDamPage: function() {
       this.$router
-        .push({ name: 'dam', params: { damId: 200 } })
+        .push({ name: 'dam', params: { damId: this.item.dam_code } })
         .catch(error => {
           return { error };
         });
     },
     goToPostPage: function() {
-      this.$router.push({ name: 'post', params: { damId: 1 } }).catch(error => {
-        return { error };
-      });
+      this.$router
+        .push({ name: 'post', params: { damId: this.item.dam_code } })
+        .catch(error => {
+          return { error };
+        });
     },
   },
 };
