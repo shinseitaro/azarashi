@@ -35,10 +35,16 @@ class DamFilter(filters.FilterSet):
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
     address = filters.CharFilter(field_name='address', lookup_expr='contains')
 
-
     class Meta:
         model = Dam
         fields = ("name", "address", )
+
+
+class DamIdFilter(filters.FilterSet):
+    dam_code = filters.NumberFilter(field_name='dam_code')
+    class Meta:
+        model = Dam
+        fields = ( )
 
 class DamViewSet(viewsets.ModelViewSet):
 
@@ -48,8 +54,22 @@ class DamViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,DistanceToPointFilter,) #
     distance_filter_field = 'geom'
     distance_filter_convert_meters = True
-    filterset_class = DamFilter
+    filterset_class = DamIdFilter
     http_method_names = ['get', 'head', 'option']
+
+
+class DamIdViewSet(viewsets.ModelViewSet):
+
+    queryset = Dam.objects.all()
+    serializer_class = DamSerializer
+    pagination_class = DamPagination
+    filter_backends = (filters.DjangoFilterBackend,DistanceToPointFilter,) #
+    distance_filter_field = 'geom'
+    distance_filter_convert_meters = True
+    filterset_class = DamIdFilter
+    #http_method_names = ['get', 'head', 'option']
+
+
 
 # class DamCardlistViewSet(viewsets.ModelViewSet):
 #     """ CardList用View
