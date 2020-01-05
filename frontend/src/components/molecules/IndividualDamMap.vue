@@ -39,7 +39,7 @@ export default {
       map: null,
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/light-v10',
-      zoom: 6,
+      zoom: 10,
       scrollZoom: false,
       damLayer: {
         id: 'damLayer',
