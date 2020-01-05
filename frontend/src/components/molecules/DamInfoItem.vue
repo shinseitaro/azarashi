@@ -10,6 +10,9 @@
       <v-list-item-content v-if="Array.isArray(title[name])">
         <v-list-item-subtitle>{{ title[name][0] }}</v-list-item-subtitle>
         <div>{{ value }}<span v-html="title[name][1]"></span></div>
+        <div v-if="name === 'total_pondage' && value !== -9999">
+          （東京ドーム約{{ Math.round((value / 1240) * 10) / 10 }}杯分）
+        </div>
       </v-list-item-content>
       <v-list-item-content v-else>
         <v-list-item-subtitle>{{ title[name] }}</v-list-item-subtitle>
