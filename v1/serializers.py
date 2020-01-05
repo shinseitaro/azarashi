@@ -9,6 +9,7 @@ class DamSerializer(serializers.ModelSerializer):
         exclude = ["registered_at", "modified_at"]
         #fields = ("name", "address", "river_name","geom")
 
+
 class DamCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dam
@@ -55,7 +56,6 @@ class DamGeoFeatureModelSerializer(GeoFeatureModelSerializer):
         id_field = False
         #exclude = ("registered_at", "modified_at", )
         fields = ("name", "address", "river_name", "type_code", "institution_in_charge", "purpose_code" )
-        #fields = ("name", "address", "river_name",)
 
 
 class DamMapModelSerializer(GeoFeatureModelSerializer):
@@ -66,3 +66,14 @@ class DamMapModelSerializer(GeoFeatureModelSerializer):
         geo_field = "geom"
         id_field = False
         fields = ("name", "geom",)
+
+
+class DamIdSerializer(DamGeoFeatureModelSerializer):
+
+    class Meta:
+        model = Dam
+        geo_field = "geom"
+        #exclude = ["registered_at", "modified_at"]
+        id_field = False
+        fields = ("name", "address", "river_name", "type_code", "institution_in_charge", "purpose_code", "scale_bank_height", "scale_bank_span", "total_pondage", )
+

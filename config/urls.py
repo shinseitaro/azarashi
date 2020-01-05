@@ -7,13 +7,13 @@ from v1.views import DamViewSet, DamCardListViewSet, DamMapListViewSet, DamIdVie
 
 router = DefaultRouter()
 
-router.register('dam/search', DamViewSet)
+router.register('dam/search', DamViewSet, basename="dam/search")
 
 # cache 処理のために DamCardListViewSet を、ModelViewSet→ViewSetに変更したので、最後に basenameオプションが必要になった
 #router.register('dam/list', DamCardListViewSet)
 router.register('dam/list', DamCardListViewSet, basename="dam/list")
 router.register('dam/map', DamMapListViewSet, basename="dam/map")
-router.register('dam', DamIdViewSet, basename="dam/dam")
+router.register('dam', DamIdViewSet, )
 
 
 urlpatterns = [

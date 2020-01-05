@@ -7,15 +7,13 @@ from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
 
-
-
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
 
 
 from dam.models import Dam
-from v1.serializers import DamGeoFeatureModelSerializer, DamSerializer, DamListSerializer, DamCardListSerializer,DamCardSerializer, DamMapModelSerializer
+from v1.serializers import DamGeoFeatureModelSerializer, DamSerializer, DamListSerializer, DamCardListSerializer,DamCardSerializer, DamMapModelSerializer, DamIdSerializer
 
 class GeojsonLocationList(generics.ListCreateAPIView):
     pagination_class = GeoJsonPagination
@@ -24,7 +22,7 @@ class DamPagination(PageNumberPagination):
     # url のリクエスト　例：GET /api/dam/?page=2
     page_size_query_param = 'page_size'
     # 一ページあたりの件数
-    page_size = 100
+    page_size = 10
 
 class DamFilter(filters.FilterSet):
     # この変数名が、 url のクエリ文字列キーになる
@@ -54,20 +52,14 @@ class DamViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,DistanceToPointFilter,) #
     distance_filter_field = 'geom'
     distance_filter_convert_meters = True
-    filterset_class = DamIdFilter
+    filterset_class = DamFilter
     http_method_names = ['get', 'head', 'option']
 
 
-class DamIdViewSet(viewsets.ModelViewSet):
+class DamIdViewSet(DamViewSet):
 
-    queryset = Dam.objects.all()
-    serializer_class = DamSerializer
-    pagination_class = DamPagination
-    filter_backends = (filters.DjangoFilterBackend,DistanceToPointFilter,) #
-    distance_filter_field = 'geom'
-    distance_filter_convert_meters = True
     filterset_class = DamIdFilter
-    #http_method_names = ['get', 'head', 'option']
+    serializer_class = DamIdSerializer #DamGeoFeatureModelSerializer
 
 
 
