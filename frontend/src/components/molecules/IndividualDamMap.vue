@@ -20,6 +20,8 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import {
   MapboxMap,
   // MapboxMarker,
+  MapboxSource,
+  MapboxLayer,
   MapboxNavigationControl,
 } from '@studiometa/vue-mapbox-gl';
 import { mapState } from 'vuex';
@@ -28,6 +30,8 @@ export default {
   components: {
     MapboxMap,
     // MapboxMarker,
+    MapboxSource,
+    MapboxLayer,
     MapboxNavigationControl,
   },
   data() {
@@ -42,7 +46,7 @@ export default {
         type: 'circle',
         source: 'dam',
         paint: {
-          'circle-radius': 20,
+          'circle-radius': 10,
           'circle-color': '#3794b3',
         },
       },

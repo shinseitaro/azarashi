@@ -7,7 +7,11 @@
         <v-icon color="indigo">mdi-sign-direction</v-icon>
       </v-list-item-icon>
 
-      <v-list-item-content>
+      <v-list-item-content v-if="Array.isArray(title[name])">
+        <v-list-item-subtitle>{{ title[name][0] }}</v-list-item-subtitle>
+        <div>{{ value }}<span v-html="title[name][1]"></span></div>
+      </v-list-item-content>
+      <v-list-item-content v-else>
         <v-list-item-subtitle>{{ title[name] }}</v-list-item-subtitle>
         <div>
           {{
