@@ -16,10 +16,10 @@ const map = {
     isEmptySearchField: true,
   },
   mutations: {
-    GET_DAM_GEO_DATA(state, data) {
+    SET_DAM_GEO_DATA(state, data) {
       state.damGeoData = data;
     },
-    GET_DAM_LIST(state, list) {
+    SET_DAM_LIST(state, list) {
       state.damList = list;
     },
     SET_POPUP(state, bool) {
@@ -47,12 +47,12 @@ const map = {
   actions: {
     getDamGeoData({ commit }) {
       API.read('dam/map').then(response => {
-        commit('GET_DAM_GEO_DATA', response.payload);
+        commit('SET_DAM_GEO_DATA', response.payload);
       });
     },
     getDamList({ commit }) {
       API.read('dam/list').then(response => {
-        commit('GET_DAM_LIST', response.payload);
+        commit('SET_DAM_LIST', response.payload);
       });
     },
     setPopup({ commit }, bool) {

@@ -32,7 +32,9 @@ export default {
     CardListForDam,
   },
   mounted() {
-    this.$store.dispatch('dam/getDam', this.damId);
+    this.$store.dispatch('dam/getDam', this.damId).then(() => {
+      document.title = this.$store.state.dam.damName + 'ダム情報';
+    });
   },
 };
 </script>

@@ -4,7 +4,9 @@ const dam = {
   namespaced: true,
   state: {
     damId: 0,
+    damName: '',
     damInfo: [],
+    damGeoData: {},
     damCoord: [null, null],
     distributionList: [],
     distributionCoords: [[null, null]],
@@ -14,8 +16,14 @@ const dam = {
     SET_DAM_ID(state, id) {
       state.damId = id;
     },
+    SET_DAM_NAME(state, name) {
+      state.damName = name;
+    },
     SET_DAM_INFO(state, array) {
       state.damInfo = array;
+    },
+    SET_DAM_GEO_DATA(state, data) {
+      state.damGeoData = data;
     },
     SET_DAM_COORD(state, array) {
       state.damCoord = array;
@@ -36,8 +44,16 @@ const dam = {
     },
     getDam({ commit }, id) {
       API.setQuery('dam', 'dam_code', id).then(response => {
-        commit('SET_DAM_INFO', response.payload.results[0]);
-        commit('SET_DAM_COORD', response.payload.results[0].geom.coordinates);
+        commit(
+          'SET_DAM_NAME',
+          response.payload.results.features[0].properties.name
+        );
+        commit('SET_DAM_INFO', response.payload.results.features[0].properties);
+        commit('SET_DAM_GEO_DATA', response.payload.results);
+        commit(
+          'SET_DAM_COORD',
+          response.payload.results.features[0].geometry.coordinates
+        );
       });
     },
   },

@@ -9,7 +9,8 @@
       @mb-created="mapboxInstance => (map = mapboxInstance)"
     >
       <mapbox-navigation-control />
-      <mapbox-marker :lng-lat="damCoord" />
+      <mapbox-source id="dam" :options="damSource" />
+      <mapbox-layer :id="damLayer.id" :options="damLayer" />
     </mapbox-map>
   </div>
 </template>
@@ -18,7 +19,7 @@
 import 'mapbox-gl/dist/mapbox-gl.css';
 import {
   MapboxMap,
-  MapboxMarker,
+  // MapboxMarker,
   MapboxNavigationControl,
 } from '@studiometa/vue-mapbox-gl';
 import { mapState } from 'vuex';
@@ -26,7 +27,7 @@ import { mapState } from 'vuex';
 export default {
   components: {
     MapboxMap,
-    MapboxMarker,
+    // MapboxMarker,
     MapboxNavigationControl,
   },
   data() {
@@ -36,12 +37,28 @@ export default {
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       zoom: 6,
       scrollZoom: false,
+      damLayer: {
+        id: 'damLayer',
+        type: 'circle',
+        source: 'dam',
+        paint: {
+          'circle-radius': 20,
+          'circle-color': '#3794b3',
+        },
+      },
     };
   },
   computed: {
     ...mapState({
       damCoord: state => state.dam.damCoord,
     }),
+    damSource: function() {
+      return {
+        type: 'geojson',
+        cluster: false,
+        data: this.$store.state.dam.damGeoData,
+      };
+    },
   },
 };
 </script>
