@@ -28,18 +28,18 @@ export default {
         {
           imageUrl: 'http://****',
           userId: 1,
+          username: 'aiueo',
+          published_date: '2020-01-01',
+        },
+        {
+          imageUrl: 'http://****',
+          userId: 2,
           username: 'kaizumaki',
           published_date: '2020-01-01',
         },
         {
           imageUrl: 'http://****',
-          userId: 1,
-          username: 'kaizumaki',
-          published_date: '2020-01-01',
-        },
-        {
-          imageUrl: 'http://****',
-          userId: 1,
+          userId: 2,
           username: 'kaizumaki',
           published_date: '2020-01-01',
         },

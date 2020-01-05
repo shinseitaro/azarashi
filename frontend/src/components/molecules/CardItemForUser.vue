@@ -46,18 +46,14 @@
         <v-card-actions v-if="this.$route.name === 'edit'">
           <v-spacer></v-spacer>
           <v-btn @click="goToEditPostPage">
-            <v-icon left>mdi-pencil-outline</v-icon>Edit
+            <v-icon left>mdi-pencil-outline</v-icon>編集
           </v-btn>
-          <v-btn><v-icon left>mdi-delete-forever</v-icon>Delete</v-btn>
+          <v-btn><v-icon left>mdi-delete-forever</v-icon>削除</v-btn>
         </v-card-actions>
-
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn v-if="this.$route.name === 'user'" @click="goToEditPage">
-            <v-icon left>mdi-square-edit-outline</v-icon>編集
-          </v-btn>
           <v-btn @click="goToDamPage">
-            <v-icon left>mdi-map-legend</v-icon>詳細
+            <v-icon left>mdi-map-legend</v-icon>ダム詳細
           </v-btn>
           <v-btn @click="goToPostPage">
             <v-icon left>mdi-pencil-plus</v-icon>投稿する
@@ -96,13 +92,6 @@ export default {
     }
   },
   methods: {
-    goToEditPage: function() {
-      this.$router
-        .push({ name: 'edit', params: { userId: this.userId } })
-        .catch(error => {
-          return { error };
-        });
-    },
     goToDamPage: function() {
       this.$router
         .push({ name: 'dam', params: { damId: this.item.dam_code } })

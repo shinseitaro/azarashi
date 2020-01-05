@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-toolbar color="indigo" dark>
+      <v-toolbar-title>kaizumakiさんのカード</v-toolbar-title>
+    </v-toolbar>
     <v-row>
       <v-col
         v-for="(item, index) in damList.slice(0, 8)"

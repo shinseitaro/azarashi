@@ -40,7 +40,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="goToDamPage">
-            <v-icon left>mdi-map-legend</v-icon>詳細
+            <v-icon left>mdi-map-legend</v-icon>ダム詳細
           </v-btn>
           <v-btn @click="goToPostPage">
             <v-icon left>mdi-pencil-plus</v-icon>投稿する
