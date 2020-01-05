@@ -82,29 +82,21 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('token');
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (
-      to.params.userId !== null &&
-      to.params.userId === store.state.auth.userId
-    ) {
-      if (store.state.auth.isLoggedIn) {
-        next();
-      } else {
-        if (token !== null) {
-          store
-            .dispatch('auth/update')
-            .then(() => {
-              next();
-            })
-            .catch(() => {
-              forceToLoginPage(to, from, next);
-            });
-        } else {
-          forceToLoginPage(to, from, next);
-        }
-      }
+    if (store.state.auth.isLoggedIn) {
+      next();
     } else {
-      store.dispatch('auth/logout');
-      forceToLoginPage(to, from, next);
+      if (token !== null) {
+        store
+          .dispatch('auth/update')
+          .then(() => {
+            next();
+          })
+          .catch(() => {
+            forceToLoginPage(to, from, next);
+          });
+      } else {
+        forceToLoginPage(to, from, next);
+      }
     }
   } else {
     next();

@@ -1,6 +1,7 @@
 <template>
   <v-text-field
     outlined
+    hide-details
     background-color="white"
     :label="label"
     prepend-inner-icon="mdi-magnify"

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto card" max-width="374" min-height="100%">
+  <v-card class="mx-auto card" max-width="450" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
         <v-img :aspect-ratio="88 / 63" src="/img/no_cards_posted.jpg"></v-img>

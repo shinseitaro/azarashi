@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card outlined>
     <v-toolbar color="indigo" dark>
       <v-toolbar-title>{{ damInfo.name }}</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -40,7 +40,7 @@ export default {
         purpose_code: '目的',
         scale_bank_height: ['堤高', 'm'],
         scale_bank_span: ['堤頂長', 'm'],
-        bank_volume: ['堤体積', 'm&sup3;'],
+        bank_volume: ['堤体積', '万m&sup3;'],
         total_pondage: ['総貯水量', '万m&sup3;'],
         institution_in_charge: 'ダム事業者名',
         year_of_completion: ['竣工年度', '年'],

@@ -138,7 +138,7 @@ export default {
 <style lang="scss">
 #map-wrap {
   position: relative;
-  height: 80vh;
+  height: 100vh;
   overflow: hidden;
 }
 

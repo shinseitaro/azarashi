@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card outlined>
     <v-toolbar color="indigo" dark>
       <v-toolbar-title>カード配布所</v-toolbar-title>
     </v-toolbar>

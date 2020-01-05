@@ -1,6 +1,6 @@
 <template>
   <div v-if="title[name]">
-    <v-divider v-if="!first"></v-divider>
+    <v-divider inset v-if="!first"></v-divider>
 
     <v-list-item>
       <v-list-item-icon>
