@@ -62,7 +62,7 @@ export default {
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       center: [139.7009177, 35.6580971],
       scrollZoom: false,
-      zoom: 6,
+      zoom: 4,
       zoomThreshold: 7,
       clustersPaint: {
         'circle-color': [
