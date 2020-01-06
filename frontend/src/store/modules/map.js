@@ -14,6 +14,7 @@ const map = {
       waterSystem: '',
     },
     isEmptySearchField: true,
+    page: 1,
   },
   mutations: {
     SET_DAM_GEO_DATA(state, data) {
@@ -21,6 +22,9 @@ const map = {
     },
     SET_DAM_LIST(state, list) {
       state.damList = list;
+    },
+    GET_DAM_LIST(state, data) {
+      state.damList = state.damList.concat(data)
     },
     SET_POPUP(state, bool) {
       state.isDisplayPopup = bool;
@@ -43,6 +47,12 @@ const map = {
     EMPTY_SEARCH_FIELD(state, bool) {
       state.isEmptySearchField = bool;
     },
+    PAGE_UP(state) {
+      state.page += 1
+    },
+    PAGE_DOWN(state) {
+      state.page -= 1
+    },
   },
   actions: {
     getDamGeoData({ commit }) {
@@ -50,9 +60,9 @@ const map = {
         commit('SET_DAM_GEO_DATA', response.payload);
       });
     },
-    getDamList({ commit }) {
-      API.read('dam/list').then(response => {
-        commit('SET_DAM_LIST', response.payload);
+    getDamList({ commit, state }) {
+      API.readPage('dam/list', state.page).then(response => {
+        commit('GET_DAM_LIST', response.payload);
       });
     },
     setPopup({ commit }, bool) {
@@ -116,8 +126,18 @@ const map = {
       }
       commit('SET_POPUP', false);
     },
+    pageUp({commit},) {
+      commit('PAGE_UP')
+    },
+    pageDown({commit},) {
+      commit('PAGE_DOWN')
+    },
   },
-  getters: {},
+  getters: {
+    getPages: state => {
+      return state.page;
+    },
+  },
 };
 
 export default map;

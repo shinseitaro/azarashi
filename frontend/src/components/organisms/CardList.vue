@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col
-        v-for="(item, index) in damList.slice(0, 8)"
+        v-for="(item, index) in damList"
         :key="index"
         cols="12"
         lg="4"
@@ -15,6 +15,12 @@
           :item="item.properties"
         />
       </v-col>
+    </v-row>
+    <v-row align="center"
+          justify="center">
+      <div class="text-xs-center">
+        <v-btn small @click="loadMore">もっと見る</v-btn>
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -33,5 +39,13 @@ export default {
       isEmptySearchField: state => state.map.isEmptySearchField,
     }),
   },
+  methods: {
+    async loadMore() {
+              console.log('page up')
+              await this.$store.dispatch('map/pageUp');
+              //read pages
+              await this.$store.dispatch('map/getDamList');
+          }
+  }
 };
 </script>
