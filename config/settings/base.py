@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import datetime
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+load_dotenv(dotenv_path=BASE_DIR+'/.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -23,6 +24,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 DEBUG = False
 
 ALLOWED_HOSTS = []
+
+BASE_URL = os.environ['BASE_URL']
 
 # Application definition
 
@@ -177,8 +180,8 @@ JWT_AUTH = {
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-GITHUB_CALLBACK_URL = 'http://127.0.0.1:8000/accounts/github/login/callback/'
-TWITTER_CALLBACK_URL = 'http://127.0.0.1:8000/accounts/twitter/login/callback/'
+GITHUB_CALLBACK_URL = BASE_URL + 'accounts/github/login/callback/'
+TWITTER_CALLBACK_URL = BASE_URL + 'accounts/twitter/login/callback/'
 LOGIN_REDIRECT_URL = '/token/'
 REST_USE_JWT = True
 
