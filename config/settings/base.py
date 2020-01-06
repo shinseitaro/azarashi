@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import datetime
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+load_dotenv(dotenv_path=BASE_DIR+'/.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -24,7 +25,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = []
 
-BASE_URL = 'http://127.0.0.1:8000/'
+BASE_URL = os.environ['BASE_URL']
 
 # Application definition
 
