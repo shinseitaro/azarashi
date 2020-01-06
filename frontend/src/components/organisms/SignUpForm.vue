@@ -4,6 +4,11 @@
       <v-card-title>ユーザー登録</v-card-title>
       <div class="mx-4">
         <v-text-field
+          v-model="username"
+          label="user name"
+          :rules="[rules.required]"
+        ></v-text-field>
+        <v-text-field
           v-model="email"
           label="e-mail"
           type="email"
@@ -53,6 +58,7 @@ export default {
     return {
       show1: false,
       show2: false,
+      username: '',
       email: '',
       password1: '',
       password2: '',
@@ -70,6 +76,7 @@ export default {
   computed: {
     disabledBtn: function() {
       return (
+        this.username === '' ||
         this.email === '' ||
         this.password1 === '' ||
         this.password2 === '' ||
@@ -80,10 +87,10 @@ export default {
   methods: {
     signUp: function() {
       const params = new URLSearchParams();
+      params.append('username', this.username);
       params.append('email', this.email);
       params.append('password1', this.password1);
       params.append('password2', this.password2);
-      params.append('username', this.email);
       axios
         .post(
           process.env.VUE_APP_ROOT_URL + 'rest-auth/registration/',
@@ -98,8 +105,6 @@ export default {
           this.$router.push('check_your_email');
         })
         .catch(error => {
-          console.log(error);
-          console.log(error.response);
           return (this.error = error.response.data.email.join(''));
         });
     },
