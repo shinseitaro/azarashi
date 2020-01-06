@@ -4,7 +4,9 @@ axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
 // axios.defaults.xsrfCookieName = 'csrftoken';
 // axios.defaults.xsrfHeaderName = 'X-CSRFToken';
 axios.defaults.headers.common['Authorization'] =
-  'JWT ' + localStorage.getItem('token');
+  localStorage.getItem('token') != null
+    ? 'JWT ' + localStorage.getItem('token')
+    : '';
 
 export function read(repository) {
   return access(`${repository}/`, 'GET');
@@ -28,8 +30,8 @@ export function searchGeo(
   );
 }
 
-export function set(repository, id) {
-  return data_access(`${repository}/${id}/`, 'GET');
+export function setQuery(repository, query, id) {
+  return data_access(`${repository}/?${query}=${id}`, 'GET');
 }
 
 export function create(repository, data) {

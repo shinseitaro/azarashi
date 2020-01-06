@@ -1,18 +1,11 @@
 import * as API from '../../apis/API';
 
-const initialCenter = [139.7009177, 35.6580971];
-
 const map = {
   namespaced: true,
   state: {
     damGeoData: {},
     damList: [],
-    isDisplayMarker: false,
     isDisplayPopup: false,
-    markerPosition: initialCenter,
-    boundsNext: initialCenter,
-    bounds: [initialCenter, initialCenter],
-    isMoving: false,
     search: {
       name: '',
       address: '',
@@ -23,23 +16,14 @@ const map = {
     isEmptySearchField: true,
   },
   mutations: {
-    GET_DAM_GEO_DATA(state, data) {
+    SET_DAM_GEO_DATA(state, data) {
       state.damGeoData = data;
     },
-    GET_DAM_LIST(state, list) {
+    SET_DAM_LIST(state, list) {
       state.damList = list;
     },
     SET_POPUP(state, bool) {
       state.isDisplayPopup = bool;
-    },
-    START_MOVE(state, marker) {
-      state.isMoving = true;
-      state.isDisplayMarker = true;
-      state.markerPosition = marker;
-      state.boundsNext = marker;
-    },
-    STOP_MOVE(state) {
-      state.isMoving = false;
     },
     SEARCH_NAME(state, name) {
       state.search.name = name;
@@ -63,22 +47,16 @@ const map = {
   actions: {
     getDamGeoData({ commit }) {
       API.read('dam/map').then(response => {
-        commit('GET_DAM_GEO_DATA', response.payload);
+        commit('SET_DAM_GEO_DATA', response.payload);
       });
     },
     getDamList({ commit }) {
       API.read('dam/list').then(response => {
-        commit('GET_DAM_LIST', response.payload);
+        commit('SET_DAM_LIST', response.payload);
       });
     },
     setPopup({ commit }, bool) {
       commit('SET_POPUP', bool);
-    },
-    startMove({ commit }, marker) {
-      commit('START_MOVE', marker);
-    },
-    stopMove({ commit }) {
-      commit('STOP_MOVE');
     },
     searchName({ commit }, name) {
       return new Promise(resolve => {
@@ -130,20 +108,16 @@ const map = {
           state.search.waterSystem
         ).then(response => {
           commit('GET_DAM_GEO_DATA', response.payload.results);
+          commit('GET_DAM_LIST', response.payload.results.features);
         });
       } else {
         dispatch('getDamGeoData');
+        dispatch('getDamList');
       }
       commit('SET_POPUP', false);
     },
   },
-  getters: {
-    getBounds: state => {
-      const boundsArray = [...state.bounds, state.boundsNext].slice(-2);
-      state.bounds = boundsArray;
-      return boundsArray;
-    },
-  },
+  getters: {},
 };
 
 export default map;

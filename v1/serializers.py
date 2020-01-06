@@ -56,7 +56,7 @@ class DamGeoFeatureModelSerializer(GeoFeatureModelSerializer):
         geo_field = "geom"
         id_field = False
         #exclude = ("registered_at", "modified_at", )
-        fields = ("name", "address", "river_name", "type_code", "institution_in_charge", "purpose_code" )
+        fields = ("name", "address", "water_system_name", "river_name", "type_code", "institution_in_charge", "purpose_code")
         #fields = ("name", "address", "river_name",)
 
 
@@ -68,3 +68,13 @@ class DamMapModelSerializer(GeoFeatureModelSerializer):
         geo_field = "geom"
         id_field = False
         fields = ("name", "total_pondage", "geom",)
+
+
+class DamIdSerializer(DamGeoFeatureModelSerializer):
+
+    class Meta:
+        model = Dam
+        geo_field = "geom"
+        #exclude = ["registered_at", "modified_at"]
+        id_field = False
+        fields = ("name", "address", "river_name", "type_code", "institution_in_charge", "purpose_code", "scale_bank_height", "scale_bank_span", "total_pondage", )

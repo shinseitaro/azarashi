@@ -38,9 +38,22 @@
           <div class="subtitle-1">{{ item.address }}</div>
           <div>{{ item.water_system_name }}水系 {{ item.river_name }}</div>
         </v-card-text>
+
+        <v-card-text>
+          <div>
+            コメントです。コメントです。コメントです。コメントです。コメントです。
+          </div>
+        </v-card-text>
       </v-col>
 
       <v-col class="card-footer">
+        <v-card-actions v-if="this.$route.name === 'mypage'">
+          <v-spacer></v-spacer>
+          <v-btn @click="goToEditPostPage">
+            <v-icon left>mdi-pencil-outline</v-icon>編集
+          </v-btn>
+          <v-btn><v-icon left>mdi-delete-forever</v-icon>削除</v-btn>
+        </v-card-actions>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn @click="goToDamPage">
@@ -56,12 +69,31 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
-  props: ['item'],
+  props: ['item', 'userId'],
   data() {
     return {
       checkbox: false,
     };
+  },
+  computed: {
+    ...mapState({
+      isLoggedIn: state => state.auth.isLoggedIn,
+    }),
+  },
+  mounted() {
+    if (
+      this.$store.state.auth.isLoggedIn &&
+      this.userId === this.$store.state.auth.userId
+    ) {
+      this.$router
+        .push({ name: 'mypage', params: { userId: this.userId } })
+        .catch(error => {
+          return { error };
+        });
+    }
   },
   methods: {
     goToDamPage: function() {
@@ -74,6 +106,13 @@ export default {
     goToPostPage: function() {
       this.$router
         .push({ name: 'post', params: { damId: this.item.dam_code } })
+        .catch(error => {
+          return { error };
+        });
+    },
+    goToEditPostPage: function() {
+      this.$router
+        .push({ name: 'edit_post', params: { cardId: 1 } })
         .catch(error => {
           return { error };
         });

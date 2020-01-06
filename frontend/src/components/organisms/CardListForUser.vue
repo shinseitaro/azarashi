@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-toolbar color="indigo" dark>
+      <v-toolbar-title>kaizumakiさんのカード</v-toolbar-title>
+    </v-toolbar>
     <v-row>
       <v-col
         v-for="(item, index) in damList.slice(0, 8)"
@@ -9,11 +12,7 @@
         md="6"
         xs="12"
       >
-        <card-item v-if="isEmptySearchField" :item="item" />
-        <card-item
-          v-if="!isEmptySearchField && item.properties"
-          :item="item.properties"
-        />
+        <card-item-for-user :item="item" :user-id="userId" />
       </v-col>
     </v-row>
   </v-container>
@@ -21,16 +20,16 @@
 
 <script>
 import { mapState } from 'vuex';
-import CardItem from '../molecules/CardItem';
+import CardItemForUser from '../molecules/CardItemForUser';
 
 export default {
+  props: ['userId'],
   components: {
-    CardItem,
+    CardItemForUser,
   },
   computed: {
     ...mapState({
       damList: state => state.map.damList,
-      isEmptySearchField: state => state.map.isEmptySearchField,
     }),
   },
 };

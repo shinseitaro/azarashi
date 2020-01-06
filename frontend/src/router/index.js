@@ -2,11 +2,13 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import store from '../store';
 import SiteTop from '../components/pages/SiteTop';
+import DamPage from '../components/pages/DamPage';
 import SignUp from '../components/pages/SignUp';
 import CheckYourEmail from '../components/pages/CheckYourEmail';
 import CompleteSignUp from '../components/pages/CompleteSignUp';
 import LoginPage from '../components/pages/LoginPage';
 import PostPage from '../components/pages/PostPage';
+import UserPage from '../components/pages/UserPage';
 
 Vue.use(VueRouter);
 
@@ -15,6 +17,12 @@ const routes = [
     path: '/',
     name: 'sitetop',
     component: SiteTop,
+  },
+  {
+    path: '/dam/:damId',
+    name: 'dam',
+    component: DamPage,
+    props: true,
   },
   {
     path: '/signup',
@@ -32,14 +40,35 @@ const routes = [
     component: CompleteSignUp,
   },
   {
-    path: '/login',
+    path: '/login/:damId?:userId?',
     name: 'login',
     component: LoginPage,
+    props: true,
   },
   {
-    path: '/post',
+    path: '/post/:damId',
     name: 'post',
     component: PostPage,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/edit/:cardId',
+    name: 'edit_post',
+    component: PostPage,
+    props: true,
+  },
+  {
+    path: '/user/:userId',
+    name: 'user',
+    component: UserPage,
+    props: true,
+  },
+  {
+    path: '/user/:userId/mypage',
+    name: 'mypage',
+    component: UserPage,
+    props: true,
     meta: { requiresAuth: true },
   },
 ];
@@ -76,8 +105,9 @@ router.beforeEach((to, from, next) => {
 
 function forceToLoginPage(to, from, next) {
   next({
-    path: '/login',
+    name: 'login',
     query: { next: to.fullPath },
+    params: to.params,
   });
 }
 

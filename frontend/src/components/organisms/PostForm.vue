@@ -13,7 +13,10 @@
     </div>
     <v-btn @click="clearFile">Clear File</v-btn>
     <v-textarea v-model="comment" label="コメント"></v-textarea>
-    <v-btn large color="primary" @click="sendForm">Post</v-btn>
+    <v-btn large color="primary" @click="sendForm">
+      <span v-if="this.$route.name === 'post'">Post</span>
+      <span v-if="this.$route.name === 'edit_post'">Edit</span>
+    </v-btn>
   </v-container>
 </template>
 
