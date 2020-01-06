@@ -90,7 +90,7 @@ export default {
             } else {
               this.$router
                 .push({
-                  name: 'edit',
+                  name: 'mypage',
                   params: { userId: this.$store.state.auth.userId },
                 })
                 .catch(error => {

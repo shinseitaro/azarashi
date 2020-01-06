@@ -65,8 +65,8 @@ const routes = [
     props: true,
   },
   {
-    path: '/user/:userId/edit',
-    name: 'edit',
+    path: '/user/:userId/mypage',
+    name: 'mypage',
     component: UserPage,
     props: true,
     meta: { requiresAuth: true },

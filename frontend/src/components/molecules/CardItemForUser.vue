@@ -47,7 +47,7 @@
       </v-col>
 
       <v-col class="card-footer">
-        <v-card-actions v-if="this.$route.name === 'edit'">
+        <v-card-actions v-if="this.$route.name === 'mypage'">
           <v-spacer></v-spacer>
           <v-btn @click="goToEditPostPage">
             <v-icon left>mdi-pencil-outline</v-icon>編集
@@ -89,7 +89,7 @@ export default {
       this.userId === this.$store.state.auth.userId
     ) {
       this.$router
-        .push({ name: 'edit', params: { userId: this.userId } })
+        .push({ name: 'mypage', params: { userId: this.userId } })
         .catch(error => {
           return { error };
         });
