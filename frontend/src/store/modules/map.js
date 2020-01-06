@@ -107,8 +107,8 @@ const map = {
           state.search.river,
           state.search.waterSystem
         ).then(response => {
-          commit('GET_DAM_GEO_DATA', response.payload.results);
-          commit('GET_DAM_LIST', response.payload.results.features);
+          commit('SET_DAM_GEO_DATA', response.payload.results);
+          commit('SET_DAM_LIST', response.payload.results.features);
         });
       } else {
         dispatch('getDamGeoData');
