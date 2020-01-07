@@ -9,9 +9,9 @@ const auth = {
     error: '',
   },
   mutations: {
-    SET_NAME(state, id, name) {
-      state.userId = id;
-      state.username = name;
+    SET_NAME(state, payload) {
+      state.userId = payload.pk;
+      state.username = payload.name;
       state.isLoggedIn = true;
     },
     CLEAR_NAME(state) {
@@ -58,7 +58,7 @@ const auth = {
             },
           })
           .then(response => {
-            commit('SET_NAME', response.data.pk, response.data.name);
+            commit('SET_NAME', response.data);
             return { payload: response };
           })
           .catch(error => {
