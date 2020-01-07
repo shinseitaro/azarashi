@@ -4,7 +4,7 @@
       <information-text
         text="メールアドレスが確認されました。<br>以下よりログインしてください。"
       />
-      <v-btn href="/login" text>
+      <v-btn @click="login">
         <span>Login</span>
       </v-btn>
     </v-container>
@@ -19,6 +19,18 @@ export default {
   components: {
     BaseLayout,
     InformationText,
+  },
+  methods: {
+    login: function() {
+      this.$router
+        .push({ name: 'login' })
+        .then(response => {
+          return { response };
+        })
+        .catch(error => {
+          return { error };
+        });
+    },
   },
 };
 </script>
