@@ -46,6 +46,7 @@ class DamIdFilter(filters.FilterSet):
         model = Dam
         fields = ( )
 
+
 class DamViewSet(viewsets.ModelViewSet):
 
     queryset = Dam.objects.all()
@@ -65,6 +66,7 @@ class DamIdViewSet(DamViewSet):
 
 
 
+
 # class DamCardlistViewSet(viewsets.ModelViewSet):
 #     """ CardList用View
 #     """
@@ -77,20 +79,27 @@ class DamIdViewSet(DamViewSet):
 #     distance_filter_convert_meters = True
 #     filterset_class = DamFilter
 
-class DamCardListViewSet(viewsets.ViewSet):
-    # ＃　キャッシュのためにModelViewSetは使えないので、コメントアウト
-    # queryset = Dam.objects.all()
-    # serializer_class = DamCardSerializer
 
-    # 二時間キャッシュ
-    @method_decorator(cache_page(60*60*2))
-    @method_decorator(vary_on_cookie)
-    def list(self, request):
-        queryset = Dam.objects.all()
-        serializer = DamCardSerializer(queryset, many=True)
-        # キャッシュがきいているかどうか確認するのにかんたんな方法はプリントされるかどうか。効いている間はされない。
-        #print("Am I Printed?")
-        return Response(serializer.data)
+# class DamCardListViewSet(viewsets.ViewSet):
+#
+#     # 二時間キャッシュ
+#     @method_decorator(cache_page(60*60*2))
+#     @method_decorator(vary_on_cookie)
+#     def list(self, request):
+#         queryset = Dam.objects.all()
+#         serializer = DamCardSerializer(queryset, many=True)
+#
+#         # キャッシュがきいているかどうか確認するのにかんたんな方法はプリントされるかどうか。効いている間はされない。
+#         #print("Am I Printed?")
+#         return Response(serializer.data)
+
+
+class DamCardListViewSet(viewsets.ModelViewSet):
+    # issue_84 で、ページネーションを使うことにした
+    queryset = Dam.objects.all()
+    serializer_class = DamCardSerializer
+    pagination_class = DamPagination
+
 
 
 class DamMapListViewSet(viewsets.ViewSet, APIView):
