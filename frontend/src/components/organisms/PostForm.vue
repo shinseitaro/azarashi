@@ -1,5 +1,5 @@
 <template>
-  <v-container class="grey lighten-5">
+  <v-container>
     <v-file-input
       label="カード画像"
       accept="image/*"
