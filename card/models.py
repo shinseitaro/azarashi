@@ -11,6 +11,7 @@ class Card(models.Model):
     modified_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField(blank=True, null=True)
     dam = models.ForeignKey(Dam, null=True, blank=True, on_delete=models.CASCADE)
+    cloudinary_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.file.name

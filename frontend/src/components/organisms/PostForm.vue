@@ -56,6 +56,7 @@ export default {
       const params = new FormData();
       params.append('file', this.file);
       params.append('comment', this.comment);
+      params.append('dam_id', this.$route.params.damId);
       API.fileUpload('card', params).then(response => {
         if (response.payload.status === 201) {
           this.fileName = [];
