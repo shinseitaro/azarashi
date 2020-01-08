@@ -51,6 +51,9 @@ const map = {
     SET_PAGE_LENGTH(state, count) {
       state.pageLength = Math.ceil(count / 10);
     },
+    RESET_PAGE_NUM(state) {
+      state.page = 1;
+    },
   },
   actions: {
     getDamGeoData({ commit }) {
@@ -61,10 +64,12 @@ const map = {
     getDamList({ commit, state }) {
       API.readPage('dam/list', state.page).then(response => {
         commit('SET_DAM_LIST', response.payload.results);
+        commit('SET_PAGE_LENGTH', response.payload.count);
       });
     },
     initDamList({ commit }) {
       API.readPage('dam/list', 1).then(response => {
+        commit('RESET_PAGE_NUM');
         commit('SET_DAM_LIST', response.payload.results);
         commit('SET_PAGE_LENGTH', response.payload.count);
       });
