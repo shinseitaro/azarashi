@@ -20,13 +20,13 @@ export default {
   methods: {
     getNumber(number) {
       console.log(number);
-      this.$store.dispatch('map/setPageNum', { page: number });
-
-      if (!this.$props.isEmptySearchField) {
-        this.$store.dispatch('map/searchResult');
-      } else {
-        this.$store.dispatch('map/getDamList');
-      }
+      this.$store.dispatch('map/setPageNum', { page: number }).then(() => {
+        if (!this.$props.isEmptySearchField) {
+          this.$store.dispatch('map/searchResult');
+        } else {
+          this.$store.dispatch('map/getDamList');
+        }
+      });
     },
   },
 };
