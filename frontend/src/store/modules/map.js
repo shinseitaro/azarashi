@@ -52,7 +52,7 @@ const map = {
     },
     getDamList({ commit }) {
       API.read('dam/list').then(response => {
-        commit('SET_DAM_LIST', response.payload);
+        commit('SET_DAM_LIST', response.payload.results);
       });
     },
     setPopup({ commit }, bool) {

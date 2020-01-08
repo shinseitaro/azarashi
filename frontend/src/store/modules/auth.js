@@ -25,8 +25,8 @@ const auth = {
   },
   actions: {
     login({ commit }, params) {
-      return new Promise(resolve => {
-        const payload = axios
+      return new Promise((resolve, reject) => {
+        axios
           .post(process.env.VUE_APP_ROOT_URL + 'api-token-auth/', params, {
             headers: {
               'content-type': 'application/x-www-form-urlencoded',
@@ -35,13 +35,12 @@ const auth = {
           .then(response => {
             commit('SET_ERROR', '');
             localStorage.setItem('token', response.data.token);
-            return { payload: response };
+            resolve({ payload: response });
           })
           .catch(error => {
             commit('SET_ERROR', error.response.data.non_field_errors.join(''));
-            return { error };
+            reject(error);
           });
-        resolve(payload);
       });
     },
     logout({ commit }) {
@@ -50,8 +49,8 @@ const auth = {
     },
     update({ commit }) {
       const token = localStorage.getItem('token');
-      return new Promise(resolve => {
-        const payload = axios
+      return new Promise((resolve, reject) => {
+        axios
           .get(process.env.VUE_APP_ROOT_URL + 'rest-auth/user/', {
             headers: {
               Authorization: 'JWT ' + token,
@@ -59,12 +58,11 @@ const auth = {
           })
           .then(response => {
             commit('SET_NAME', response.data);
-            return { payload: response };
+            resolve({ payload: response });
           })
           .catch(error => {
-            return { error };
+            reject(error);
           });
-        resolve(payload);
       });
     },
   },

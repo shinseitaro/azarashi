@@ -1,12 +1,26 @@
 import axios from 'axios';
+import store from '../store';
 
 axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
-// axios.defaults.xsrfCookieName = 'csrftoken';
-// axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.headers.common['Authorization'] =
-  localStorage.getItem('token') != null
-    ? 'JWT ' + localStorage.getItem('token')
-    : '';
+
+function setAuthHeader() {
+  const token = localStorage.getItem('token');
+  if (token !== null) {
+    store
+      .dispatch('auth/update')
+      .then(() => {
+        axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          store.dispatch('auth/logout');
+          setAuthHeader();
+        }
+      });
+  } else {
+    axios.defaults.headers.common['Authorization'] = '';
+  }
+}
 
 export function read(repository) {
   return access(`${repository}/`, 'GET');
@@ -95,6 +109,7 @@ function data_access(url, method, data) {
 function _access(url, config) {
   // console.log("---send---");
   // console.log(config);
+  setAuthHeader();
   return axios(url, config)
     .then(response => {
       // console.log('response : ', response);
