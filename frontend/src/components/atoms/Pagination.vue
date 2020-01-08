@@ -1,13 +1,17 @@
 <template>
   <div class="text-center">
-    <v-pagination v-model="page" :length="6" @input="getNumber"></v-pagination>
+    <v-pagination
+      v-model="page"
+      :length="pageLength"
+      @input="getNumber"
+    ></v-pagination>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Pagination',
-  props: [],
+  props: ['pageLength', 'isEmptySearchField'],
   data() {
     return {
       page: 1,
@@ -17,7 +21,12 @@ export default {
     getNumber(number) {
       console.log(number);
       this.$store.dispatch('map/setPageNum', { page: number });
-      this.$store.dispatch('map/searchResult');
+
+      if (!this.$props.isEmptySearchField) {
+        this.$store.dispatch('map/searchResult');
+      } else {
+        this.$store.dispatch('map/getDamList');
+      }
     },
   },
 };

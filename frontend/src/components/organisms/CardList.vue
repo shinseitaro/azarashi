@@ -16,12 +16,10 @@
         />
       </v-col>
     </v-row>
-    <pagination></pagination>
-    <v-row align="center" justify="center">
-      <div class="text-xs-center">
-        <v-btn small @click="loadMore">もっと見る</v-btn>
-      </div>
-    </v-row>
+    <pagination
+      :page-length="pageLength"
+      :is-empty-search-field="isEmptySearchField"
+    ></pagination>
   </v-container>
 </template>
 
@@ -39,13 +37,8 @@ export default {
     ...mapState({
       damList: state => state.map.damList,
       isEmptySearchField: state => state.map.isEmptySearchField,
+      pageLength: state => state.map.pageLength,
     }),
-  },
-  methods: {
-    async loadMore() {
-      await this.$store.dispatch('map/pageUp');
-      await this.$store.dispatch('map/getDamList');
-    },
   },
 };
 </script>

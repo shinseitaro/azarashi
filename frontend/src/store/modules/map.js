@@ -15,6 +15,7 @@ const map = {
     },
     isEmptySearchField: true,
     page: 1,
+    pageLength: 1,
   },
   mutations: {
     SET_DAM_GEO_DATA(state, data) {
@@ -22,9 +23,6 @@ const map = {
     },
     SET_DAM_LIST(state, list) {
       state.damList = list;
-    },
-    GET_DAM_LIST(state, data) {
-      state.damList = state.damList.concat(data);
     },
     SET_POPUP(state, bool) {
       state.isDisplayPopup = bool;
@@ -47,14 +45,11 @@ const map = {
     EMPTY_SEARCH_FIELD(state, bool) {
       state.isEmptySearchField = bool;
     },
-    PAGE_UP(state) {
-      state.page += 1;
-    },
-    PAGE_DOWN(state) {
-      state.page -= 1;
-    },
     SET_PAGE_NUM(state, page) {
       state.page = page;
+    },
+    SET_PAGE_LENGTH(state, count) {
+      state.pageLength = Math.ceil(count / 10);
     },
   },
   actions: {
@@ -65,12 +60,13 @@ const map = {
     },
     getDamList({ commit, state }) {
       API.readPage('dam/list', state.page).then(response => {
-        commit('GET_DAM_LIST', response.payload.results);
+        commit('SET_DAM_LIST', response.payload.results);
       });
     },
     initDamList({ commit }) {
       API.readPage('dam/list', 1).then(response => {
         commit('SET_DAM_LIST', response.payload.results);
+        commit('SET_PAGE_LENGTH', response.payload.count);
       });
     },
     setPopup({ commit }, bool) {
@@ -126,6 +122,7 @@ const map = {
           state.search.waterSystem,
           state.page
         ).then(response => {
+          commit('SET_PAGE_LENGTH', response.payload.count);
           commit('SET_DAM_GEO_DATA', response.payload.results);
           commit('SET_DAM_LIST', response.payload.results.features);
         });
@@ -134,12 +131,6 @@ const map = {
         dispatch('initDamList');
       }
       commit('SET_POPUP', false);
-    },
-    pageUp({ commit }) {
-      commit('PAGE_UP');
-    },
-    pageDown({ commit }) {
-      commit('PAGE_DOWN');
     },
     setPageNum({ commit }, payload) {
       commit('SET_PAGE_NUM', payload.page);
