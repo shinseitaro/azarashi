@@ -4,6 +4,11 @@
       <v-card-title>ログイン</v-card-title>
       <div class="mx-4">
         <v-text-field
+          v-model="username"
+          label="user name"
+          :rules="[rules.required]"
+        ></v-text-field>
+        <v-text-field
           v-model="email"
           label="e-mail"
           type="email"
@@ -52,6 +57,7 @@ export default {
   data() {
     return {
       show: false,
+      username: '',
       email: '',
       password: '',
       rules: {
@@ -63,42 +69,42 @@ export default {
   },
   computed: {
     disabledBtn: function() {
-      return this.email === '' || this.password === '';
+      return this.username === '' || this.email === '' || this.password === '';
     },
     ...mapState({
       error: state => state.auth.error,
     }),
   },
   methods: {
-    login: function() {
+    login: async function() {
+      await this.$store.dispatch('auth/logout');
       const params = new URLSearchParams();
+      params.append('name', this.username);
       params.append('email', this.email);
       params.append('password', this.password);
-      params.append('name', this.email);
-      this.$store.dispatch('auth/login', params).then(() => {
-        this.$store.dispatch('auth/update').then(response => {
-          if (response.payload.status === 200) {
-            if (this.$route.params.damId) {
-              this.$router
-                .push({
-                  name: 'post',
-                  params: { damId: this.$route.params.damId },
-                })
-                .catch(error => {
-                  return { error };
-                });
-            } else {
-              this.$router
-                .push({
-                  name: 'mypage',
-                  params: { userId: this.$store.state.auth.userId },
-                })
-                .catch(error => {
-                  return { error };
-                });
-            }
+      await this.$store.dispatch('auth/login', params);
+      this.$store.dispatch('auth/update').then(response => {
+        if (response.payload.status === 200) {
+          if (this.$route.params.damId) {
+            this.$router
+              .push({
+                name: 'post',
+                params: { damId: this.$route.params.damId },
+              })
+              .catch(error => {
+                return { error };
+              });
+          } else {
+            this.$router
+              .push({
+                name: 'mypage',
+                params: { userId: this.$store.state.auth.userId },
+              })
+              .catch(error => {
+                return { error };
+              });
           }
-        });
+        }
       });
     },
   },

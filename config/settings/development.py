@@ -1,7 +1,4 @@
 from .base import *
-from dotenv import load_dotenv
-
-load_dotenv(dotenv_path=BASE_DIR+'/.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
