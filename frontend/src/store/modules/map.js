@@ -65,6 +65,11 @@ const map = {
         commit('GET_DAM_LIST', response.payload.results);
       });
     },
+    initDamList({ commit }) {
+      API.readPage('dam/list', 1).then(response => {
+        commit('SET_DAM_LIST', response.payload.results);
+      });
+    },
     setPopup({ commit }, bool) {
       commit('SET_POPUP', bool);
     },
@@ -122,7 +127,7 @@ const map = {
         });
       } else {
         dispatch('getDamGeoData');
-        dispatch('getDamList');
+        dispatch('initDamList');
       }
       commit('SET_POPUP', false);
     },
