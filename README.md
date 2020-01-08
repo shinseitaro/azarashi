@@ -75,3 +75,9 @@ curl -X "POST" "http://127.0.0.1:8000/api-token-auth/" \
      --data-urlencode "email=tokyo2021@damcard.com" \
      --data-urlencode "password=asdfsdf1234---"
 ```
+
+
+### Database Management
+```bash
+python manage.py dbshell --settings config.settings.development
+```

@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col
-        v-for="(item, index) in damList.slice(0, 8)"
+        v-for="(item, index) in damList"
         :key="index"
         cols="12"
         lg="4"
@@ -16,21 +16,28 @@
         />
       </v-col>
     </v-row>
+    <pagination
+      :page-length="pageLength"
+      :is-empty-search-field="isEmptySearchField"
+    ></pagination>
   </v-container>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import CardItem from '../molecules/CardItem';
+import Pagination from '../atoms/Pagination';
 
 export default {
   components: {
+    Pagination,
     CardItem,
   },
   computed: {
     ...mapState({
       damList: state => state.map.damList,
       isEmptySearchField: state => state.map.isEmptySearchField,
+      pageLength: state => state.map.pageLength,
     }),
   },
 };

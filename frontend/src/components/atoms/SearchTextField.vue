@@ -16,7 +16,10 @@ export default {
     search: function(e) {
       if (e !== undefined) {
         this.$store
-          .dispatch('map/' + this.searchAction, e)
+          .dispatch('map/setPageNum', { page: 1 })
+          .then(() => {
+            this.$store.dispatch('map/' + this.searchAction, e);
+          })
           .then(() => {
             this.$store.dispatch('map/emptySearchField');
           })
