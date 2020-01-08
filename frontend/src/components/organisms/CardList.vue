@@ -16,8 +16,7 @@
         />
       </v-col>
     </v-row>
-    <v-row align="center"
-          justify="center">
+    <v-row align="center" justify="center">
       <div class="text-xs-center">
         <v-btn small @click="loadMore">もっと見る</v-btn>
       </div>
@@ -41,11 +40,11 @@ export default {
   },
   methods: {
     async loadMore() {
-              console.log('page up')
-              await this.$store.dispatch('map/pageUp');
-              //read pages
-              await this.$store.dispatch('map/getDamList');
-          }
-  }
+      console.log('page up');
+      await this.$store.dispatch('map/pageUp');
+      //read pages
+      await this.$store.dispatch('map/getDamList');
+    },
+  },
 };
 </script>

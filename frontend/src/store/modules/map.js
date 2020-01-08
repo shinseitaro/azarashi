@@ -24,7 +24,7 @@ const map = {
       state.damList = list;
     },
     GET_DAM_LIST(state, data) {
-      state.damList = state.damList.concat(data)
+      state.damList = state.damList.concat(data);
     },
     SET_POPUP(state, bool) {
       state.isDisplayPopup = bool;
@@ -48,10 +48,10 @@ const map = {
       state.isEmptySearchField = bool;
     },
     PAGE_UP(state) {
-      state.page += 1
+      state.page += 1;
     },
     PAGE_DOWN(state) {
-      state.page -= 1
+      state.page -= 1;
     },
   },
   actions: {
@@ -62,7 +62,7 @@ const map = {
     },
     getDamList({ commit, state }) {
       API.readPage('dam/list', state.page).then(response => {
-        commit('GET_DAM_LIST', response.payload);
+        commit('GET_DAM_LIST', response.payload.results);
       });
     },
     setPopup({ commit }, bool) {
@@ -126,11 +126,11 @@ const map = {
       }
       commit('SET_POPUP', false);
     },
-    pageUp({commit},) {
-      commit('PAGE_UP')
+    pageUp({ commit }) {
+      commit('PAGE_UP');
     },
-    pageDown({commit},) {
-      commit('PAGE_DOWN')
+    pageDown({ commit }) {
+      commit('PAGE_DOWN');
     },
   },
   getters: {
