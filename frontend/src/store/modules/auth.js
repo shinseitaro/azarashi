@@ -44,8 +44,11 @@ const auth = {
       });
     },
     logout({ commit }) {
-      localStorage.removeItem('token');
-      commit('CLEAR_NAME');
+      return new Promise(resolve => {
+        localStorage.removeItem('token');
+        commit('CLEAR_NAME');
+        resolve();
+      });
     },
     update({ commit }) {
       const token = localStorage.getItem('token');

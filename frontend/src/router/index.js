@@ -80,24 +80,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token');
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.state.auth.isLoggedIn) {
-      next();
-    } else {
-      if (token !== null) {
-        store
-          .dispatch('auth/update')
-          .then(() => {
-            next();
-          })
-          .catch(() => {
-            forceToLoginPage(to, from, next);
-          });
-      } else {
-        forceToLoginPage(to, from, next);
-      }
-    }
+    goToNextByToken(to, from, next);
   } else {
     next();
   }
@@ -109,6 +93,26 @@ function forceToLoginPage(to, from, next) {
     query: { next: to.fullPath },
     params: to.params,
   });
+}
+
+function goToNextByToken(to, from, next) {
+  const token = localStorage.getItem('token');
+  if (token !== null) {
+    store
+      .dispatch('auth/update')
+      .then(() => {
+        next();
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          store.dispatch('auth/logout').then(() => {
+            goToNextByToken(to, from, next);
+          });
+        }
+      });
+  } else {
+    forceToLoginPage(to, from, next);
+  }
 }
 
 export default router;
