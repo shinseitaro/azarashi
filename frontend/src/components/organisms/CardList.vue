@@ -16,6 +16,7 @@
         />
       </v-col>
     </v-row>
+    <pagination></pagination>
     <v-row align="center" justify="center">
       <div class="text-xs-center">
         <v-btn small @click="loadMore">もっと見る</v-btn>
@@ -27,9 +28,11 @@
 <script>
 import { mapState } from 'vuex';
 import CardItem from '../molecules/CardItem';
+import Pagination from '../atoms/Pagination';
 
 export default {
   components: {
+    Pagination,
     CardItem,
   },
   computed: {

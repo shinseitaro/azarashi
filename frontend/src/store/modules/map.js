@@ -53,6 +53,9 @@ const map = {
     PAGE_DOWN(state) {
       state.page -= 1;
     },
+    SET_PAGE_NUM(state, page) {
+      state.page = page;
+    },
   },
   actions: {
     getDamGeoData({ commit }) {
@@ -120,7 +123,8 @@ const map = {
           state.search.address,
           state.search.prefecture,
           state.search.river,
-          state.search.waterSystem
+          state.search.waterSystem,
+          state.page
         ).then(response => {
           commit('SET_DAM_GEO_DATA', response.payload.results);
           commit('SET_DAM_LIST', response.payload.results.features);
@@ -136,6 +140,9 @@ const map = {
     },
     pageDown({ commit }) {
       commit('PAGE_DOWN');
+    },
+    setPageNum({ commit }, payload) {
+      commit('SET_PAGE_NUM', payload.page);
     },
   },
   getters: {},

@@ -22,10 +22,11 @@ export function searchGeo(
   address = '',
   prefecture = '',
   river = '',
-  waterSystem = ''
+  waterSystem = '',
+  page = ''
 ) {
   return access(
-    `${repository}/?name=${name}&address=${address}&prefecture=${prefecture}&river=${river}&water_system=${waterSystem}`,
+    `${repository}/?name=${name}&address=${address}&prefecture=${prefecture}&river=${river}&water_system=${waterSystem}&page=${page}`,
     'GET'
   );
 }
