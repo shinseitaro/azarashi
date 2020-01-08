@@ -133,11 +133,7 @@ const map = {
       commit('PAGE_DOWN');
     },
   },
-  getters: {
-    getPages: state => {
-      return state.page;
-    },
-  },
+  getters: {},
 };
 
 export default map;

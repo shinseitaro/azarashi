@@ -40,9 +40,7 @@ export default {
   },
   methods: {
     async loadMore() {
-      console.log('page up');
       await this.$store.dispatch('map/pageUp');
-      //read pages
       await this.$store.dispatch('map/getDamList');
     },
   },
