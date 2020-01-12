@@ -1,23 +1,13 @@
 <template>
-  <v-app-bar app color="primary" dark>
+  <v-app-bar app dark class="header">
     <div class="d-flex align-center">
       <v-img
-        alt="Vuetify Logo"
-        class="shrink mr-2 pointer"
-        contain
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-        transition="scale-transition"
-        width="40"
-        @click="goToTop"
-      />
-
-      <v-img
-        alt="Vuetify Name"
-        class="shrink mt-1 hidden-sm-and-down pointer"
+        alt="mindam"
+        class="shrink pointer"
         contain
         min-width="100"
-        src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-        width="100"
+        src="/img/logo_transparent.png"
+        width="150"
         @click="goToTop"
       />
     </div>
@@ -85,6 +75,10 @@ export default {
 </script>
 
 <style lang="scss">
+.header {
+  background-color: #514f48;
+}
+
 .pointer {
   cursor: pointer;
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-footer class="primary lighten-2 font-weight-medium white--text mt-4">
+  <v-footer class="font-weight-medium white--text mt-4 footer">
     <v-col class="text-center" cols="12">
       {{ new Date().getFullYear() }} — <strong>みんなのダムカード</strong>
     </v-col>
@@ -12,4 +12,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss">
+.footer {
+  background-color: #5b5b51 !important;
+}
+</style>
