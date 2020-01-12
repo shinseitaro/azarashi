@@ -1,12 +1,27 @@
 import axios from 'axios';
+import store from '../store';
 
 axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
-// axios.defaults.xsrfCookieName = 'csrftoken';
-// axios.defaults.xsrfHeaderName = 'X-CSRFToken';
-axios.defaults.headers.common['Authorization'] =
-  localStorage.getItem('token') != null
-    ? 'JWT ' + localStorage.getItem('token')
-    : '';
+
+function setAuthHeader() {
+  const token = localStorage.getItem('token');
+  if (token !== null) {
+    store
+      .dispatch('auth/update')
+      .then(() => {
+        axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
+      })
+      .catch(error => {
+        if (error.response.status === 401) {
+          store.dispatch('auth/logout').then(() => {
+            setAuthHeader();
+          });
+        }
+      });
+  } else {
+    axios.defaults.headers.common['Authorization'] = '';
+  }
+}
 
 export function read(repository) {
   return access(`${repository}/`, 'GET');
@@ -32,7 +47,7 @@ export function searchGeo(
 }
 
 export function setQuery(repository, query, id) {
-  return data_access(`${repository}/?${query}=${id}`, 'GET');
+  return access(`${repository}/?${query}=${id}`, 'GET');
 }
 
 export function create(repository, data) {
@@ -52,74 +67,59 @@ export function fetchUrl(url) {
 }
 
 export function fileUpload(repository, params) {
-  return new Promise(resolve => {
-    const payload = axios
+  return new Promise((resolve, reject) => {
+    axios
       .post(`${repository}/`, params, {
         headers: {
           'content-type': 'multipart/form-data',
         },
       })
       .then(response => {
-        return { payload: response };
+        resolve({ payload: response });
       })
       .catch(error => {
-        // console.log(error.config);
-        return { error };
+        reject(error);
       });
-    resolve(payload);
   });
 }
 
 function access(url, method) {
-  return new Promise(resolve => {
-    const payload = _access(url, {
-      method: method,
-      headers: {},
-    });
-    resolve(payload);
+  return _access(url, {
+    method: method,
+    headers: {},
   });
 }
 
 function data_access(url, method, data) {
-  return new Promise(resolve => {
-    const payload = _access(url, {
-      method: method,
-      headers: {
-        'content-type': 'application/json',
-      },
-      data: JSON.stringify(data),
-    });
-    resolve(payload);
+  return _access(url, {
+    method: method,
+    headers: {
+      'content-type': 'application/json',
+    },
+    data: JSON.stringify(data),
   });
 }
 
 function _access(url, config) {
-  // console.log("---send---");
-  // console.log(config);
-  return axios(url, config)
-    .then(response => {
-      // console.log('response : ', response);
-      // console.log(response.data);
-      return { payload: response.data };
-    })
-    .catch(error => {
-      if (error.response) {
-        // The request was made and the server responded with a status code
-        // that falls out of the range of 2xx
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
+  setAuthHeader();
+  return new Promise((resolve, reject) => {
+    axios(url, config)
+      .then(response => {
+        resolve({ payload: response.data });
+      })
+      .catch(error => {
+        // if (error.response) {
+        // console.log(error.response.data);
+        // console.log(error.response.status);
+        // console.log(error.response.headers);
+        // } else if (error.request) {
         // The request was made but no response was received
-        // `error.request` is an instance of XMLHttpRequest in the
-        // browser and an instance of
-        // http.ClientRequest in node.js
-        console.log(error.request);
-      } else {
-        // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-      }
-      console.log(error.config);
-      return { error };
-    });
+        // console.log(error.request);
+        // } else {
+        // console.log('Error', error.message);
+        // }
+        // console.log(error.config);
+        reject(error);
+      });
+  });
 }

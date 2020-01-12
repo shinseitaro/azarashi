@@ -83,29 +83,34 @@ export default {
       params.append('email', this.email);
       params.append('password', this.password);
       await this.$store.dispatch('auth/login', params);
-      this.$store.dispatch('auth/update').then(response => {
-        if (response.payload.status === 200) {
-          if (this.$route.params.damId) {
-            this.$router
-              .push({
-                name: 'post',
-                params: { damId: this.$route.params.damId },
-              })
-              .catch(error => {
-                return { error };
-              });
-          } else {
-            this.$router
-              .push({
-                name: 'mypage',
-                params: { userId: this.$store.state.auth.userId },
-              })
-              .catch(error => {
-                return { error };
-              });
+      this.$store
+        .dispatch('auth/update')
+        .then(response => {
+          if (response.payload.status === 200) {
+            if (this.$route.params.damId) {
+              this.$router
+                .push({
+                  name: 'post',
+                  params: { damId: this.$route.params.damId },
+                })
+                .catch(error => {
+                  return { error };
+                });
+            } else {
+              this.$router
+                .push({
+                  name: 'mypage',
+                  params: { userId: this.$store.state.auth.userId },
+                })
+                .catch(error => {
+                  return { error };
+                });
+            }
           }
-        }
-      });
+        })
+        .catch(error => {
+          return { error };
+        });
     },
   },
 };

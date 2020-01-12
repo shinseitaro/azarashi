@@ -43,23 +43,27 @@ const dam = {
       commit('SET_DAM_ID', id);
     },
     getDam({ commit }, id) {
-      return new Promise(resolve => {
-        const payload = API.setQuery('dam', 'dam_code', id).then(response => {
-          commit(
-            'SET_DAM_NAME',
-            response.payload.results.features[0].properties.name
-          );
-          commit(
-            'SET_DAM_INFO',
-            response.payload.results.features[0].properties
-          );
-          commit('SET_DAM_GEO_DATA', response.payload.results);
-          commit(
-            'SET_DAM_COORD',
-            response.payload.results.features[0].geometry.coordinates
-          );
-        });
-        resolve(payload);
+      return new Promise((resolve, reject) => {
+        API.setQuery('dam', 'dam_code', id)
+          .then(response => {
+            commit(
+              'SET_DAM_NAME',
+              response.payload.results.features[0].properties.name
+            );
+            commit(
+              'SET_DAM_INFO',
+              response.payload.results.features[0].properties
+            );
+            commit('SET_DAM_GEO_DATA', response.payload.results);
+            commit(
+              'SET_DAM_COORD',
+              response.payload.results.features[0].geometry.coordinates
+            );
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
       });
     },
   },

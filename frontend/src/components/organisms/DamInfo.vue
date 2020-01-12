@@ -2,9 +2,8 @@
   <v-card outlined>
     <v-toolbar color="indigo" dark>
       <v-toolbar-title>{{ damInfo.name }}</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text @click="goToPostPage">
-        <v-icon>mdi-pencil-plus</v-icon>投稿する
+      <v-btn color="pink" dark absolute bottom right fab @click="goToPostPage">
+        <v-icon>mdi-pencil-plus</v-icon>
       </v-btn>
     </v-toolbar>
     <v-list>
