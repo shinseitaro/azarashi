@@ -1,11 +1,12 @@
 <template>
-  <div class="text-center">
+  <v-row justify="center">
     <v-pagination
       v-model="page"
       :length="pageLength"
+      total-visible="7"
       @input="getNumber"
     ></v-pagination>
-  </div>
+  </v-row>
 </template>
 
 <script>
@@ -31,5 +32,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
