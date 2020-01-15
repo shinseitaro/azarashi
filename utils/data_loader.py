@@ -137,7 +137,7 @@ def to_boolean(val):
 
 def load_dam_card_distribution_place():
     excludes = ['idx', 'dam', 'dam_name', 'mon','tue','wed','thu','fri','sat','sun']
-    with open('./data/dam_card_places_set_editmode.csv', newline='') as file:
+    with open('./data/dam_card_places_set_editmode.csv', newline='', encoding="utf-8_sig") as file:
         reader = csv.DictReader(file, delimiter=",", quotechar='"')
         next(reader)  # skip header
         rows = []
