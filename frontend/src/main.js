@@ -13,7 +13,7 @@ Vue.use(VueAuthenticate, {
   tokenPath: 'token',
   providers: {
     github: {
-      clientId: process.env.GITHUB_CLIENT_ID,
+      clientId: '7f93ca54ce0f48e7b05c',
       redirectUri: 'http://127.0.0.1:8080/',
       url: 'http://127.0.0.1:8000/api/login/social/jwt-pair-user/github/',
     },

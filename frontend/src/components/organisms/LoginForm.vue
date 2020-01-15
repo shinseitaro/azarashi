@@ -57,10 +57,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import { authMixin } from '../../mixins/social_auth_mixin';
 
 export default {
-  mixins: [authMixin],
   data() {
     return {
       show: false,
@@ -81,6 +79,17 @@ export default {
     }),
   },
   methods: {
+    authenticate: function(provider) {
+      this.$auth
+        .authenticate(provider, { provider: provider })
+        .then(response => {
+          console.log(response);
+          this.$router.push({ name: 'sitetop' });
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     login: async function() {
       await this.$store.dispatch('auth/logout');
       const params = new URLSearchParams();

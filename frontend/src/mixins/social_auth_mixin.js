@@ -16,13 +16,12 @@ export const authMixin = {
         });
     },
     authenticate: function(provider) {
-      console.log(provider);
       this.$auth
-        .authenticate('github', { provider: 'github' })
+        .authenticate(provider, { provider: provider })
         .then(function(response) {
           console.log(response);
-          if (response.data.email === '') {
-            window.location = '/';
+          if (response.data.email != '') {
+            this.$router.push({ name: 'sitetop' });
           }
         })
         .catch(function(error) {
