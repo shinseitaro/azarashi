@@ -16,7 +16,7 @@
         :clustersPaint="clustersPaint"
         :unclusteredPointPaint="unclusteredPointPaint"
       />
-      <mapbox-source id="zoomUp" :options="zoomUpSource" />
+      <mapbox-source id="plot" :options="plotSource" />
       <mapbox-layer
         v-if="isDisplayZoomLayer && !isDisplayPlotLayer"
         :id="zoomUpLayer.id"
@@ -30,7 +30,6 @@
           <div class="mapboxgl-popup">{{ name }}</div>
         </template>
       </mapbox-marker>
-      <mapbox-source id="plot" :options="plotSource" />
       <mapbox-layer :id="plotLayer.id" :options="plotLayer" />
       <div class="slider">
         <v-slider
@@ -110,7 +109,7 @@ export default {
       zoomUpLayer: {
         id: 'zoomUpLayer',
         type: 'circle',
-        source: 'zoomUp',
+        source: 'plot',
         paint: {
           'circle-radius': [
             '/',
@@ -125,6 +124,9 @@ export default {
         id: 'plotLayer',
         type: 'circle',
         source: 'plot',
+        layout: {
+          visibility: 'none',
+        },
         paint: {
           'circle-radius': [
             '/',
@@ -157,13 +159,6 @@ export default {
       damGeoData: state => state.map.damGeoData,
       isDisplayPopup: state => state.map.isDisplayPopup,
     }),
-    zoomUpSource: function() {
-      return {
-        type: 'geojson',
-        cluster: false,
-        data: this.$store.state.map.damGeoData,
-      };
-    },
     plotSource: function() {
       return {
         type: 'geojson',
@@ -182,7 +177,6 @@ export default {
       this.map.setFilter('plotLayer', filters);
     },
     displayPlotLayer: function(boolean) {
-      console.log(this.isDisplayPlotLayer);
       if (this.map.getLayer('plotLayer')) {
         if (boolean) {
           this.map.setLayoutProperty('plotLayer', 'visibility', 'visible');
