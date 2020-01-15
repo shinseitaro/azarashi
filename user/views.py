@@ -17,6 +17,12 @@ import urllib.parse
 from allauth.socialaccount.models import SocialToken
 from django.http import JsonResponse
 from django.contrib.auth.models import AnonymousUser
+from rest_framework import generics, status
+from rest_social_auth.serializers import UserSerializer
+from rest_social_auth.views import JWTAuthMixin, KnoxAuthMixin, SimpleJWTAuthMixin
+from django.contrib.auth import logout, get_user_model
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+
 
 class TwitterLoginView(SocialLoginView):
     serializer_class = TwitterLoginSerializer
@@ -75,3 +81,27 @@ class CustomConfirmEmailView(APIView, ConfirmEmailView):
         # クエリパラメータに認証結果を付与
         url = '{}?{}'.format(url, urllib.parse.urlencode(params))
         return HttpResponseRedirect(redirect_to=url)
+
+
+class BaseDetailView(generics.RetrieveAPIView):
+    permission_classes = IsAuthenticated,
+    serializer_class = UserSerializer
+    model = get_user_model()
+
+    def get_object(self, queryset=None):
+        return self.request.user
+
+class UserSessionDetailView(BaseDetailView):
+    authentication_classes = (SessionAuthentication, )
+
+
+class UserTokenDetailView(BaseDetailView):
+    authentication_classes = (TokenAuthentication, )
+
+
+class UserJWTOldDetailView(JWTAuthMixin, BaseDetailView):
+    pass
+
+
+class UserJWTDetailView(SimpleJWTAuthMixin, BaseDetailView):
+    pass

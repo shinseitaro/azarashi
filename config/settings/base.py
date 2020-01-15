@@ -14,6 +14,7 @@ import os
 import datetime
 from dotenv import load_dotenv
 import cloudinary
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -213,10 +214,15 @@ REST_AUTH_SERIALIZERS = {
 }
 
 SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_TOKEN_CLASSES': (
         'rest_framework_simplejwt.tokens.AccessToken',
         'rest_framework_simplejwt.tokens.SlidingToken',
     ),
+    'AUTH_HEADER_TYPES': ('Bearer','JWT'),
 }
 
 SOCIAL_AUTH_PIPELINE = (
