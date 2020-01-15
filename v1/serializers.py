@@ -67,7 +67,7 @@ class DamMapModelSerializer(GeoFeatureModelSerializer):
         model = Dam
         geo_field = "geom"
         id_field = False
-        fields = ("name", "total_pondage", "geom",)
+        fields = ("name", "total_pondage", "year_of_completion", "geom",)
 
 
 class DamIdSerializer(DamGeoFeatureModelSerializer):

@@ -11,25 +11,48 @@
     >
       <mapbox-navigation-control />
       <mapbox-cluster
-        v-if="!isDisplayZoomLayer"
+        v-if="!isDisplayZoomLayer && !isDisplayPlotLayer"
         :data="damGeoData"
         :clustersPaint="clustersPaint"
         :unclusteredPointPaint="unclusteredPointPaint"
       />
-      <mapbox-marker v-if="isDisplayPopup" :lng-lat="coordinates">
-        <template>
-          <div class="mapboxgl-popup">{{ name }}</div>
-        </template>
-      </mapbox-marker>
       <mapbox-source id="zoomUp" :options="zoomUpSource" />
       <mapbox-layer
-        v-if="isDisplayZoomLayer"
+        v-if="isDisplayZoomLayer && !isDisplayPlotLayer"
         :id="zoomUpLayer.id"
         :options="zoomUpLayer"
         @mb-click="displayPopup"
         @mb-mouseenter="setCursor"
         @mb-mouseleave="clearCursor"
       />
+      <mapbox-marker v-if="isDisplayPopup" :lng-lat="coordinates">
+        <template>
+          <div class="mapboxgl-popup">{{ name }}</div>
+        </template>
+      </mapbox-marker>
+      <mapbox-source id="plot" :options="plotSource" />
+      <mapbox-layer :id="plotLayer.id" :options="plotLayer" />
+      <div class="slider">
+        <v-slider
+          v-model="slider"
+          thumb-label="always"
+          :min="min"
+          :max="max"
+          @end="filterBy"
+          @click="displayPlotLayer(true)"
+        />
+        <div>
+          <v-btn fab small class="ml-2" @click="animateSlide">
+            <v-icon dark>mdi-play</v-icon>
+          </v-btn>
+          <v-btn fab small class="ml-2" @click="stopSlide">
+            <v-icon dark>mdi-stop</v-icon>
+          </v-btn>
+          <v-btn fab small class="ml-2" @click="displayPlotLayer(false)">
+            <v-icon dark>mdi-close</v-icon>
+          </v-btn>
+        </div>
+      </div>
     </mapbox-map>
   </div>
 </template>
@@ -83,21 +106,50 @@ export default {
         'circle-radius': 4,
       },
       isDisplayZoomLayer: false,
+      isDisplayPlotLayer: false,
       zoomUpLayer: {
         id: 'zoomUpLayer',
         type: 'circle',
         source: 'zoomUp',
         paint: {
           'circle-radius': [
-            '+',
-            ['ln', ['number', ['get', 'total_pondage']]],
-            1,
+            '/',
+            ['+', ['log2', ['number', ['get', 'total_pondage']]], 1],
+            2.5,
           ],
           'circle-color': '#3794b3',
+          'circle-opacity': 0.7,
+        },
+      },
+      plotLayer: {
+        id: 'plotLayer',
+        type: 'circle',
+        source: 'plot',
+        paint: {
+          'circle-radius': [
+            '/',
+            ['+', ['log2', ['number', ['get', 'total_pondage']]], 1],
+            2.5,
+          ],
+          'circle-opacity': 0.7,
+          'circle-color': [
+            'interpolate',
+            ['linear'],
+            ['to-number', ['get', 'year_of_completion'], 1790],
+            1790,
+            '#df9ee2',
+            1800,
+            '#9233d0',
+            2020,
+            '#ec3823',
+          ],
         },
       },
       coordinates: [null, null],
       name: '',
+      slider: 1800,
+      min: 1790,
+      max: 2020,
     };
   },
   computed: {
@@ -112,8 +164,46 @@ export default {
         data: this.$store.state.map.damGeoData,
       };
     },
+    plotSource: function() {
+      return {
+        type: 'geojson',
+        cluster: false,
+        data: this.$store.state.map.damGeoData,
+      };
+    },
   },
   methods: {
+    filterBy: function(e) {
+      const filters = [
+        '==',
+        ['to-number', ['get', 'year_of_completion'], 1790],
+        e,
+      ];
+      this.map.setFilter('plotLayer', filters);
+    },
+    displayPlotLayer: function(boolean) {
+      console.log(this.isDisplayPlotLayer);
+      if (this.map.getLayer('plotLayer')) {
+        if (boolean) {
+          this.map.setLayoutProperty('plotLayer', 'visibility', 'visible');
+        } else {
+          this.map.setLayoutProperty('plotLayer', 'visibility', 'none');
+          this.stopSlide();
+        }
+        this.isDisplayPlotLayer = boolean;
+      }
+    },
+    animateSlide: function() {
+      this.displayPlotLayer(true);
+      const countUp = () => {
+        this.slider++;
+        this.filterBy(this.slider);
+      };
+      this.timer = setInterval(countUp, 400);
+    },
+    stopSlide: function() {
+      clearInterval(this.timer);
+    },
     zoomMap: function() {
       this.isDisplayZoomLayer = this.map.getZoom() > this.zoomThreshold;
     },
@@ -155,5 +245,14 @@ export default {
   white-space: nowrap;
   padding: 0.5em;
   transform: translate(-50%, -40px);
+}
+
+.slider {
+  display: flex;
+  position: absolute;
+  bottom: 1em;
+  left: 2em;
+  right: 2em;
+  z-index: 2;
 }
 </style>
