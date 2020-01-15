@@ -24,6 +24,10 @@ router.register('dam', DamIdViewSet, )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/login/', include('rest_social_auth.urls_jwt_pair')),
+    path('api/login/', include('rest_social_auth.urls_token')),
+    path('api/login/', include('rest_social_auth.urls_session')),
+    path('auth/', include('rest_framework_social_oauth2.urls')),
     path('api/', include(router.urls)),
     path('accounts/', include('allauth.urls')),
     path('rest-auth/', include('rest_auth.urls')),

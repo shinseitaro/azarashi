@@ -36,12 +36,17 @@
       <v-card-title>SNSでログイン</v-card-title>
       <v-list>
         <v-list-item>
-          <v-btn block dark class="github-color" :href="githubLoginUrl">
+          <v-btn
+            block
+            dark
+            class="github-color"
+            @click="authenticate('github')"
+          >
             <v-icon left>mdi-github-circle</v-icon> GitHub
           </v-btn>
         </v-list-item>
         <v-list-item>
-          <v-btn block dark class="twitter-color" :href="twitterLoginUrl">
+          <v-btn block dark class="twitter-color">
             <v-icon left>mdi-twitter</v-icon> twitter
           </v-btn>
         </v-list-item>
@@ -52,8 +57,10 @@
 
 <script>
 import { mapState } from 'vuex';
+import { authMixin } from '../../mixins/social_auth_mixin';
 
 export default {
+  mixins: [authMixin],
   data() {
     return {
       show: false,
@@ -63,8 +70,6 @@ export default {
       rules: {
         required: value => !!value || '必須項目です',
       },
-      githubLoginUrl: process.env.VUE_APP_ROOT_URL + 'accounts/github/login/',
-      twitterLoginUrl: process.env.VUE_APP_ROOT_URL + 'accounts/twitter/login/',
     };
   },
   computed: {

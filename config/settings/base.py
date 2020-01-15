@@ -17,7 +17,7 @@ import cloudinary
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-load_dotenv(dotenv_path=BASE_DIR+'/.env')
+load_dotenv(dotenv_path=BASE_DIR + '/.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -44,6 +44,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'rest_framework.authtoken',
+    'social_django',
+    'rest_social_auth',
+    'oauth2_provider',
+    'rest_framework_social_oauth2',
     'rest_auth',
     'rest_auth.registration',
     'markdown',
@@ -98,11 +102,12 @@ TEMPLATES = [
     },
 ]
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.github.GithubOAuth2',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
-
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
 )
 # refer to https://django-allauth.readthedocs.io/en/latest/installation.html
 
@@ -149,6 +154,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Social Login
+SOCIAL_AUTH_RAISE_EXCEPTIONS = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
+CSRF_COOKIE_SECURE = True
+CORS_ORIGIN_ALLOW_ALL = True
+SOCIAL_AUTH_GITHUB_KEY = os.environ.get('GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('GITHUB_SECRET')
 
 # REST Framework
 REST_FRAMEWORK = {
@@ -199,11 +212,32 @@ REST_AUTH_SERIALIZERS = {
     'USER_DETAILS_SERIALIZER': 'user.serializer.UserDetailsSerializer'
 }
 
+SIMPLE_JWT = {
+    'AUTH_TOKEN_CLASSES': (
+        'rest_framework_simplejwt.tokens.AccessToken',
+        'rest_framework_simplejwt.tokens.SlidingToken',
+    ),
+}
 
-#Cloudinary
+SOCIAL_AUTH_PIPELINE = (
+    # 'users.social_pipeline.auto_logout',  # custom action
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    # 'users.social_pipeline.check_for_email',  # custom action
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+    # 'users.social_pipeline.save_avatar',  # custom action
+)
+
+# Cloudinary
 cloudinary.config(
-  cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME'),
-  api_key = os.environ.get('CLOUDINARY_API_KEY'),
-  api_secret = os.environ.get('CLOUDINARY_API_SECRET'),
-  secure = True
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    api_key=os.environ.get('CLOUDINARY_API_KEY'),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+    secure=True
 )
