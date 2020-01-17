@@ -12,10 +12,11 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAu
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
-
+from django.db.models import Count
 
 from dam.models import Dam
-from v1.serializers import DamGeoFeatureModelSerializer, DamSerializer, DamListSerializer, DamCardListSerializer,DamCardSerializer, DamMapModelSerializer, DamIdSerializer
+from v1.serializers import (DamGeoFeatureModelSerializer, DamSerializer, DamListSerializer, DamCardListSerializer,
+                            DamCardSerializer, DamMapModelSerializer, DamIdSerializer, DamCountSerializer)
 
 class GeojsonLocationList(generics.ListCreateAPIView):
     pagination_class = GeoJsonPagination
@@ -34,6 +35,9 @@ class DamFilter(filters.FilterSet):
     water_system = filters.CharFilter(field_name='water_system_name', lookup_expr='contains')
     name = filters.CharFilter(field_name='name', lookup_expr='contains')
     address = filters.CharFilter(field_name='address', lookup_expr='contains')
+    total_pondage = filters.CharFilter(field_name='total_pondage', lookup_expr='gt')
+
+
 
     class Meta:
         model = Dam
@@ -45,7 +49,6 @@ class DamIdFilter(filters.FilterSet):
     class Meta:
         model = Dam
         fields = ( )
-
 
 class DamViewSet(viewsets.ModelViewSet):
 
@@ -59,10 +62,30 @@ class DamViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'head', 'option']
 
 
+class DamTopTotalpontageView(DamViewSet):
+    queryset = Dam.objects.all().order_by('-total_pondage')
+    serializer_class = DamCardSerializer
+
+
+class DamBottomTotalpontageView(DamTopTotalpontageView):
+    queryset = Dam.objects.all().order_by('total_pondage')
+
+
+class DamTopCountByPrefectureView(DamTopTotalpontageView):
+    serializer_class = DamCountSerializer
+
+    def get_queryset(self):
+        key = 'prefecture'
+        queryset = Dam.objects.values(key).annotate(count=Count(key)).order_by('-count')
+        #print(queryset)
+        # QuerySet [{'prefecture': '北海道', 'count': 190}, {'prefecture': '岡山県', 'count': 166}, {'prefecture': '新潟県', 'count': 114}, {'prefecture': '兵庫県', 'count': 104}, {'prefecture': '広島県', 'count': 100}, {'prefecture': '長崎県', 'count': 97}, {'prefecture': '福岡県', 'count': 96}, {'prefecture': '岐阜県', 'count': 95}, {'prefecture': '福島県', 'count': 89}, {'prefecture': '三重県', 'count': 86}, {'prefecture': '山口県', 'count': 86}, {'prefecture': '大分県', 'count': 84}, {'prefecture': '富山県', 'count': 76}, {'prefecture': '愛媛県', 'count': 71}, {'prefecture': '秋田県', 'count': 66}, {'prefecture': '香川県', 'count': 65}, {'prefecture': '長野県', 'count': 65}, {'prefecture': '山形県', 'count': 59}, {'prefecture': '佐賀県', 'count': 57}, {'prefecture': '石川県', 'count': 55}, '...(remaining elements truncated)...']>
+        return queryset
+
 class DamIdViewSet(DamViewSet):
 
     filterset_class = DamIdFilter
     serializer_class = DamIdSerializer #DamGeoFeatureModelSerializer
+
 
 
 
@@ -102,6 +125,19 @@ class DamCardListViewSet(viewsets.ModelViewSet):
 
 
 
+    # ordering_filter = filters.OrderingFilter()
+    #
+    # def filter_queryset(self, queryset):
+    #     queryset = super(DamCardListViewSet, self).filter_queryset(queryset)
+    #     return self.ordering_filter.filter_queryset(self.request, queryset, self)
+
+
+    # filter_backends = [filters.OrderingFilter]
+    # ordering_fields = ['total_pondage']
+
+
+
+
 class DamMapListViewSet(viewsets.ViewSet, APIView):
     # permission_classes = (IsAuthenticatedOrReadOnly,)
     permission_classes = (AllowAny,)
@@ -114,7 +150,5 @@ class DamMapListViewSet(viewsets.ViewSet, APIView):
         # キャッシュがきいているかどうか確認するのにかんたんな方法はプリントされるかどうか。効いている間はされない。
         #print("Am I Printed?")
         return Response(serializer.data)
-
-
 
 
