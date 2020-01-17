@@ -4,7 +4,7 @@
 
     <v-list-item>
       <v-list-item-icon>
-        <v-icon color="indigo">mdi-sign-direction</v-icon>
+        <v-icon color="info">mdi-sign-direction</v-icon>
       </v-list-item-icon>
 
       <v-list-item-content v-if="Array.isArray(title[name])">

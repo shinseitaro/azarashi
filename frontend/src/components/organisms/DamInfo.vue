@@ -1,8 +1,16 @@
 <template>
   <v-card outlined>
-    <v-toolbar color="indigo" dark>
+    <v-toolbar color="primary" dark>
       <v-toolbar-title>{{ damInfo.name }}</v-toolbar-title>
-      <v-btn color="pink" dark absolute bottom right fab @click="goToPostPage">
+      <v-btn
+        color="secondary"
+        dark
+        absolute
+        bottom
+        right
+        fab
+        @click="goToPostPage"
+      >
         <v-icon>mdi-pencil-plus</v-icon>
       </v-btn>
     </v-toolbar>

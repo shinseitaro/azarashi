@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-toolbar color="indigo" dark>
+    <v-toolbar color="primary" dark>
       <v-toolbar-title>kaizumakiさんのカード</v-toolbar-title>
     </v-toolbar>
     <v-row>
