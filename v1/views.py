@@ -25,7 +25,7 @@ class DamPagination(PageNumberPagination):
     # url のリクエスト　例：GET /api/dam/?page=2
     page_size_query_param = 'page_size'
     # 一ページあたりの件数
-    page_size = 10
+    page_size = 12
 
 class DamFilter(filters.FilterSet):
     # この変数名が、 url のクエリ文字列キーになる

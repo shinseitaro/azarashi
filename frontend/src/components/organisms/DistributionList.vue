@@ -1,6 +1,6 @@
 <template>
   <v-card outlined>
-    <v-toolbar color="indigo" dark>
+    <v-toolbar color="primary" dark>
       <v-toolbar-title>カード配布所</v-toolbar-title>
     </v-toolbar>
     <v-list :key="key" v-for="(item, key) in items">
@@ -8,7 +8,7 @@
 
       <v-list-item>
         <v-list-item-icon class="pt-3">
-          <v-icon color="indigo">mdi-hand-pointing-right</v-icon>
+          <v-icon color="info">mdi-hand-pointing-right</v-icon>
         </v-list-item-icon>
 
         <v-list-item-content>

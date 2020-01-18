@@ -1,8 +1,16 @@
 <template>
   <v-card outlined>
-    <v-toolbar color="indigo" dark>
+    <v-toolbar color="primary" dark>
       <v-toolbar-title>{{ damInfo.name }}</v-toolbar-title>
-      <v-btn color="pink" dark absolute bottom right fab @click="goToPostPage">
+      <v-btn
+        color="secondary"
+        dark
+        absolute
+        bottom
+        right
+        fab
+        @click="goToPostPage"
+      >
         <v-icon>mdi-pencil-plus</v-icon>
       </v-btn>
     </v-toolbar>
@@ -42,7 +50,7 @@ export default {
         bank_volume: ['堤体積', '千m&sup3;'],
         total_pondage: ['総貯水量', '千m&sup3;'],
         institution_in_charge: 'ダム事業者名',
-        year_of_completion: ['竣工年度', '年'],
+        year_of_completion: '竣工年度',
         address: '所在地',
       },
     };

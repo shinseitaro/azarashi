@@ -20,6 +20,7 @@ export default {
     CardList,
   },
   mounted() {
+    document.title = 'みんなのダムカード';
     this.$store.dispatch('map/getDamGeoData');
     this.$store.dispatch('map/getDamList');
   },
