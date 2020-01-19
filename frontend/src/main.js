@@ -17,6 +17,11 @@ Vue.use(VueAuthenticate, {
       redirectUri: 'http://127.0.0.1:8080/',
       url: 'http://127.0.0.1:8000/api/login/social/jwt-pair-user/github/',
     },
+    twitter: {
+      clientId: 't77VU9x4ZFsL17W6Ks9IJkxPw',
+      redirectUri: 'http://127.0.0.1:8000/',
+      url: 'http://127.0.0.1:8000/api/login/social/jwt-pair-user/twitter/',
+    },
   },
 });
 new Vue({

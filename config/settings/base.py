@@ -104,6 +104,7 @@ TEMPLATES = [
 ]
 AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
     # Needed to login by username in Django admin, regardless of `allauth`
     'django.contrib.auth.backends.ModelBackend',
     # `allauth` specific authentication methods, such as login by e-mail
@@ -162,7 +163,11 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 CSRF_COOKIE_SECURE = True
 CORS_ORIGIN_ALLOW_ALL = True
 SOCIAL_AUTH_GITHUB_KEY = os.environ.get('GITHUB_KEY')
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get('TWITTER_KEY')
 SOCIAL_AUTH_GITHUB_SECRET = os.environ.get('GITHUB_SECRET')
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('TWITTER_SECRET')
+REST_SOCIAL_OAUTH_REDIRECT_URI = '/auth/complete/twitter/'
+REDIRECT_STATE = False
 
 # REST Framework
 REST_FRAMEWORK = {

@@ -46,7 +46,12 @@
           </v-btn>
         </v-list-item>
         <v-list-item>
-          <v-btn block dark class="twitter-color">
+          <v-btn
+            block
+            dark
+            class="twitter-color"
+            @click="authenticate('twitter')"
+          >
             <v-icon left>mdi-twitter</v-icon> twitter
           </v-btn>
         </v-list-item>
@@ -81,7 +86,7 @@ export default {
   methods: {
     authenticate: function(provider) {
       this.$auth
-        .authenticate(provider, { provider: provider })
+        .authenticate(provider)
         .then(response => {
           console.log(response);
           this.$router.push({ name: 'sitetop' });
