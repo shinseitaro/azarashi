@@ -44,21 +44,12 @@ const dam = {
     },
     getDam({ commit }, id) {
       return new Promise((resolve, reject) => {
-        API.setQuery('dam', 'dam_code', id)
+        API.set('dam', id)
           .then(response => {
-            commit(
-              'SET_DAM_NAME',
-              response.payload.results.features[0].properties.name
-            );
-            commit(
-              'SET_DAM_INFO',
-              response.payload.results.features[0].properties
-            );
-            commit('SET_DAM_GEO_DATA', response.payload.results);
-            commit(
-              'SET_DAM_COORD',
-              response.payload.results.features[0].geometry.coordinates
-            );
+            commit('SET_DAM_NAME', response.payload.properties.name);
+            commit('SET_DAM_INFO', response.payload.properties);
+            commit('SET_DAM_GEO_DATA', response.payload);
+            commit('SET_DAM_COORD', response.payload.geometry.coordinates);
             resolve();
           })
           .catch(error => {

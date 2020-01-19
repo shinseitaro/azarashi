@@ -6,12 +6,12 @@ from datetime import datetime
 from .serializers import CardSerializer
 from .models import Card, Dam
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 import cloudinary.uploader
 
 class CardViewSet(viewsets.ViewSet):
     authentication_classes = [JSONWebTokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     parser_class = (FileUploadParser,)
     http_method_names = ['post']
 

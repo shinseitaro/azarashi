@@ -39,6 +39,7 @@ class Purpose(models.Model):
         return purpose
 
 class Dam(Infra):
+    id = models.IntegerField(null=False, primary_key=True)
     dam_code = models.IntegerField(null=False)
     water_system_name = models.CharField(max_length=50, blank=True, null=True)
     river_name = models.CharField(max_length=50, blank=True, null=True)

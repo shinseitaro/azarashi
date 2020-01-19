@@ -46,8 +46,8 @@ export function searchGeo(
   );
 }
 
-export function setQuery(repository, query, id) {
-  return access(`${repository}/?${query}=${id}`, 'GET');
+export function set(repository, id) {
+  return access(`${repository}/${id}/`, 'GET');
 }
 
 export function create(repository, data) {

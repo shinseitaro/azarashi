@@ -82,9 +82,7 @@ class DamTopCountByPrefectureView(DamTopTotalpontageView):
         return queryset
 
 class DamIdViewSet(DamViewSet):
-
-    filterset_class = DamIdFilter
-    serializer_class = DamIdSerializer #DamGeoFeatureModelSerializer
+    serializer_class = DamIdSerializer
 
 
 
