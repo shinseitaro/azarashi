@@ -106,6 +106,7 @@ def load_records():
 
             # First, create Dam record excluding fields that have many-to-many relationship
             record_excluded = {k: v for k, v in record.items() if k not in excludes}
+            record_excluded['id']=record_excluded.get('dam_code')
 
             # dam = Dam(**record_excluded)
             dam = Dam.objects.filter(dam_code=record_excluded.get('dam_code')).first()
