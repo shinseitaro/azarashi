@@ -10,7 +10,6 @@ function setAuthHeader() {
       store
         .dispatch('auth/update')
         .then(() => {
-          console.log('ok');
           resolve({
             headers: {
               Authorization: `JWT ${token}`,
