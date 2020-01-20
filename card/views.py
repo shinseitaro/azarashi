@@ -4,7 +4,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from datetime import datetime
 from .serializers import CardSerializer
-from .models import Card, Dam
+from .models import Card
+from dam.models import Dam
+from user.models import User
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 import cloudinary.uploader
@@ -28,10 +30,11 @@ class CardViewSet(viewsets.ViewSet):
 
         if serializer.is_valid():
             response_from_cloudinary = cloudinary.uploader.upload(request.FILES.get('file').read(), folder='udc-dam')
-            dam_record = Dam.objects.filter(dam_code=request.data.get('dam_id'))
+            current_user = User.objects.get(name=request.data.get('username'))
+            dam_record = Dam.objects.get(dam_code=request.data.get('dam_id'))
             serializer.save(
-                user=request.user,
-                dam=dam_record[0],
+                user=current_user,
+                dam=dam_record,
                 cloudinary_url=response_from_cloudinary['url'],
                 published_date=datetime.now())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
