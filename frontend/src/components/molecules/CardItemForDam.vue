@@ -15,7 +15,11 @@
                 {{ item.username }}
               </a>
             </div>
-            <div>{{ item.published_date }}</div>
+            <div>
+              <a :href="`/card/${item.cardId}`">
+                {{ item.published_date }}
+              </a>
+            </div>
           </v-row>
         </v-card-text>
       </v-col>

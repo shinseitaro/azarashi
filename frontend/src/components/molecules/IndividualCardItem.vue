@@ -38,9 +38,22 @@
           <div class="subtitle-1">{{ item.address }}</div>
           <div>{{ item.water_system_name }}水系 {{ item.river_name }}</div>
         </v-card-text>
+
+        <v-card-text>
+          <div>
+            コメントです。コメントです。コメントです。コメントです。コメントです。
+          </div>
+        </v-card-text>
       </v-col>
 
       <v-col class="card-footer">
+        <v-card-actions v-if="this.$route.name === 'mycard'">
+          <v-spacer></v-spacer>
+          <v-btn @click="goToEditPostPage">
+            <v-icon left>mdi-pencil-outline</v-icon>編集
+          </v-btn>
+          <v-btn><v-icon left>mdi-delete-forever</v-icon>削除</v-btn>
+        </v-card-actions>
         <common-card-footer :dam-id="item.dam_code" />
       </v-col>
     </v-row>
@@ -48,10 +61,11 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import CommonCardFooter from './CommonCardFooter';
 
 export default {
-  props: ['item'],
+  props: ['item', 'userId'],
   components: {
     CommonCardFooter,
   },
@@ -59,6 +73,32 @@ export default {
     return {
       checkbox: false,
     };
+  },
+  computed: {
+    ...mapState({
+      isLoggedIn: state => state.auth.isLoggedIn,
+    }),
+  },
+  mounted() {
+    if (
+      this.$store.state.auth.isLoggedIn &&
+      parseInt(this.userId) === this.$store.state.auth.userId
+    ) {
+      this.$router
+        .push({ name: 'mycard', params: { userId: this.userId } })
+        .catch(error => {
+          return { error };
+        });
+    }
+  },
+  methods: {
+    goToEditPostPage: function() {
+      this.$router
+        .push({ name: 'edit_post', params: { cardId: 1 } })
+        .catch(error => {
+          return { error };
+        });
+    },
   },
 };
 </script>

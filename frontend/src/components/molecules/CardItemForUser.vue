@@ -54,15 +54,7 @@
           </v-btn>
           <v-btn><v-icon left>mdi-delete-forever</v-icon>削除</v-btn>
         </v-card-actions>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn @click="goToDamPage">
-            <v-icon left>mdi-map-legend</v-icon>ダム詳細
-          </v-btn>
-          <v-btn @click="goToPostPage">
-            <v-icon left>mdi-pencil-plus</v-icon>投稿する
-          </v-btn>
-        </v-card-actions>
+        <common-card-footer :dam-id="item.dam_code" />
       </v-col>
     </v-row>
   </v-card>
@@ -70,9 +62,13 @@
 
 <script>
 import { mapState } from 'vuex';
+import CommonCardFooter from './CommonCardFooter';
 
 export default {
   props: ['item', 'userId'],
+  components: {
+    CommonCardFooter,
+  },
   data() {
     return {
       checkbox: false,
@@ -86,7 +82,7 @@ export default {
   mounted() {
     if (
       this.$store.state.auth.isLoggedIn &&
-      this.userId === this.$store.state.auth.userId
+      parseInt(this.userId) === this.$store.state.auth.userId
     ) {
       this.$router
         .push({ name: 'mypage', params: { userId: this.userId } })
@@ -96,20 +92,6 @@ export default {
     }
   },
   methods: {
-    goToDamPage: function() {
-      this.$router
-        .push({ name: 'dam', params: { damId: this.item.dam_code } })
-        .catch(error => {
-          return { error };
-        });
-    },
-    goToPostPage: function() {
-      this.$router
-        .push({ name: 'post', params: { damId: this.item.dam_code } })
-        .catch(error => {
-          return { error };
-        });
-    },
     goToEditPostPage: function() {
       this.$router
         .push({ name: 'edit_post', params: { cardId: 1 } })

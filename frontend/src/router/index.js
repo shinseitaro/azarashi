@@ -9,6 +9,7 @@ import CompleteSignUp from '../components/pages/CompleteSignUp';
 import LoginPage from '../components/pages/LoginPage';
 import PostPage from '../components/pages/PostPage';
 import UserPage from '../components/pages/UserPage';
+import CardPage from '../components/pages/CardPage';
 
 Vue.use(VueRouter);
 
@@ -68,6 +69,19 @@ const routes = [
     path: '/user/:userId/mypage',
     name: 'mypage',
     component: UserPage,
+    props: true,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/card/:cardId:userId?',
+    name: 'card',
+    component: CardPage,
+    props: true,
+  },
+  {
+    path: '/card/:cardId/mycard/:userId',
+    name: 'mycard',
+    component: CardPage,
     props: true,
     meta: { requiresAuth: true },
   },
