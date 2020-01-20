@@ -23,7 +23,7 @@ class Infra(models.Model):
 		abstract = True
 
 
-	id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+	id = models.IntegerField(null=False, primary_key=True)
 	name = models.CharField(verbose_name='名称', max_length=50)
 	address = models.CharField(verbose_name='住所', max_length=60)
 	category = models.ForeignKey(Category, verbose_name='カテゴリ', on_delete=models.PROTECT, blank=True, null=True)
