@@ -4,23 +4,34 @@ import store from '../store';
 axios.defaults.baseURL = process.env.VUE_APP_ROOT_API;
 
 function setAuthHeader() {
-  const token = localStorage.getItem('token');
-  if (token !== null) {
-    store
-      .dispatch('auth/update')
-      .then(() => {
-        axios.defaults.headers.common['Authorization'] = 'JWT ' + token;
-      })
-      .catch(error => {
-        if (error.response.status === 401) {
-          store.dispatch('auth/logout').then(() => {
-            setAuthHeader();
+  return new Promise(resolve => {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      store
+        .dispatch('auth/update')
+        .then(() => {
+          console.log('ok');
+          resolve({
+            headers: {
+              Authorization: `JWT ${token}`,
+            },
           });
-        }
+        })
+        .catch(error => {
+          if (error.response.status === 401) {
+            store.dispatch('auth/logout').then(() => {
+              setAuthHeader();
+            });
+          }
+        });
+    } else {
+      resolve({
+        headers: {
+          Authorization: '',
+        },
       });
-  } else {
-    axios.defaults.headers.common['Authorization'] = '';
-  }
+    }
+  });
 }
 
 export function read(repository) {
@@ -66,11 +77,13 @@ export function fetchUrl(url) {
   return access(url, 'GET');
 }
 
-export function fileUpload(repository, params) {
+export async function fileUpload(repository, params) {
+  const options = await setAuthHeader();
   return new Promise((resolve, reject) => {
     axios
       .post(`${repository}/`, params, {
         headers: {
+          ...options.headers,
           'content-type': 'multipart/form-data',
         },
       })
@@ -83,17 +96,22 @@ export function fileUpload(repository, params) {
   });
 }
 
-function access(url, method) {
-  return _access(url, {
-    method: method,
-    headers: {},
-  });
-}
-
-function data_access(url, method, data) {
+async function access(url, method) {
+  const options = await setAuthHeader();
   return _access(url, {
     method: method,
     headers: {
+      ...options.headers,
+    },
+  });
+}
+
+async function data_access(url, method, data) {
+  const options = await setAuthHeader();
+  return _access(url, {
+    method: method,
+    headers: {
+      ...options.headers,
       'content-type': 'application/json',
     },
     data: JSON.stringify(data),
@@ -101,7 +119,6 @@ function data_access(url, method, data) {
 }
 
 function _access(url, config) {
-  setAuthHeader();
   return new Promise((resolve, reject) => {
     axios(url, config)
       .then(response => {
