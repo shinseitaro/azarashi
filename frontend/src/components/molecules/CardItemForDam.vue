@@ -28,7 +28,7 @@ import CommonCardImg from './CommonCardImg';
 
 export default {
   props: ['item'],
-  comments: {
+  components: {
     CommonCardImg,
   },
 };
