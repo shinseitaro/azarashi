@@ -2,7 +2,7 @@
   <base-layout>
     <v-container>
       <v-row>
-        <individual-card-item :item="item" :user-id="item.userId" />
+        <individual-card-item :item="item" />
       </v-row>
     </v-container>
   </base-layout>
@@ -13,7 +13,7 @@ import BaseLayout from '../organisms/BaseLayout';
 import IndividualCardItem from '../molecules/IndividualCardItem';
 
 export default {
-  props: ['cardId', 'userId'],
+  props: ['cardId'],
   components: {
     BaseLayout,
     IndividualCardItem,
@@ -30,6 +30,22 @@ export default {
       },
     };
   },
-  mounted() {},
+  mounted() {
+    const token = localStorage.getItem('token');
+    if (token !== null) {
+      this.$store.dispatch('auth/update').then(() => {
+        if (
+          this.$store.state.auth.isLoggedIn &&
+          this.item.userId === this.$store.state.auth.userId
+        ) {
+          this.$router
+            .push({ name: 'mycard', params: { userId: this.item.userId } })
+            .catch(error => {
+              return { error };
+            });
+        }
+      });
+    }
+  },
 };
 </script>

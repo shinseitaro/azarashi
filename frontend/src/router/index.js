@@ -73,13 +73,13 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
-    path: '/card/:cardId:userId?',
+    path: '/card/:cardId',
     name: 'card',
     component: CardPage,
     props: true,
   },
   {
-    path: '/card/:cardId/mycard/:userId',
+    path: '/user/:userId/card/:cardId/mycard',
     name: 'mycard',
     component: CardPage,
     props: true,

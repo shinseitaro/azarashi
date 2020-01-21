@@ -61,11 +61,10 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import CommonCardFooter from './CommonCardFooter';
 
 export default {
-  props: ['item', 'userId'],
+  props: ['item'],
   components: {
     CommonCardFooter,
   },
@@ -73,23 +72,6 @@ export default {
     return {
       checkbox: false,
     };
-  },
-  computed: {
-    ...mapState({
-      isLoggedIn: state => state.auth.isLoggedIn,
-    }),
-  },
-  mounted() {
-    if (
-      this.$store.state.auth.isLoggedIn &&
-      parseInt(this.userId) === this.$store.state.auth.userId
-    ) {
-      this.$router
-        .push({ name: 'mycard', params: { userId: this.userId } })
-        .catch(error => {
-          return { error };
-        });
-    }
   },
   methods: {
     goToEditPostPage: function() {

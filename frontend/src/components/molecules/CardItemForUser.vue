@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
 import CommonCardFooter from './CommonCardFooter';
 
 export default {
@@ -73,11 +72,6 @@ export default {
     return {
       checkbox: false,
     };
-  },
-  computed: {
-    ...mapState({
-      isLoggedIn: state => state.auth.isLoggedIn,
-    }),
   },
   mounted() {
     if (
