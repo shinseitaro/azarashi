@@ -2,42 +2,9 @@
   <v-card class="mx-auto card" max-width="450" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
-        <v-img
-          :aspect-ratio="88 / 63"
-          src="/img/no_cards_posted.jpg"
-          :alt="`${item.name}のカード`"
-        ></v-img>
+        <common-card-img :url="null" :name="item.name" />
 
-        <v-card-title>
-          <v-row align="center" justify="space-between" class="mx-0">
-            <span>{{ item.name }}</span>
-            <v-checkbox
-              v-model="checkbox"
-              off-icon="mdi-heart"
-              on-icon="mdi-heart"
-              color="red"
-              hide-details
-              class="mt-0"
-            ></v-checkbox>
-          </v-row>
-        </v-card-title>
-
-        <v-card-text>
-          <v-row align="center" class="mx-0">
-            <v-rating
-              :value="4.5"
-              color="amber"
-              dense
-              half-increments
-              readonly
-              size="14"
-            ></v-rating>
-
-            <div class="grey--text ml-4">4.5 (413)</div>
-          </v-row>
-          <div class="subtitle-1">{{ item.address }}</div>
-          <div>{{ item.water_system_name }}水系 {{ item.river_name }}</div>
-        </v-card-text>
+        <common-card-title :item="item" />
       </v-col>
 
       <v-col class="card-footer">
@@ -48,17 +15,16 @@
 </template>
 
 <script>
+import CommonCardImg from './CommonCardImg';
+import CommonCardTitle from './CommonCardTitle';
 import CommonCardFooter from './CommonCardFooter';
 
 export default {
   props: ['item'],
   components: {
+    CommonCardImg,
+    CommonCardTitle,
     CommonCardFooter,
-  },
-  data() {
-    return {
-      checkbox: false,
-    };
   },
 };
 </script>
