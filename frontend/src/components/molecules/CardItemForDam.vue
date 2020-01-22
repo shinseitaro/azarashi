@@ -2,11 +2,7 @@
   <v-card class="mx-auto card" max-width="450" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
-        <v-img
-          :aspect-ratio="88 / 63"
-          src="/img/no_cards_posted.jpg"
-          :alt="`${item.username}が投稿したカード`"
-        ></v-img>
+        <common-card-img :url="null" :name="item.username" />
 
         <v-card-text>
           <v-row justify="space-between" class="mx-0">
@@ -15,7 +11,11 @@
                 {{ item.username }}
               </a>
             </div>
-            <div>{{ item.published_date }}</div>
+            <div>
+              <a :href="`/card/${item.cardId}`">
+                {{ item.published_date }}
+              </a>
+            </div>
           </v-row>
         </v-card-text>
       </v-col>
@@ -24,8 +24,13 @@
 </template>
 
 <script>
+import CommonCardImg from './CommonCardImg';
+
 export default {
   props: ['item'],
+  components: {
+    CommonCardImg,
+  },
 };
 </script>
 

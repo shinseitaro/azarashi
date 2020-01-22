@@ -9,6 +9,7 @@ import CompleteSignUp from '../components/pages/CompleteSignUp';
 import LoginPage from '../components/pages/LoginPage';
 import PostPage from '../components/pages/PostPage';
 import UserPage from '../components/pages/UserPage';
+import CardPage from '../components/pages/CardPage';
 
 Vue.use(VueRouter);
 
@@ -71,12 +72,32 @@ const routes = [
     props: true,
     meta: { requiresAuth: true },
   },
+  {
+    path: '/card/:cardId',
+    name: 'card',
+    component: CardPage,
+    props: true,
+  },
+  {
+    path: '/user/:userId/card/:cardId/mycard',
+    name: 'mycard',
+    component: CardPage,
+    props: true,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    } else {
+      return { x: 0, y: 0 };
+    }
+  },
 });
 
 router.beforeEach((to, from, next) => {

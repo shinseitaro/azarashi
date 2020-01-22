@@ -26,18 +26,21 @@ export default {
     return {
       cards: [
         {
+          cardId: 1,
           imageUrl: 'http://****',
           userId: 1,
           username: 'aiueo',
           published_date: '2020-01-01',
         },
         {
+          cardId: 2,
           imageUrl: 'http://****',
           userId: 2,
           username: 'kaizumaki',
           published_date: '2020-01-01',
         },
         {
+          cardId: 3,
           imageUrl: 'http://****',
           userId: 2,
           username: 'kaizumaki',

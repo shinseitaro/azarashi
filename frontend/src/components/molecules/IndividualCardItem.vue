@@ -5,9 +5,18 @@
         <common-card-img :url="null" :name="item.name" />
 
         <common-card-title :item="item" />
+
+        <v-card-text>
+          <div>
+            コメントです。コメントです。コメントです。コメントです。コメントです。
+          </div>
+        </v-card-text>
       </v-col>
 
       <v-col class="card-footer">
+        <v-card-actions v-if="this.$route.name === 'mycard'">
+          <common-card-edit-btn :card-id="1" />
+        </v-card-actions>
         <common-card-footer :dam-id="item.dam_code" />
       </v-col>
     </v-row>
@@ -17,6 +26,7 @@
 <script>
 import CommonCardImg from './CommonCardImg';
 import CommonCardTitle from './CommonCardTitle';
+import CommonCardEditBtn from './CommonCardEditBtn';
 import CommonCardFooter from './CommonCardFooter';
 
 export default {
@@ -24,6 +34,7 @@ export default {
   components: {
     CommonCardImg,
     CommonCardTitle,
+    CommonCardEditBtn,
     CommonCardFooter,
   },
 };

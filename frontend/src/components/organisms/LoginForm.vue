@@ -97,14 +97,7 @@ export default {
                   return { error };
                 });
             } else {
-              this.$router
-                .push({
-                  name: 'mypage',
-                  params: { userId: this.$store.state.auth.userId },
-                })
-                .catch(error => {
-                  return { error };
-                });
+              this.$router.go(-1);
             }
           }
         })
