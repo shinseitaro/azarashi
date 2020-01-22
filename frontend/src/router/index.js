@@ -10,6 +10,7 @@ import LoginPage from '../components/pages/LoginPage';
 import PostPage from '../components/pages/PostPage';
 import UserPage from '../components/pages/UserPage';
 import CardPage from '../components/pages/CardPage';
+import StatsPage from '../components/pages/StatsPage';
 
 Vue.use(VueRouter);
 
@@ -84,6 +85,12 @@ const routes = [
     component: CardPage,
     props: true,
     meta: { requiresAuth: true },
+  },
+  {
+    path: '/stats',
+    name: 'stats',
+    component: StatsPage,
+    props: true,
   },
 ];
 

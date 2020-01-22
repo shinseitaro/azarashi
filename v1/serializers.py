@@ -9,6 +9,10 @@ class DamSerializer(serializers.ModelSerializer):
         exclude = ["registered_at", "modified_at"]
         #fields = ("name", "address", "river_name","geom")
 
+class DamStatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Dam
+        fields = ('id', 'name', 'water_system_name', 'total_pondage')
 
 class DamCardSerializer(serializers.ModelSerializer):
     class Meta:
