@@ -97,8 +97,17 @@ export default {
                 .catch(error => {
                   return { error };
                 });
-            } else {
+            } else if (this.$route.params.userId) {
               this.$router.go(-1);
+            } else {
+              this.$router
+                .push({
+                  name: 'mypage',
+                  params: { userId: response.payload.data.pk },
+                })
+                .catch(error => {
+                  return { error };
+                });
             }
           }
         })

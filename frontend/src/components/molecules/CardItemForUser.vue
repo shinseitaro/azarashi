@@ -2,22 +2,22 @@
   <v-card class="mx-auto card" max-width="450" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
-        <common-card-img :url="null" :name="item.name" />
+        <common-card-img :url="item.cloudinary_url" :name="item.dam.name" />
 
-        <common-card-title :item="item" />
+        <common-card-title :item="item.dam" />
 
         <v-card-text>
           <div>
-            コメントです。コメントです。コメントです。コメントです。コメントです。
+            {{ item.comment }}
           </div>
         </v-card-text>
       </v-col>
 
       <v-col class="card-footer">
         <v-card-actions v-if="this.$route.name === 'mypage'">
-          <common-card-edit-btn :card-id="2" />
+          <common-card-edit-btn :card-id="item.id" />
         </v-card-actions>
-        <common-card-footer :dam-id="item.dam_code" />
+        <common-card-footer :dam-id="item.dam.dam_code" />
       </v-col>
     </v-row>
   </v-card>

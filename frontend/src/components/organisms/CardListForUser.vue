@@ -1,11 +1,11 @@
 <template>
   <v-container>
     <v-toolbar color="primary" dark>
-      <v-toolbar-title>kaizumakiさんのカード</v-toolbar-title>
+      <v-toolbar-title>{{ cardUser }}さんのカード</v-toolbar-title>
     </v-toolbar>
     <v-row>
       <v-col
-        v-for="(item, index) in damList.slice(0, 8)"
+        v-for="(item, index) in cardList"
         :key="index"
         cols="12"
         lg="4"
@@ -29,7 +29,8 @@ export default {
   },
   computed: {
     ...mapState({
-      damList: state => state.map.damList,
+      cardList: state => state.card.cardList,
+      cardUser: state => state.card.cardUser,
     }),
   },
 };

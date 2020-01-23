@@ -15,7 +15,7 @@ export default {
     CardListForUser,
   },
   mounted() {
-    this.$store.dispatch('map/getDamList');
+    this.$store.dispatch('card/getCardList', this.userId);
   },
 };
 </script>
