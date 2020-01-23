@@ -1,6 +1,6 @@
 <template>
   <base-layout>
-    <post-form />
+    <post-form :dam-id="damId" :card-id="cardId" />
   </base-layout>
 </template>
 
