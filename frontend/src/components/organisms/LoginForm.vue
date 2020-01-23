@@ -63,8 +63,9 @@ export default {
       rules: {
         required: value => !!value || '必須項目です',
       },
-      githubLoginUrl: process.env.VUE_APP_ROOT_URL + 'accounts/github/login/',
-      twitterLoginUrl: process.env.VUE_APP_ROOT_URL + 'accounts/twitter/login/',
+      githubLoginUrl: process.env.VUE_APP_ROOT_URL + '/accounts/github/login/',
+      twitterLoginUrl:
+        process.env.VUE_APP_ROOT_URL + '/accounts/twitter/login/',
     };
   },
   computed: {

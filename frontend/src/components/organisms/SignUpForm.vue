@@ -93,7 +93,7 @@ export default {
       params.append('password2', this.password2);
       axios
         .post(
-          process.env.VUE_APP_ROOT_URL + 'rest-auth/registration/',
+          process.env.VUE_APP_ROOT_URL + '/rest-auth/registration/',
           params,
           {
             headers: {
