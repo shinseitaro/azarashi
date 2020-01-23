@@ -64,8 +64,7 @@ export default {
           xhr.responseType = 'arraybuffer';
           xhr.onload = () => {
             const arrayBuffer = this.response;
-            const file = new File([arrayBuffer], response.payload.file_name);
-            this.file = file;
+            this.file = new File([arrayBuffer], response.payload.file_name);
           };
           xhr.send();
           this.fileName[0] = response.payload.file_name;
