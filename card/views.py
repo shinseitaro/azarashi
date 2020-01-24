@@ -32,7 +32,7 @@ class CardViewSet(viewsets.ViewSet, generics.ListCreateAPIView, generics.Retriev
     authentication_classes = [JSONWebTokenAuthentication]
     permission_classes = [AllowAny]
     parser_class = (FileUploadParser,)
-    queryset = Card.objects.filter()
+    queryset = Card.objects.filter().order_by('-published_date')
     serializer_class = CardSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = CardFilter
