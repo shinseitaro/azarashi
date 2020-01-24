@@ -7,9 +7,11 @@
         <common-card-title :item="item.dam" />
 
         <v-card-text>
-          <div>
-            {{ item.comment }}
-          </div>
+          <div>{{ item.comment }}</div>
+        </v-card-text>
+
+        <v-card-text>
+          <div>{{ publishedDate }}</div>
         </v-card-text>
       </v-col>
 
@@ -28,6 +30,7 @@ import CommonCardImg from './CommonCardImg';
 import CommonCardTitle from './CommonCardTitle';
 import CommonCardEditBtn from './CommonCardEditBtn';
 import CommonCardFooter from './CommonCardFooter';
+import * as moment from 'moment';
 
 export default {
   props: ['item', 'userName'],
@@ -36,6 +39,11 @@ export default {
     CommonCardTitle,
     CommonCardEditBtn,
     CommonCardFooter,
+  },
+  computed: {
+    publishedDate: function() {
+      return moment(this.item.published_date).format('YYYY.MM.DD HH:mm');
+    },
   },
   mounted() {
     if (
