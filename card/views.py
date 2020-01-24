@@ -14,12 +14,13 @@ import cloudinary.uploader
 from django_filters import rest_framework as filters
 
 
-class UserFilter(filters.FilterSet):
+class CardFilter(filters.FilterSet):
     user = filters.CharFilter(field_name='user__name')
+    dam = filters.NumberFilter(field_name='dam__dam_code')
 
     class Meta:
         model = Card
-        fields = ('user',)
+        fields = ('user', 'dam')
 
 
 class CardPagination(PageNumberPagination):
@@ -34,7 +35,7 @@ class CardViewSet(viewsets.ViewSet, generics.ListCreateAPIView, generics.Retriev
     queryset = Card.objects.filter()
     serializer_class = CardSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = UserFilter
+    filterset_class = CardFilter
     pagination_class = CardPagination
 
     def list(self, request):

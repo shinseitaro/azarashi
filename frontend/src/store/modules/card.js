@@ -37,6 +37,11 @@ const card = {
           });
       });
     },
+    getCardListForDam({ commit }, damId) {
+      API.setQuery('card', 'dam', damId).then(response => {
+        commit('SET_CARD_LIST', response.payload.results);
+      });
+    },
   },
   getters: {},
 };

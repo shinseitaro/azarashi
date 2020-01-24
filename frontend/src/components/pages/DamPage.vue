@@ -40,6 +40,7 @@ export default {
       .catch(error => {
         return { error };
       });
+    this.$store.dispatch('card/getCardListForDam', this.damId);
   },
 };
 </script>

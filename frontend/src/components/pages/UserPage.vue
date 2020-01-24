@@ -16,6 +16,7 @@ export default {
   },
   created() {
     this.$store.dispatch('card/getCardList', this.userName);
+    document.title = this.userName + 'さんのカード';
   },
 };
 </script>
