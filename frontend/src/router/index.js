@@ -41,7 +41,7 @@ const routes = [
     component: CompleteSignUp,
   },
   {
-    path: '/login/:damId?:userId?',
+    path: '/login/:damId?:userName?',
     name: 'login',
     component: LoginPage,
     props: true,
@@ -60,13 +60,13 @@ const routes = [
     props: true,
   },
   {
-    path: '/user/:userId',
+    path: '/user/:userName',
     name: 'user',
     component: UserPage,
     props: true,
   },
   {
-    path: '/user/:userId/mypage',
+    path: '/user/:userName/mypage',
     name: 'mypage',
     component: UserPage,
     props: true,
@@ -79,7 +79,7 @@ const routes = [
     props: true,
   },
   {
-    path: '/user/:userId/card/:cardId/mycard',
+    path: '/user/:userName/card/:cardId/mycard',
     name: 'mycard',
     component: CardPage,
     props: true,

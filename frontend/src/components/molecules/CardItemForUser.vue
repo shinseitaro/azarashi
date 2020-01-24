@@ -30,7 +30,7 @@ import CommonCardEditBtn from './CommonCardEditBtn';
 import CommonCardFooter from './CommonCardFooter';
 
 export default {
-  props: ['item', 'userId'],
+  props: ['item', 'userName'],
   components: {
     CommonCardImg,
     CommonCardTitle,
@@ -40,10 +40,10 @@ export default {
   mounted() {
     if (
       this.$store.state.auth.isLoggedIn &&
-      parseInt(this.userId) === this.$store.state.auth.userId
+      this.userName === this.$store.state.auth.username
     ) {
       this.$router
-        .push({ name: 'mypage', params: { userId: this.userId } })
+        .push({ name: 'mypage', params: { userName: this.userName } })
         .catch(error => {
           return { error };
         });

@@ -5,6 +5,7 @@ const card = {
   state: {
     cardList: [],
     cardUser: '',
+    cardItem: {},
   },
   mutations: {
     SET_CARD_LIST(state, array) {
@@ -13,12 +14,27 @@ const card = {
     SET_CARD_USER(state, name) {
       state.cardUser = name;
     },
+    SET_CARD_ITEM(state, obj) {
+      state.cardItem = obj;
+    },
   },
   actions: {
-    getCardList({ commit }, id) {
-      API.setQuery('card', 'user', id).then(response => {
+    getCardList({ commit }, name) {
+      commit('SET_CARD_USER', name);
+      API.setQuery('card', 'user', name).then(response => {
         commit('SET_CARD_LIST', response.payload.results);
-        commit('SET_CARD_USER', response.payload.results[0].user.name);
+      });
+    },
+    getCardItem({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        API.set('card', id)
+          .then(response => {
+            commit('SET_CARD_ITEM', response.payload);
+            resolve();
+          })
+          .catch(error => {
+            reject(error);
+          });
       });
     },
   },

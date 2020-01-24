@@ -14,7 +14,7 @@ export default {
     BaseLayout,
     PostForm,
   },
-  mounted() {
+  created() {
     document.title = 'カード投稿';
   },
 };

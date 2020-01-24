@@ -1,6 +1,6 @@
 <template>
   <base-layout>
-    <card-list-for-user :user-id="userId" />
+    <card-list-for-user :user-name="userName" />
   </base-layout>
 </template>
 
@@ -9,13 +9,13 @@ import BaseLayout from '../organisms/BaseLayout';
 import CardListForUser from '../organisms/CardListForUser';
 
 export default {
-  props: ['userId'],
+  props: ['userName'],
   components: {
     BaseLayout,
     CardListForUser,
   },
-  mounted() {
-    this.$store.dispatch('card/getCardList', this.userId);
+  created() {
+    this.$store.dispatch('card/getCardList', this.userName);
   },
 };
 </script>

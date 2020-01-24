@@ -12,7 +12,7 @@
         md="6"
         xs="12"
       >
-        <card-item-for-user :item="item" :user-id="userId" />
+        <card-item-for-user :item="item" :user-name="userName" />
       </v-col>
     </v-row>
   </v-container>
@@ -23,7 +23,7 @@ import { mapState } from 'vuex';
 import CardItemForUser from '../molecules/CardItemForUser';
 
 export default {
-  props: ['userId'],
+  props: ['userName'],
   components: {
     CardItemForUser,
   },

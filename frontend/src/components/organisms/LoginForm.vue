@@ -90,13 +90,13 @@ export default {
                 .catch(error => {
                   return { error };
                 });
-            } else if (this.$route.params.userId) {
+            } else if (this.$route.params.userName) {
               this.$router.go(-1);
             } else {
               this.$router
                 .push({
                   name: 'mypage',
-                  params: { userId: response.payload.data.pk },
+                  params: { userName: response.payload.data.name },
                 })
                 .catch(error => {
                   return { error };

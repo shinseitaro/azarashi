@@ -15,7 +15,7 @@ from django_filters import rest_framework as filters
 
 
 class UserFilter(filters.FilterSet):
-    user = filters.NumberFilter(field_name='user')
+    user = filters.CharFilter(field_name='user__name')
 
     class Meta:
         model = Card

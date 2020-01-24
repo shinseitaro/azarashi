@@ -20,32 +20,35 @@ export default {
   },
   data() {
     return {
-      item: {
-        name: 'あいうえお',
-        address: '北海道稚内市大字声問村字上声問',
-        water_system_name: '声問川',
-        river_name: 'タツニウシュナイ川',
-        dam_code: 1,
-        userId: 2,
-      },
+      item: {},
     };
   },
-  mounted() {
-    const token = localStorage.getItem('token');
-    if (token !== null) {
-      this.$store.dispatch('auth/update').then(() => {
-        if (
-          this.$store.state.auth.isLoggedIn &&
-          this.item.userId === this.$store.state.auth.userId
-        ) {
-          this.$router
-            .push({ name: 'mycard', params: { userId: this.item.userId } })
-            .catch(error => {
-              return { error };
-            });
+  created() {
+    this.$store
+      .dispatch('card/getCardItem', this.cardId)
+      .then(() => {
+        this.item = this.$store.state.card.cardItem;
+      })
+      .then(() => {
+        const token = localStorage.getItem('token');
+        if (token !== null) {
+          this.$store.dispatch('auth/update').then(() => {
+            if (
+              this.$store.state.auth.isLoggedIn &&
+              this.item.user.name === this.$store.state.auth.username
+            ) {
+              this.$router
+                .push({
+                  name: 'mycard',
+                  params: { userName: this.item.user.name },
+                })
+                .catch(error => {
+                  return { error };
+                });
+            }
+          });
         }
       });
-    }
   },
 };
 </script>

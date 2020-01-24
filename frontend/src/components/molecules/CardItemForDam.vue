@@ -7,7 +7,7 @@
         <v-card-text>
           <v-row justify="space-between" class="mx-0">
             <div>
-              <a :href="`/user/${item.userId}`">
+              <a :href="`/user/${item.username}`">
                 {{ item.username }}
               </a>
             </div>

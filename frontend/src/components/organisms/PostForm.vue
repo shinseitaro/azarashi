@@ -55,7 +55,7 @@ export default {
   mounted() {
     if (this.cardId) {
       API.set('card', this.cardId).then(response => {
-        if (response.payload.user === this.$store.state.auth.userId) {
+        if (response.payload.user.name === this.$store.state.auth.username) {
           xhr.open(
             'GET',
             process.env.VUE_APP_ROOT_URL + response.payload.file,

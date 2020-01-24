@@ -31,7 +31,7 @@ export default {
     DistributionList,
     CardListForDam,
   },
-  mounted() {
+  created() {
     this.$store
       .dispatch('dam/getDam', this.damId)
       .then(() => {

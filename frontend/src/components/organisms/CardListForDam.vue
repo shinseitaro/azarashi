@@ -26,7 +26,7 @@ export default {
     return {
       cards: [
         {
-          cardId: 1,
+          cardId: 8,
           imageUrl: 'http://****',
           userId: 1,
           username: 'aiueo',
