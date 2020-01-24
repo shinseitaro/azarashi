@@ -56,15 +56,16 @@ export default {
     if (this.cardId) {
       API.set('card', this.cardId).then(response => {
         if (response.payload.user.name === this.$store.state.auth.username) {
+          const me = this;
           xhr.open(
             'GET',
             process.env.VUE_APP_ROOT_URL + response.payload.file,
             true
           );
           xhr.responseType = 'arraybuffer';
-          xhr.onload = () => {
+          xhr.onload = function() {
             const arrayBuffer = this.response;
-            this.file = new File([arrayBuffer], response.payload.file_name);
+            me.file = new File([arrayBuffer], response.payload.file_name);
           };
           xhr.send();
           this.fileName[0] = response.payload.file_name;
