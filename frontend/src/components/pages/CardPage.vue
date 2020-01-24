@@ -11,6 +11,7 @@
 <script>
 import BaseLayout from '../organisms/BaseLayout';
 import IndividualCardItem from '../molecules/IndividualCardItem';
+import { mapState } from 'vuex';
 
 export default {
   props: ['cardId'],
@@ -18,37 +19,32 @@ export default {
     BaseLayout,
     IndividualCardItem,
   },
-  data() {
-    return {
-      item: {},
-    };
+  computed: {
+    ...mapState({
+      item: state => state.card.cardItem,
+    }),
   },
   created() {
-    this.$store
-      .dispatch('card/getCardItem', this.cardId)
-      .then(() => {
-        this.item = this.$store.state.card.cardItem;
-      })
-      .then(() => {
-        const token = localStorage.getItem('token');
-        if (token !== null) {
-          this.$store.dispatch('auth/update').then(() => {
-            if (
-              this.$store.state.auth.isLoggedIn &&
-              this.item.user.name === this.$store.state.auth.username
-            ) {
-              this.$router
-                .push({
-                  name: 'mycard',
-                  params: { userName: this.item.user.name },
-                })
-                .catch(error => {
-                  return { error };
-                });
-            }
-          });
-        }
-      });
+    this.$store.dispatch('card/getCardItem', this.cardId).then(() => {
+      const token = localStorage.getItem('token');
+      if (token !== null) {
+        this.$store.dispatch('auth/update').then(() => {
+          if (
+            this.$store.state.auth.isLoggedIn &&
+            this.item.user.name === this.$store.state.auth.username
+          ) {
+            this.$router
+              .push({
+                name: 'mycard',
+                params: { userName: this.item.user.name },
+              })
+              .catch(error => {
+                return { error };
+              });
+          }
+        });
+      }
+    });
   },
 };
 </script>
