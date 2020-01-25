@@ -4,11 +4,15 @@
     <v-btn @click="goToEditPostPage">
       <v-icon left>mdi-pencil-outline</v-icon>編集
     </v-btn>
-    <v-btn><v-icon left>mdi-delete-forever</v-icon>削除</v-btn>
+    <v-btn @click="deleteCard">
+      <v-icon left>mdi-delete-forever</v-icon>削除
+    </v-btn>
   </v-row>
 </template>
 
 <script>
+import * as API from '../../apis/API';
+
 export default {
   props: ['cardId'],
   methods: {
@@ -18,6 +22,9 @@ export default {
         .catch(error => {
           return { error };
         });
+    },
+    deleteCard: function() {
+      API.destroy('card', this.cardId);
     },
   },
 };

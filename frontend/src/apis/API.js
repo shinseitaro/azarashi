@@ -72,20 +72,25 @@ export function destroy(repository, id) {
   return access(`${repository}/${id}/`, 'DELETE');
 }
 
-export function fetchUrl(url) {
-  return access(url, 'GET');
+export function fileUpload(repository, data) {
+  return file(`${repository}/`, 'POST', data);
 }
 
-export async function fileUpload(repository, params) {
+export function fileUpdate(repository, id, data) {
+  return file(`${repository}/${id}/`, 'PATCH', data);
+}
+
+async function file(url, method, data) {
   const options = await setAuthHeader();
   return new Promise((resolve, reject) => {
-    axios
-      .post(`${repository}/`, params, {
-        headers: {
-          ...options.headers,
-          'content-type': 'multipart/form-data',
-        },
-      })
+    axios(url, {
+      method: method,
+      headers: {
+        ...options.headers,
+        'content-type': 'multipart/form-data',
+      },
+      data: data,
+    })
       .then(response => {
         resolve({ payload: response });
       })
