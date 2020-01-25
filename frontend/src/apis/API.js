@@ -60,6 +60,10 @@ export function set(repository, id) {
   return access(`${repository}/${id}/`, 'GET');
 }
 
+export function setQuery(repository, query, value) {
+  return access(`${repository}/?${query}=${value}`, 'GET');
+}
+
 export function create(repository, data) {
   return data_access(`${repository}/`, 'POST', data);
 }

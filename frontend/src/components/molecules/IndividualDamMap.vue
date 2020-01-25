@@ -70,7 +70,7 @@ export default {
 <style lang="scss">
 #map-wrap {
   position: relative;
-  height: 100vh;
+  height: calc(100vh - 56px);
   overflow: hidden;
 }
 

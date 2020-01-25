@@ -2,22 +2,26 @@
   <v-card class="mx-auto card" max-width="450" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
-        <common-card-img :url="null" :name="item.name" />
+        <common-card-img :url="item.cloudinary_url" :name="item.dam.name" />
 
-        <common-card-title :item="item" />
+        <common-card-title :item="item.dam" />
+
+        <v-card-text>
+          <div>{{ item.comment }}</div>
+        </v-card-text>
 
         <v-card-text>
           <div>
-            コメントです。コメントです。コメントです。コメントです。コメントです。
+            <date :card-id="item.id" :date="item.published_date" />
           </div>
         </v-card-text>
       </v-col>
 
       <v-col class="card-footer">
         <v-card-actions v-if="this.$route.name === 'mypage'">
-          <common-card-edit-btn :card-id="2" />
+          <common-card-edit-btn :card-id="item.id" />
         </v-card-actions>
-        <common-card-footer :dam-id="item.dam_code" />
+        <common-card-footer :dam-id="item.dam.dam_code" />
       </v-col>
     </v-row>
   </v-card>
@@ -28,22 +32,24 @@ import CommonCardImg from './CommonCardImg';
 import CommonCardTitle from './CommonCardTitle';
 import CommonCardEditBtn from './CommonCardEditBtn';
 import CommonCardFooter from './CommonCardFooter';
+import Date from '../atoms/Date';
 
 export default {
-  props: ['item', 'userId'],
+  props: ['item', 'userName'],
   components: {
     CommonCardImg,
     CommonCardTitle,
     CommonCardEditBtn,
     CommonCardFooter,
+    Date,
   },
   mounted() {
     if (
       this.$store.state.auth.isLoggedIn &&
-      parseInt(this.userId) === this.$store.state.auth.userId
+      this.userName === this.$store.state.auth.username
     ) {
       this.$router
-        .push({ name: 'mypage', params: { userId: this.userId } })
+        .push({ name: 'mypage', params: { userName: this.userName } })
         .catch(error => {
           return { error };
         });

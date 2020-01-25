@@ -1,18 +1,18 @@
 <template>
   <v-container>
     <v-toolbar color="primary" dark>
-      <v-toolbar-title>kaizumakiさんのカード</v-toolbar-title>
+      <v-toolbar-title>{{ cardUser }}さんのカード</v-toolbar-title>
     </v-toolbar>
     <v-row>
       <v-col
-        v-for="(item, index) in damList.slice(0, 8)"
+        v-for="(item, index) in cardList"
         :key="index"
         cols="12"
         lg="4"
         md="6"
         xs="12"
       >
-        <card-item-for-user :item="item" :user-id="userId" />
+        <card-item-for-user :item="item" :user-name="userName" />
       </v-col>
     </v-row>
   </v-container>
@@ -23,13 +23,14 @@ import { mapState } from 'vuex';
 import CardItemForUser from '../molecules/CardItemForUser';
 
 export default {
-  props: ['userId'],
+  props: ['userName'],
   components: {
     CardItemForUser,
   },
   computed: {
     ...mapState({
-      damList: state => state.map.damList,
+      cardList: state => state.card.cardList,
+      cardUser: state => state.card.cardUser,
     }),
   },
 };

@@ -9,19 +9,43 @@ from dam.models import Dam
 from user.models import User
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.pagination import PageNumberPagination
 import cloudinary.uploader
+from django_filters import rest_framework as filters
+
+
+class CardFilter(filters.FilterSet):
+    user = filters.CharFilter(field_name='user__name')
+    dam = filters.NumberFilter(field_name='dam__dam_code')
+
+    class Meta:
+        model = Card
+        fields = ('user', 'dam')
+
+
+class CardPagination(PageNumberPagination):
+    page_size_query_param = 'page_size'
+    page_size = 12
 
 
 class CardViewSet(viewsets.ViewSet, generics.ListCreateAPIView, generics.RetrieveUpdateDestroyAPIView):
     authentication_classes = [JSONWebTokenAuthentication]
     permission_classes = [AllowAny]
     parser_class = (FileUploadParser,)
-    queryset = Card.objects.filter()
+    queryset = Card.objects.filter().order_by('-published_date')
     serializer_class = CardSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = CardFilter
+    pagination_class = CardPagination
 
     def list(self, request):
-        queryset = Card.objects.all()
-        serializer = CardSerializer(queryset, many=True)
+        queryset = self.filter_queryset(self.get_queryset())
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        qs = self.filter_queryset(queryset)
+        serializer = CardSerializer(qs, many=True)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):

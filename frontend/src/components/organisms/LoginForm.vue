@@ -9,12 +9,6 @@
           :rules="[rules.required]"
         ></v-text-field>
         <v-text-field
-          v-model="email"
-          label="e-mail"
-          type="email"
-          :rules="[rules.required]"
-        ></v-text-field>
-        <v-text-field
           v-model="password"
           label="password"
           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -70,7 +64,7 @@ export default {
   },
   computed: {
     disabledBtn: function() {
-      return this.username === '' || this.email === '' || this.password === '';
+      return this.username === '' || this.password === '';
     },
     ...mapState({
       error: state => state.auth.error,
@@ -81,7 +75,6 @@ export default {
       await this.$store.dispatch('auth/logout');
       const params = new URLSearchParams();
       params.append('name', this.username);
-      params.append('email', this.email);
       params.append('password', this.password);
       await this.$store.dispatch('auth/login', params);
       this.$store
@@ -97,8 +90,17 @@ export default {
                 .catch(error => {
                   return { error };
                 });
-            } else {
+            } else if (this.$route.params.userName) {
               this.$router.go(-1);
+            } else {
+              this.$router
+                .push({
+                  name: 'mypage',
+                  params: { userName: response.payload.data.name },
+                })
+                .catch(error => {
+                  return { error };
+                });
             }
           }
         })

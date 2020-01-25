@@ -64,7 +64,7 @@ export default {
       this.$router
         .push({
           name: 'mypage',
-          params: { userId: this.$store.state.auth.userId },
+          params: { userName: this.$store.state.auth.username },
         })
         .catch(error => {
           return { error };
