@@ -12,9 +12,7 @@
               </a>
             </div>
             <div>
-              <a :href="`/card/${item.id}`">
-                {{ publishedDate }}
-              </a>
+              <date :card-id="item.id" :date="item.published_date" />
             </div>
           </v-row>
         </v-card-text>
@@ -25,17 +23,13 @@
 
 <script>
 import CommonCardImg from './CommonCardImg';
-import * as moment from 'moment';
+import Date from '../atoms/Date';
 
 export default {
   props: ['item'],
   components: {
     CommonCardImg,
-  },
-  computed: {
-    publishedDate: function() {
-      return moment(this.item.published_date).format('YYYY.MM.DD HH:mm');
-    },
+    Date,
   },
 };
 </script>

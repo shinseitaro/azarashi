@@ -15,7 +15,9 @@
         </v-card-text>
 
         <v-card-text>
-          <div>{{ publishedDate }}</div>
+          <div>
+            <date :date="item.published_date" />
+          </div>
         </v-card-text>
       </v-col>
 
@@ -34,7 +36,7 @@ import CommonCardImg from './CommonCardImg';
 import CommonCardTitle from './CommonCardTitle';
 import CommonCardEditBtn from './CommonCardEditBtn';
 import CommonCardFooter from './CommonCardFooter';
-import * as moment from 'moment';
+import Date from '../atoms/Date';
 
 export default {
   props: ['item'],
@@ -43,11 +45,7 @@ export default {
     CommonCardTitle,
     CommonCardEditBtn,
     CommonCardFooter,
-  },
-  computed: {
-    publishedDate: function() {
-      return moment(this.item.published_date).format('YYYY.MM.DD HH:mm');
-    },
+    Date,
   },
 };
 </script>
