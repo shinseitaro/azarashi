@@ -7,7 +7,7 @@
         <v-card-text>
           <v-row justify="space-between" class="mx-0">
             <div>
-              <a :href="`/user/${item.user.name}`">
+              <a href="javascript:void(0)" @click="goToUserPage">
                 {{ item.user.name }}
               </a>
             </div>
@@ -30,6 +30,15 @@ export default {
   components: {
     CommonCardImg,
     Date,
+  },
+  methods: {
+    goToUserPage: function() {
+      this.$router
+        .push({ name: 'user', params: { userName: this.item.user.name } })
+        .catch(error => {
+          return { error };
+        });
+    },
   },
 };
 </script>

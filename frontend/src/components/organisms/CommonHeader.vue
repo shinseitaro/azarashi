@@ -14,7 +14,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn v-if="!isLoggedIn" text href="/signup">
+    <v-btn v-if="!isLoggedIn" text @click="signUp">
       <span class="mr-2">Sign Up</span>
     </v-btn>
 
@@ -44,6 +44,11 @@ export default {
   methods: {
     goToTop: function() {
       this.$router.push({ name: 'sitetop' }).catch(error => {
+        return { error };
+      });
+    },
+    signUp: function() {
+      this.$router.push({ name: 'signup' }).catch(error => {
         return { error };
       });
     },
