@@ -104,7 +104,7 @@ async function file(url, method, data) {
   });
 }
 
-async function access(url, method) {
+export async function access(url, method) {
   const options = await setAuthHeader();
   return _access(url, {
     method: method,

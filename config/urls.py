@@ -18,7 +18,6 @@ router = DefaultRouter()
 router.register('dam/search', DamViewSet, basename="dam/search")
 
 # cache 処理のために DamCardListViewSet を、ModelViewSet→ViewSetに変更したので、最後に basebaneオプションが必要になった
-# router.register('dam/list', DamCardListViewSet)
 router.register('dam/list', DamCardListViewSet, basename="dam/list")
 router.register('dam/top_totalpontage', DamTopTotalPondageView, basename="dam/top_totalpontage")
 router.register('dam/bottom_totalpontage', DamBottomTotalPondageView, basename="dam/bottom_totalpontage")
