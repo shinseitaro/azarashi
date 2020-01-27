@@ -12,6 +12,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.pagination import PageNumberPagination
 import cloudinary.uploader
 from django_filters import rest_framework as filters
+from django.conf import settings
+
 
 
 class CardFilter(filters.FilterSet):
@@ -61,13 +63,13 @@ class CardViewSet(viewsets.ViewSet, generics.ListCreateAPIView, generics.Retriev
         serializer = CardSerializer(data=request.data, context=context)
 
         if serializer.is_valid():
-            response_from_cloudinary = cloudinary.uploader.upload(request.FILES.get('file').read(), folder='udc-dam')
+            response_from_cloudinary = cloudinary.uploader.upload(request.FILES.get('file').read(), folder=settings.CLOUDINARY_DIRECTORY)
             current_user = User.objects.get(name=request.data.get('username'))
             dam_record = Dam.objects.get(dam_code=request.data.get('dam_id'))
             serializer.save(
                 user=current_user,
                 dam=dam_record,
-                cloudinary_url=response_from_cloudinary['url'],
+                cloudinary_url='v{0}/{1}'.format(response_from_cloudinary['version'], response_from_cloudinary['public_id']),
                 published_date=datetime.now())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -75,7 +77,7 @@ class CardViewSet(viewsets.ViewSet, generics.ListCreateAPIView, generics.Retriev
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
-        response_from_cloudinary = cloudinary.uploader.upload(request.FILES.get('file').read(), folder='udc-dam')
+        response_from_cloudinary = cloudinary.uploader.upload(request.FILES.get('file').read(), folder=settings.CLOUDINARY_DIRECTORY)
         instance.cloudinary_url = response_from_cloudinary['url']
         instance.save()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
