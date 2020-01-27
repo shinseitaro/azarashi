@@ -23,7 +23,7 @@
 
       <v-col class="card-footer">
         <v-card-actions v-if="this.$route.name === 'mycard'">
-          <common-card-edit-btn :card-id="item.id" />
+          <common-card-edit-btn :item="item" />
         </v-card-actions>
         <common-card-footer v-if="item.dam" :dam-id="item.dam.dam_code" />
       </v-col>
