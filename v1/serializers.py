@@ -11,7 +11,7 @@ class DamSerializer(serializers.ModelSerializer):
 class DamStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model=Dam
-        fields = ('id', 'name', 'water_system_name', 'total_pondage')
+        fields = ('id', 'name', 'prefecture', 'water_system_name', 'total_pondage')
 
 class DamCardSerializer(serializers.ModelSerializer):
     class Meta:

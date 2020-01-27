@@ -1,26 +1,20 @@
-from django.shortcuts import render
 from rest_framework import generics, viewsets
-
 from rest_framework_gis.filters import DistanceToPointFilter
 from rest_framework_gis.pagination import GeoJsonPagination
 from rest_framework.pagination import PageNumberPagination
 from django_filters import rest_framework as filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAuthenticated
-
+from rest_framework.permissions import AllowAny
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
-from django.db.models import Count
-
-from dam.models import Dam, DamCardDistributionPlace
+from django.db.models import Count, F, Q
+from dam.models import Dam
 from v1.serializers import (DamGeoFeatureModelSerializer, DamCardSerializer, DamMapModelSerializer, DamIdSerializer,
                             DamCountSerializer, DamCardDistributionPlaceSerializer, DamStatsSerializer)
 from django.shortcuts import get_object_or_404
-from rest_framework.decorators import action
 from decimal import Decimal
-from django.db.models import F
 
 class GeojsonLocationList(generics.ListCreateAPIView):
     pagination_class = GeoJsonPagination
@@ -55,6 +49,9 @@ class DamIdFilter(filters.FilterSet):
         model = Dam
         fields = ( )
 
+class DamBaseStatsViewSet(viewsets.ModelViewSet):
+    http_method_names = ['get', 'head',]
+
 
 class DamViewSet(viewsets.ModelViewSet):
     queryset = Dam.objects.all()
@@ -64,24 +61,21 @@ class DamViewSet(viewsets.ModelViewSet):
     distance_filter_field = 'geom'
     distance_filter_convert_meters = True
     filterset_class = DamFilter
-    http_method_names = ['get', 'head', 'option']
 
 
-class DamTopTotalpontageView(viewsets.ModelViewSet):
-    window = {
-        'order_by': F('total_pondage').desc()
-    }
-
+class DamTopTotalPondageView(DamBaseStatsViewSet):
     queryset = Dam.objects.filter(scale_bank_height__gt=Decimal(0)).order_by('-total_pondage').extra(
         select={'rank': 'RANK() OVER(ORDER BY total_pondage DESC)'})[:10]
     serializer_class = DamStatsSerializer
 
 
-class DamBottomTotalpontageView(DamTopTotalpontageView):
-    queryset = Dam.objects.all().order_by('total_pondage')
+class DamBottomTotalPondageView(DamBaseStatsViewSet):
+    queryset = Dam.objects.filter(Q(scale_bank_height__gt=Decimal(0)) & Q(total_pondage__gt=0)).order_by('total_pondage').extra(
+        select={'rank': 'RANK() OVER(ORDER BY total_pondage DESC)'})[:10]
+    serializer_class = DamStatsSerializer
 
 
-class DamTopCountByPrefectureView(DamTopTotalpontageView):
+class DamTopCountByPrefectureView(DamBaseStatsViewSet):
     serializer_class = DamCountSerializer
 
     def get_queryset(self):
