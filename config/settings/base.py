@@ -207,3 +207,5 @@ cloudinary.config(
   api_secret = os.environ.get('CLOUDINARY_API_SECRET'),
   secure = True
 )
+
+CLOUDINARY_DIRECTORY = 'udc-dam'

@@ -32,6 +32,18 @@
     >
       Edit
     </v-btn>
+    <v-dialog v-model="loading" fullscreen full-width>
+      <v-container
+        fluid
+        fill-height
+        style="background-color: rgba(255, 255, 255, 0.5);"
+      >
+        <v-layout justify-center align-center>
+          <v-progress-circular indeterminate color="primary">
+          </v-progress-circular>
+        </v-layout>
+      </v-container>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -50,6 +62,7 @@ export default {
       previewSrc: '',
       clearable: false,
       comment: '',
+      loading: false,
     };
   },
   mounted() {
@@ -97,32 +110,43 @@ export default {
       e.target.value = '';
     },
     post: function() {
+      this.loading = true;
       const params = new FormData();
       params.append('file', this.file);
       params.append('file_name', this.fileName[0]);
       params.append('comment', this.comment);
       params.append('dam_id', this.damId);
       params.append('username', this.$store.state.auth.username);
-      API.fileUpload('card', params).then(response => {
-        if (response.payload.status === 201) {
-          this.fileName = [];
-          this.previewSrc = '';
-          this.comment = '';
-        }
-      });
+      API.fileUpload('card', params)
+        .then(response => {
+          if (response.payload.status === 201) {
+            this.fileName = [];
+            this.previewSrc = '';
+            this.comment = '';
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     edit: function() {
+      this.loading = true;
+
       const params = new FormData();
       params.append('file', this.file);
       params.append('file_name', this.fileName[0]);
       params.append('comment', this.comment);
-      API.fileUpdate('card', this.cardId, params).then(response => {
-        if (response.payload.status === 200) {
-          this.fileName = [];
-          this.previewSrc = '';
-          this.comment = '';
-        }
-      });
+      API.fileUpdate('card', this.cardId, params)
+        .then(response => {
+          if (response.payload.status === 200) {
+            this.fileName = [];
+            this.previewSrc = '';
+            this.comment = '';
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
 };

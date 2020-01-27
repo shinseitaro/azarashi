@@ -96,7 +96,7 @@ class DamIdViewSet(DamViewSet):
 
 class DamCardListViewSet(viewsets.ModelViewSet):
     # issue_84 で、ページネーションを使うことにした
-    queryset = Dam.objects.all()
+    queryset = Dam.objects.order_by(F('card__published_date').desc(nulls_last=True))
     serializer_class = DamCardSerializer
     pagination_class = DamPagination
 

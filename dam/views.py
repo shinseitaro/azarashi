@@ -1,8 +1,8 @@
 from rest_framework import viewsets
-from rest_framework_gis.filters import DistanceToPointFilter, InBBoxFilter 
-from rest_framework.pagination import PageNumberPagination 
+from rest_framework_gis.filters import DistanceToPointFilter, InBBoxFilter
+from rest_framework.pagination import PageNumberPagination
 
-from .serializers import DamSerializer, DamCardListSerializer
+from .serializers import DamSerializer
 from .models import Dam
 
 class MyPagination(PageNumberPagination):
