@@ -16,9 +16,11 @@ from django.db.models import Count
 
 from dam.models import Dam, DamCardDistributionPlace
 from v1.serializers import (DamGeoFeatureModelSerializer, DamCardSerializer, DamMapModelSerializer, DamIdSerializer,
-                            DamCountSerializer, DamCardDistributionPlaceSerializer, )
+                            DamCountSerializer, DamCardDistributionPlaceSerializer, DamStatsSerializer)
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
+from decimal import Decimal
+from django.db.models import F
 
 class GeojsonLocationList(generics.ListCreateAPIView):
     pagination_class = GeoJsonPagination
@@ -65,9 +67,14 @@ class DamViewSet(viewsets.ModelViewSet):
     http_method_names = ['get', 'head', 'option']
 
 
-class DamTopTotalpontageView(DamViewSet):
-    queryset = Dam.objects.all().order_by('-total_pondage')
-    serializer_class = DamCardSerializer
+class DamTopTotalpontageView(viewsets.ModelViewSet):
+    window = {
+        'order_by': F('total_pondage').desc()
+    }
+
+    queryset = Dam.objects.filter(scale_bank_height__gt=Decimal(0)).order_by('-total_pondage').extra(
+        select={'rank': 'RANK() OVER(ORDER BY total_pondage DESC)'})[:10]
+    serializer_class = DamStatsSerializer
 
 
 class DamBottomTotalpontageView(DamTopTotalpontageView):

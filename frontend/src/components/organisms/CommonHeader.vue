@@ -26,6 +26,10 @@
       <span class="mr-2">My Page</span>
     </v-btn>
 
+    <v-btn text @click="goToMyPage">
+      <span class="mr-2">Stats</span>
+    </v-btn>
+
     <v-btn v-if="isLoggedIn" text @click="logout">
       <span class="mr-2">Logout</span>
     </v-btn>
