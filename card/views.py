@@ -78,7 +78,7 @@ class CardViewSet(viewsets.ViewSet, generics.ListCreateAPIView, generics.Retriev
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         response_from_cloudinary = cloudinary.uploader.upload(request.FILES.get('file').read(), folder=settings.CLOUDINARY_DIRECTORY)
-        instance.cloudinary_url = 'v{0}/{1}'.format(response_from_cloudinary['version'], response_from_cloudinary['public_id']),
+        instance.cloudinary_url = 'v{0}/{1}'.format(response_from_cloudinary['version'], response_from_cloudinary['public_id'])
         instance.save()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
