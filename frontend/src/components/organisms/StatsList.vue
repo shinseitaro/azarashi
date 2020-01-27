@@ -15,7 +15,7 @@
             </thead>
             <tbody>
               <tr v-for="item in top_totalpontage_items" :key="item.name">
-                <td>{{ item.name }}</td>
+                <td @click="moveToDam(item.id)">{{ item.name }}</td>
                 <td>{{ item.total_pondage }}</td>
               </tr>
             </tbody>
@@ -38,7 +38,7 @@
             </thead>
             <tbody>
               <tr v-for="item in bottom_totalpontage_items" :key="item.name">
-                <td>{{ item.name }}</td>
+                <td @click="moveToDam(item.id)">{{ item.name }}</td>
                 <td>{{ item.total_pondage }}</td>
               </tr>
             </tbody>
@@ -96,6 +96,15 @@ export default {
       console.log(response.payload);
       this.top_by_pref_items = response.payload;
     });
+  },
+  methods: {
+    moveToDam: function(damId) {
+      this.$router
+        .push({ name: 'dam', params: { damId: damId } })
+        .catch(error => {
+          return { error };
+        });
+    },
   },
 };
 </script>
