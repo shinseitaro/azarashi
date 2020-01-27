@@ -11,7 +11,7 @@ class Card(models.Model):
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     published_date = models.DateTimeField(blank=True, null=True)
-    dam = models.ForeignKey(Dam, null=True, blank=True, on_delete=models.CASCADE)
+    dam = models.ForeignKey(Dam, null=True, blank=True, on_delete=models.CASCADE, related_name='card')
     cloudinary_url = models.URLField(blank=True, null=True)
 
     def __str__(self):

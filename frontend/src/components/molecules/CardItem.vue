@@ -2,7 +2,7 @@
   <v-card class="mx-auto card" max-width="450" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
-        <common-card-img :url="null" :name="item.name" />
+        <common-card-img :url="item.url" :name="item.name" />
 
         <common-card-title :item="item" />
       </v-col>

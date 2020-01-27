@@ -17,6 +17,9 @@ class DamCardSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         response_dict = super().to_representation(instance)
         response_dict['coordinates'] = instance.geom.coords #['coordinates']
+        cards = instance.card.all()
+        if len(cards) > 0:
+            response_dict['url'] = cards[0].cloudinary_url
         del response_dict['geom']
         return response_dict
 
