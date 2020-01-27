@@ -19,6 +19,7 @@ from v1.serializers import (DamGeoFeatureModelSerializer, DamCardSerializer, Dam
                             DamCountSerializer, DamCardDistributionPlaceSerializer, )
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
+from django.db.models import F
 
 class GeojsonLocationList(generics.ListCreateAPIView):
     pagination_class = GeoJsonPagination
@@ -89,7 +90,7 @@ class DamIdViewSet(DamViewSet):
 
 class DamCardListViewSet(viewsets.ModelViewSet):
     # issue_84 で、ページネーションを使うことにした
-    queryset = Dam.objects.all()
+    queryset = Dam.objects.order_by(F('card__created_date').desc(nulls_last=True))
     serializer_class = DamCardSerializer
     pagination_class = DamPagination
 
