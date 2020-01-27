@@ -64,6 +64,10 @@ export function setQuery(repository, query, value) {
   return access(`${repository}/?${query}=${value}`, 'GET');
 }
 
+export function setUrl(repository, id, hierarchy) {
+  return access(`${repository}/${id}/${hierarchy}/`, 'GET');
+}
+
 export function create(repository, data) {
   return data_access(`${repository}/`, 'POST', data);
 }

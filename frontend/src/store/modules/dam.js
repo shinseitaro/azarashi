@@ -57,6 +57,11 @@ const dam = {
           });
       });
     },
+    getDistribution({ commit }, id) {
+      API.setUrl('dam', id, 'distribution').then(response => {
+        commit('SET_DISTRIBUTION_LIST', response.payload);
+      });
+    },
   },
   getters: {},
 };
