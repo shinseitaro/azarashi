@@ -9,7 +9,7 @@ from rest_framework.permissions import AllowAny
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie
-from django.db.models import Count, F, Q
+from django.db.models import Count, F, Q, Max
 from dam.models import Dam
 from v1.serializers import (DamGeoFeatureModelSerializer, DamCardSerializer, DamMapModelSerializer, DamIdSerializer,
                             DamCountSerializer, DamCardDistributionPlaceSerializer, DamStatsSerializer)
@@ -90,7 +90,7 @@ class DamIdViewSet(DamViewSet):
 
 class DamCardListViewSet(viewsets.ModelViewSet):
     # issue_84 で、ページネーションを使うことにした
-    queryset = Dam.objects.order_by(F('card__published_date').desc(nulls_last=True))
+    queryset = Dam.objects.annotate(card__published_date=Max("card")).order_by(F('card__published_date').desc(nulls_last=True))
     serializer_class = DamCardSerializer
     pagination_class = DamPagination
 

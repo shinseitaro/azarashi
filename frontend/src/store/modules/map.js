@@ -49,7 +49,7 @@ const map = {
       state.page = page;
     },
     SET_PAGE_LENGTH(state, count) {
-      state.pageLength = Math.ceil(count / 10);
+      state.pageLength = Math.ceil(count / 12);
     },
     RESET_PAGE_NUM(state) {
       state.page = 1;
