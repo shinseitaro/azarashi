@@ -26,7 +26,7 @@
       <span class="mr-2">My Page</span>
     </v-btn>
 
-    <v-btn text @click="goToMyPage">
+    <v-btn text @click="statsPage">
       <span class="mr-2">Stats</span>
     </v-btn>
 
@@ -78,6 +78,11 @@ export default {
         .catch(error => {
           return { error };
         });
+    },
+    statsPage: function() {
+      this.$router.push({ name: 'stats' }).catch(error => {
+        return { error };
+      });
     },
   },
 };

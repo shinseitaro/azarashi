@@ -1,14 +1,16 @@
 <template>
   <base-layout>
-    <StatsList />
+    <stats-list />
   </base-layout>
 </template>
 
 <script>
 import StatsList from '../organisms/StatsList';
+import BaseLayout from '../organisms/BaseLayout';
+
 export default {
   name: 'StatsPage',
-  components: { StatsList },
+  components: { BaseLayout, StatsList },
 };
 </script>
 
