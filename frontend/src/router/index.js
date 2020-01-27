@@ -90,7 +90,6 @@ const routes = [
     path: '/stats',
     name: 'stats',
     component: StatsPage,
-    props: true,
   },
 ];
 
