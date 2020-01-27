@@ -1,13 +1,12 @@
 from rest_framework import serializers
 from rest_framework_gis.serializers import GeoFeatureModelSerializer
-from dam.models import Dam, Institution, Purpose
+from dam.models import Dam, Institution, Purpose, DamCardDistributionPlace
 
 
 class DamSerializer(serializers.ModelSerializer):
     class Meta:
         model=Dam
         exclude = ["registered_at", "modified_at"]
-        #fields = ("name", "address", "river_name","geom")
 
 class DamStatsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,7 +17,6 @@ class DamCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dam
         exclude = ["registered_at", "modified_at"]
-        #fields = ("name", "address","geom")
 
     def to_representation(self, instance):
         response_dict = super().to_representation(instance)
@@ -59,9 +57,7 @@ class DamGeoFeatureModelSerializer(GeoFeatureModelSerializer):
         model = Dam
         geo_field = "geom"
         id_field = False
-        #exclude = ("registered_at", "modified_at", )
         fields = ("dam_code", "name", "address", "water_system_name", "river_name", "type_code", "institution_in_charge", "year_of_completion", "purpose_code")
-        #fields = ("name", "address", "river_name",)
 
 
 class DamMapModelSerializer(GeoFeatureModelSerializer):
@@ -90,3 +86,9 @@ class DamCountSerializer(serializers.Serializer):
 
     def to_representation(self, instance):
         return instance
+
+class DamCardDistributionPlaceSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DamCardDistributionPlace
+        fields = "__all__"

@@ -14,7 +14,7 @@
 
     <v-spacer></v-spacer>
 
-    <v-btn v-if="!isLoggedIn" text href="/signup">
+    <v-btn v-if="!isLoggedIn" text @click="signUp">
       <span class="mr-2">Sign Up</span>
     </v-btn>
 
@@ -47,6 +47,11 @@ export default {
         return { error };
       });
     },
+    signUp: function() {
+      this.$router.push({ name: 'signup' }).catch(error => {
+        return { error };
+      });
+    },
     login: function() {
       this.$router.push({ name: 'login' }).catch(error => {
         return { error };
@@ -64,7 +69,7 @@ export default {
       this.$router
         .push({
           name: 'mypage',
-          params: { userId: this.$store.state.auth.userId },
+          params: { userName: this.$store.state.auth.username },
         })
         .catch(error => {
           return { error };

@@ -1,23 +1,31 @@
 <template>
-  <v-card class="mx-auto card" max-width="450" min-height="100%">
+  <v-card class="mx-auto card" max-width="450" width="100%" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
-        <common-card-img :url="null" :name="item.name" />
+        <common-card-img
+          v-if="item.dam"
+          :url="item.cloudinary_url"
+          :name="item.dam.name"
+        />
 
-        <common-card-title :item="item" />
+        <common-card-title v-if="item.dam" :item="item.dam" />
+
+        <v-card-text>
+          <div>{{ item.comment }}</div>
+        </v-card-text>
 
         <v-card-text>
           <div>
-            コメントです。コメントです。コメントです。コメントです。コメントです。
+            <date :date="item.published_date" />
           </div>
         </v-card-text>
       </v-col>
 
       <v-col class="card-footer">
         <v-card-actions v-if="this.$route.name === 'mycard'">
-          <common-card-edit-btn :card-id="1" />
+          <common-card-edit-btn :card-id="item.id" />
         </v-card-actions>
-        <common-card-footer :dam-id="item.dam_code" />
+        <common-card-footer v-if="item.dam" :dam-id="item.dam.dam_code" />
       </v-col>
     </v-row>
   </v-card>
@@ -28,6 +36,7 @@ import CommonCardImg from './CommonCardImg';
 import CommonCardTitle from './CommonCardTitle';
 import CommonCardEditBtn from './CommonCardEditBtn';
 import CommonCardFooter from './CommonCardFooter';
+import Date from '../atoms/Date';
 
 export default {
   props: ['item'],
@@ -36,6 +45,7 @@ export default {
     CommonCardTitle,
     CommonCardEditBtn,
     CommonCardFooter,
+    Date,
   },
 };
 </script>

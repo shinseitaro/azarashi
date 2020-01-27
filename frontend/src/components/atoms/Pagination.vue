@@ -20,7 +20,6 @@ export default {
   },
   methods: {
     getNumber(number) {
-      console.log(number);
       this.$store.dispatch('map/setPageNum', { page: number }).then(() => {
         if (!this.$props.isEmptySearchField) {
           this.$store.dispatch('map/searchResult');

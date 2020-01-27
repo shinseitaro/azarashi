@@ -6,6 +6,7 @@ from dam.models import Dam
 class Card(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     file = models.FileField(blank=False, null=False)
+    file_name = models.CharField(max_length=50, blank=True, null=True)
     comment = models.TextField(blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)

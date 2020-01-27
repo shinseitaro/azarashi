@@ -19,7 +19,7 @@ export default {
     DamSearchField,
     CardList,
   },
-  mounted() {
+  created() {
     document.title = 'みんなのダムカード';
     this.$store.dispatch('map/getDamGeoData');
     this.$store.dispatch('map/getDamList');

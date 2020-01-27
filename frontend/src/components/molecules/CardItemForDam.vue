@@ -2,19 +2,17 @@
   <v-card class="mx-auto card" max-width="450" min-height="100%">
     <v-row class="card-inner" justify="space-between" no-gutters>
       <v-col>
-        <common-card-img :url="null" :name="item.username" />
+        <common-card-img :url="item.cloudinary_url" :name="item.user.name" />
 
         <v-card-text>
           <v-row justify="space-between" class="mx-0">
             <div>
-              <a :href="`/user/${item.userId}`">
-                {{ item.username }}
+              <a href="javascript:void(0)" @click="goToUserPage">
+                {{ item.user.name }}
               </a>
             </div>
             <div>
-              <a :href="`/card/${item.cardId}`">
-                {{ item.published_date }}
-              </a>
+              <date :card-id="item.id" :date="item.published_date" />
             </div>
           </v-row>
         </v-card-text>
@@ -25,11 +23,22 @@
 
 <script>
 import CommonCardImg from './CommonCardImg';
+import Date from '../atoms/Date';
 
 export default {
   props: ['item'],
   components: {
     CommonCardImg,
+    Date,
+  },
+  methods: {
+    goToUserPage: function() {
+      this.$router
+        .push({ name: 'user', params: { userName: this.item.user.name } })
+        .catch(error => {
+          return { error };
+        });
+    },
   },
 };
 </script>

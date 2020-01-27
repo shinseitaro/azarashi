@@ -76,7 +76,7 @@ class DamCardDistributionPlace(models.Model):
     address = models.CharField(max_length=100)
     operation_hour = models.CharField(max_length=200)
     prefecture = models.CharField(max_length=4)
-    dam = models.ManyToManyField(Dam, blank=True)
+    dam = models.ManyToManyField(Dam, blank=True, related_name='card_distribution_places')
     mon = models.BooleanField(default=False)
     tue = models.BooleanField(default=False)
     wed = models.BooleanField(default=False)

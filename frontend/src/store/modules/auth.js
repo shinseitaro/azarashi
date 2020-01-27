@@ -27,7 +27,7 @@ const auth = {
     login({ commit }, params) {
       return new Promise((resolve, reject) => {
         axios
-          .post(process.env.VUE_APP_ROOT_URL + 'api-token-auth/', params, {
+          .post(process.env.VUE_APP_ROOT_URL + '/api-token-auth/', params, {
             headers: {
               'content-type': 'application/x-www-form-urlencoded',
             },
@@ -54,7 +54,7 @@ const auth = {
       const token = localStorage.getItem('token');
       return new Promise((resolve, reject) => {
         axios
-          .get(process.env.VUE_APP_ROOT_URL + 'rest-auth/user/', {
+          .get(process.env.VUE_APP_ROOT_URL + '/rest-auth/user/', {
             headers: {
               Authorization: 'JWT ' + token,
             },

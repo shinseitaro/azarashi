@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col
-        v-for="(item, index) in cards"
+        v-for="(item, index) in cardList"
         :key="index"
         cols="12"
         lg="4"
@@ -17,37 +17,16 @@
 
 <script>
 import CardItemForDam from '../molecules/CardItemForDam';
+import { mapState } from 'vuex';
 
 export default {
   components: {
     CardItemForDam,
   },
-  data() {
-    return {
-      cards: [
-        {
-          cardId: 1,
-          imageUrl: 'http://****',
-          userId: 1,
-          username: 'aiueo',
-          published_date: '2020-01-01',
-        },
-        {
-          cardId: 2,
-          imageUrl: 'http://****',
-          userId: 2,
-          username: 'kaizumaki',
-          published_date: '2020-01-01',
-        },
-        {
-          cardId: 3,
-          imageUrl: 'http://****',
-          userId: 2,
-          username: 'kaizumaki',
-          published_date: '2020-01-01',
-        },
-      ],
-    };
+  computed: {
+    ...mapState({
+      cardList: state => state.card.cardList,
+    }),
   },
 };
 </script>

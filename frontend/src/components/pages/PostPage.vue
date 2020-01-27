@@ -1,6 +1,6 @@
 <template>
   <base-layout>
-    <post-form />
+    <post-form :dam-id="damId" :card-id="cardId" />
   </base-layout>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     BaseLayout,
     PostForm,
   },
-  mounted() {
+  created() {
     document.title = 'カード投稿';
   },
 };
