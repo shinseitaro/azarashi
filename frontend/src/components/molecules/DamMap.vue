@@ -7,6 +7,7 @@
         :center="center"
         :zoom="zoom"
         :scrollZoom="scrollZoom"
+        :touchZoomRotate="touchZoomRotate"
         @mb-created="mapboxInstance => (map = mapboxInstance)"
         @mb-zoom="zoomMap"
       >
@@ -99,6 +100,7 @@ export default {
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       center: [139.7009177, 35.6580971],
       scrollZoom: false,
+      touchZoomRotate: false,
       zoom: 4,
       zoomThreshold: 7,
       clustersPaint: {

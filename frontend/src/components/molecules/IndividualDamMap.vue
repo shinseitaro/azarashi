@@ -6,6 +6,7 @@
       :center="damCoord"
       :zoom="zoom"
       :scrollZoom="scrollZoom"
+      :touchZoomRotate="touchZoomRotate"
       @mb-created="mapboxInstance => (map = mapboxInstance)"
     >
       <mapbox-navigation-control />
@@ -41,6 +42,7 @@ export default {
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       zoom: 10,
       scrollZoom: false,
+      touchZoomRotate: false,
       damLayer: {
         id: 'damLayer',
         type: 'circle',
