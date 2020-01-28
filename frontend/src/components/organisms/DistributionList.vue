@@ -28,6 +28,7 @@
 
 <script>
 import DistributionItem from '../molecules/DistributionItem';
+import { mapState } from 'vuex';
 
 export default {
   components: {
@@ -41,42 +42,12 @@ export default {
         address: '所在地',
         operation_hour: '配布日時',
       },
-      items: [
-        {
-          id: 1,
-          name: '駒込',
-          dam_code: 191,
-          url: 'http://web.pref.hyogo.lg.jp/wd16/wd16_000000067.html',
-          address: '青森県青森市大字駒込',
-          operation_hour:
-            '9:00~17:00 (土・日・祝祭日・年末年始は配布しておりません)',
-          prefecture: '青森県',
-          coordinates: [140.8858935039343, 40.70977115787313],
-        },
-        {
-          id: 1,
-          name: '駒込',
-          dam_code: 191,
-          url: 'http://web.pref.hyogo.lg.jp/wd16/wd16_000000067.html',
-          address: '青森県青森市大字駒込',
-          operation_hour:
-            '9:00~17:00 (土・日・祝祭日・年末年始は配布しておりません)',
-          prefecture: '青森県',
-          coordinates: [140.8858935039343, 40.70977115787313],
-        },
-        {
-          id: 1,
-          name: '駒込',
-          dam_code: 191,
-          url: 'http://web.pref.hyogo.lg.jp/wd16/wd16_000000067.html',
-          address: '青森県青森市大字駒込',
-          operation_hour:
-            '9:00~17:00 (土・日・祝祭日・年末年始は配布しておりません)',
-          prefecture: '青森県',
-          coordinates: [140.8858935039343, 40.70977115787313],
-        },
-      ],
     };
+  },
+  computed: {
+    ...mapState({
+      items: state => state.dam.distributionList,
+    }),
   },
 };
 </script>
