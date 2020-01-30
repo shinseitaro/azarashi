@@ -1,12 +1,11 @@
 <template>
-  <div id="map-wrap">
+  <div id="map-wrap" v-resize="onResize" :style="`width: ${width}`">
     <mapbox-map
       :access-token="accessToken"
       :map-style="mapStyle"
       :center="damCoord"
       :zoom="zoom"
       :scrollZoom="scrollZoom"
-      :touchZoomRotate="touchZoomRotate"
       @mb-created="mapboxInstance => (map = mapboxInstance)"
     >
       <mapbox-navigation-control />
@@ -37,12 +36,12 @@ export default {
   },
   data() {
     return {
+      width: '100vw',
       map: null,
       accessToken: process.env.VUE_APP_MAPBOX_KEY,
       mapStyle: 'mapbox://styles/mapbox/light-v10',
       zoom: 10,
       scrollZoom: false,
-      touchZoomRotate: false,
       damLayer: {
         id: 'damLayer',
         type: 'circle',
@@ -66,6 +65,18 @@ export default {
       };
     },
   },
+  mounted() {
+    this.onResize();
+  },
+  methods: {
+    onResize: function() {
+      if (window.innerWidth < 720) {
+        this.width = 'calc(100vw - 2em)';
+      } else {
+        this.width = '100vw';
+      }
+    },
+  },
 };
 </script>
 
@@ -74,6 +85,7 @@ export default {
   position: relative;
   height: calc(100vh - 56px);
   overflow: hidden;
+  margin: 0 auto;
 }
 
 .mapboxgl-map {
