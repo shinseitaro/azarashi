@@ -85,15 +85,12 @@ export default {
   },
   mounted() {
     API.access('dam/top_totalpontage', 'GET').then(response => {
-      console.log(response.payload);
       this.top_totalpontage_items = response.payload;
     });
     API.access('dam/bottom_totalpontage', 'GET').then(response => {
-      console.log(response.payload);
       this.bottom_totalpontage_items = response.payload;
     });
     API.access('dam/top_by_pref', 'GET').then(response => {
-      console.log(response.payload);
       this.top_by_pref_items = response.payload;
     });
   },
@@ -108,5 +105,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>
