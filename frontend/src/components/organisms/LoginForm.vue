@@ -26,21 +26,21 @@
         <p>{{ error }}</p>
       </div>
     </v-card>
-    <v-card class="mx-auto my-4 pa-4" max-width="400">
-      <v-card-title>SNSでログイン</v-card-title>
-      <v-list>
-        <v-list-item>
-          <v-btn block dark class="github-color" :href="githubLoginUrl">
-            <v-icon left>mdi-github-circle</v-icon> GitHub
-          </v-btn>
-        </v-list-item>
-        <v-list-item>
-          <v-btn block dark class="twitter-color" :href="twitterLoginUrl">
-            <v-icon left>mdi-twitter</v-icon> twitter
-          </v-btn>
-        </v-list-item>
-      </v-list>
-    </v-card>
+    <!--    <v-card class="mx-auto my-4 pa-4" max-width="400">-->
+    <!--      <v-card-title>SNSでログイン</v-card-title>-->
+    <!--      <v-list>-->
+    <!--        <v-list-item>-->
+    <!--          <v-btn block dark class="github-color" :href="githubLoginUrl">-->
+    <!--            <v-icon left>mdi-github-circle</v-icon> GitHub-->
+    <!--          </v-btn>-->
+    <!--        </v-list-item>-->
+    <!--        <v-list-item>-->
+    <!--          <v-btn block dark class="twitter-color" :href="twitterLoginUrl">-->
+    <!--            <v-icon left>mdi-twitter</v-icon> twitter-->
+    <!--          </v-btn>-->
+    <!--        </v-list-item>-->
+    <!--      </v-list>-->
+    <!--    </v-card>-->
   </v-container>
 </template>
 
