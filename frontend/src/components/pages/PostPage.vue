@@ -15,7 +15,7 @@ export default {
     PostForm,
   },
   created() {
-    document.title = 'カード投稿';
+    document.title = 'カード投稿・編集';
   },
 };
 </script>
