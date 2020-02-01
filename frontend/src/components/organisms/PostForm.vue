@@ -1,17 +1,17 @@
 <template>
   <v-container>
     <v-file-input
+      ref="fileInput"
       label="カード画像"
       accept="image/*"
       :clearable="clearable"
-      :value="fileName"
       @click="clearFileName"
       @change="inputFile"
     ></v-file-input>
     <div>
       <img :src="previewSrc" alt="" width="300" />
     </div>
-    <div>{{ fileName[0] }}</div>
+    <div>{{ fileName }}</div>
     <div class="my-4">
       <v-btn @click="clearFile">Clear File</v-btn>
     </div>
@@ -32,12 +32,8 @@
     >
       Edit
     </v-btn>
-    <v-dialog v-model="loading" fullscreen full-width>
-      <v-container
-        fluid
-        fill-height
-        style="background-color: rgba(255, 255, 255, 0.5);"
-      >
+    <v-dialog v-model="loading" fullscreen>
+      <v-container fluid fill-height class="dialog">
         <v-layout justify-center align-center>
           <v-progress-circular indeterminate color="primary">
           </v-progress-circular>
@@ -58,7 +54,7 @@ export default {
   data() {
     return {
       file: null,
-      fileName: [],
+      fileName: '',
       previewSrc: '',
       clearable: false,
       comment: '',
@@ -81,8 +77,8 @@ export default {
             me.file = new File([arrayBuffer], response.payload.file_name);
           };
           xhr.send();
-          this.fileName[0] = response.payload.file_name;
-          this.previewSrc = response.payload.cloudinary_url;
+          this.fileName = response.payload.file_name;
+          this.previewSrc = `http://res.cloudinary.com/${process.env.VUE_APP_CLOUDINARY_CLOUD_NAME}/image/upload/${process.env.VUE_APP_CLOUDINARY_IMAGE_PARAMS}/${response.payload.cloudinary_url}`;
           this.comment = response.payload.comment;
         } else {
           this.$router.push({ name: 'sitetop' }).catch(error => {
@@ -99,12 +95,13 @@ export default {
       };
       reader.readAsDataURL(e);
       this.file = e;
-      this.fileName[0] = e.name;
+      this.fileName = e.name;
     },
     clearFile: function() {
       this.file = null;
-      this.fileName = [];
+      this.fileName = '';
       this.previewSrc = '';
+      this.$refs.fileInput.lazyValue = '';
     },
     clearFileName: function(e) {
       e.target.value = '';
@@ -113,16 +110,17 @@ export default {
       this.loading = true;
       const params = new FormData();
       params.append('file', this.file);
-      params.append('file_name', this.fileName[0]);
+      params.append('file_name', this.fileName);
       params.append('comment', this.comment);
       params.append('dam_id', this.damId);
       params.append('username', this.$store.state.auth.username);
       API.fileUpload('card', params)
         .then(response => {
           if (response.payload.status === 201) {
-            this.fileName = [];
+            this.fileName = '';
             this.previewSrc = '';
             this.comment = '';
+            this.$refs.fileInput.lazyValue = '';
           }
         })
         .finally(() => {
@@ -131,17 +129,17 @@ export default {
     },
     edit: function() {
       this.loading = true;
-
       const params = new FormData();
       params.append('file', this.file);
-      params.append('file_name', this.fileName[0]);
+      params.append('file_name', this.fileName);
       params.append('comment', this.comment);
       API.fileUpdate('card', this.cardId, params)
         .then(response => {
           if (response.payload.status === 200) {
-            this.fileName = [];
+            this.fileName = '';
             this.previewSrc = '';
             this.comment = '';
+            this.$refs.fileInput.lazyValue = '';
           }
         })
         .finally(() => {
@@ -151,3 +149,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.dialog {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+</style>
