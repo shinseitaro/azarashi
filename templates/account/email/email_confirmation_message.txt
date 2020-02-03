@@ -1,0 +1,22 @@
+{% load account %}
+{% user_display user as user_display %}
+{% load i18n %}
+{% autoescape off %}
+{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
+
+こちらはみんダム運営事務局です。
+ユーザー情報をご登録頂きありがとうございます。
+
+以下の登録確認URLをクリックして頂くと登録手続きが完了致します。
+
+登録確認URL
+{{ activate_url }}
+
+登録した覚えのない場合、他の方が間違ってこのメールアドレスを入力した可能性があります。その場合、上記のURLをクリックしないでください。
+
+{% endblocktrans %}
+みんダム運営事務局
+support@mindam.jp
+{% endautoescape %}
+
+
