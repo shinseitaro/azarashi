@@ -213,4 +213,3 @@ cloudinary.config(
 
 CLOUDINARY_DIRECTORY = 'udc-dam'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
